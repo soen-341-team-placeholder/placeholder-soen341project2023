@@ -16,6 +16,5 @@ app.use(express.json());
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 
-
 // Define app port
 app.listen(process.env.PORT, () => console.log('listening on port ' + process.env.PORT));
