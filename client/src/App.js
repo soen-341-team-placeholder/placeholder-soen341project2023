@@ -9,7 +9,7 @@ function App() {
 <p> hello world</p>
       <div>
         <React.Fragment>
-          {/* <Navbar /> */}
+          <Navbar />
         </React.Fragment>
       </div>
     </div>
