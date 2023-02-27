@@ -1,9 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const authenticateToken = require('../auth/token_validator');
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', authenticateToken, async (req, res) => {
     const email = req.query.email;
 
     // User has provided an email, thus search for a specific user with that email
@@ -18,19 +19,26 @@ router.get('/', (req, res, next) => {
             } else {
                 res.status(404).send('message: User not found');
             }
-            return;
         });
+        return;
     }
 
     // User has not provided an email, thus return all users
+
+    // Get requester user type
+    const userType = (await User.findOne({ email: req.email })).userType;
+    if (userType != 'admin') {
+        res.status(403).send('message: Forbidden');
+        return;
+    }
+
     User.find({}).then((users) => { // Find all users
-        
         // Remove password from each user
         users.forEach((user) => {
             user.password = undefined;
         });
-        
         res.status(200).json(users);
+
     }).catch((err) => {
         res.status(400).send('message:' + err);
         console.log(err);
