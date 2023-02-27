@@ -9,11 +9,11 @@ const mongoDB = 'mongodb+srv://' + process.env.MONGO_USERNAME + ':' + process.en
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Routers
-const userRouter = require('./routes/user');
+const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 
 app.use(express.json());
-app.use('/users', userRouter);
+app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 
 
