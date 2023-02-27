@@ -4,9 +4,10 @@ import Navbar from './components/Navbar';
 function App() {
   return (
     <div className='main-div'>
+     <p> hello world</p>
       <div>
         <React.Fragment>
-          <Navbar />
+          {/* <Navbar /> */}
         </React.Fragment>
       </div>
     </div>
