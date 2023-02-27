@@ -10,9 +10,11 @@ mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Routers
 const userRouter = require('./routes/user');
+const loginRouter = require('./routes/login');
 
 app.use(express.json());
 app.use('/users', userRouter);
+app.use('/login', loginRouter);
 
 
 // Define app port
