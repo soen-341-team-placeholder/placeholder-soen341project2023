@@ -7,6 +7,7 @@ const mongoDB = 'mongodb+srv://' + process.env.MONGO_USERNAME + ':' + process.en
   + '?retryWrites=true&w=majority';
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('strictQuery', true);
 
 // Routers
 const usersRouter = require('./routes/users');
