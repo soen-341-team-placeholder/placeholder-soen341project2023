@@ -3,3 +3,6 @@
 
 # Node.js build files
 node_modules/
+
+# Local environment variables
+.env
