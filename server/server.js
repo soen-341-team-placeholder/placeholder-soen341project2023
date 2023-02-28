@@ -17,6 +17,7 @@ const tokenRouter = require('./routes/token');
 const postingsRouter = require('./routes/postings');
 
 app.options("*", cors());
+app.use(cors());
 app.use(express.json());
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
