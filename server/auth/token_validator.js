@@ -7,7 +7,7 @@ function authenticateToken(req, res, next) {
     if (token == null) return res.sendStatus(401);
 
     jwt.verify(token, process.env.JWT_ACCESS_TOKEN_SECRET, (err) => {
-        if (err) return res.sendStatus(403);
+        if (err) return res.status(403).send('message: Forbidden (Invalid token)');
         req.email = jwt.decode(token).email;
         next();
     });
