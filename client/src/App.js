@@ -6,6 +6,7 @@ import CandidateProfilePage from "./pages/CandidateProfilePage"
 function App() {
   return (
     <div className='main-div'>
+      hello world
       <div>
         <React.Fragment>
           <Navbar />
