@@ -15,7 +15,6 @@ function App() {
       <div>
         <React.Fragment>
           <Navbar />
-        </React.Fragment>
         <p>hello world</p>
          <div className="appRoutes">
        <Router>
@@ -28,8 +27,12 @@ function App() {
           )} />
           <Route path="profile/:userID" component={ApplicantProfilePage} />
       </Router>
+      
     </div>
+                  </React.Fragment>
+
       </div>
+
     </div>
   );
 }
