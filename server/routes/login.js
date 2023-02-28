@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
         } else if (user) {
             try {
                 if (await bcrypt.compare(password, user.password)) {
-                    const accessToken = jwt.sign({ email }, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '30s' });
+                    const accessToken = jwt.sign({ email }, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
                     const refreshToken = jwt.sign({ email }, process.env.JWT_REFRESH_TOKEN_SECRET);
                     res.status(201).json({ acessToken: accessToken, refreshToken: refreshToken });
                 } else {
