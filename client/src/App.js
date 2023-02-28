@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link , Switch} from 'react-router-dom';
 import Navbar from './components/Navbar';
 
 import ApplicantProfilePage from './pages/ApplicantProfilePage';
@@ -21,10 +21,12 @@ export default function App() {
               </Link>{" "}
             </div>
           </div>
-
+        <Switch>
           <Route exact path="/" component ={HomePage}/>
           <Route path="/profile/:userID" component={ApplicantProfilePage} />
-          
+        </Switch>
+
+
         </main>
 
         <footer>
