@@ -1,11 +1,14 @@
 import React from 'react'
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import FormInput from '../components/FormInput';
 import '../styles/Register.css';
 import '../styles/FormInput.css';
 
 function RegisterPage() {
+
+  const navigate = useNavigate();
 
   const [values, setValues] = useState({
     firstName: "",
@@ -101,13 +104,18 @@ function RegisterPage() {
     let valuesToSubmit = values;
     delete valuesToSubmit.confirmPassword;
     valuesToSubmit.userType = values.userType.toLowerCase();
-    await axios.post('http://localhost:4000/users', valuesToSubmit)
+    axios.post('http://localhost:4000/users', valuesToSubmit).then((res) => {
+      console.log(res);
+      navigate('/login');
+    }).catch((err) => {
+      console.log(err);
+    });
   };
 
   return (
     <div className='RegisterPage'>
 
-      <form onSubmit={handleSubmit}>
+      <form>
         <h1>Sign Up</h1>
         <label>Account Type</label>
         <div className="customSelect">
