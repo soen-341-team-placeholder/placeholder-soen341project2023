@@ -16,7 +16,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/" element={<AboutPage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/profile/:userID" element={<ApplicantProfilePage />} />
         </Routes>
       </main>
