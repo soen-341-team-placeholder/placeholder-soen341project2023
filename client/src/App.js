@@ -12,7 +12,6 @@ import ApplicantProfilePage from "./pages/ApplicantProfilePage";
 function App() {
   return (
     <div className='main-div'>
-      hello world
       <div>
         <React.Fragment>
           <Navbar />
