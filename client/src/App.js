@@ -4,7 +4,6 @@ import ApplicantProfilePage from "./pages/ApplicantProfilePage";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
 
 export default function App() {
   return (
@@ -17,7 +16,6 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/profile/:userID" element={<ApplicantProfilePage />} />
           <Route path="/registration" element={<RegisterPage />} />
-          <Route path="/login" element={<LoginPage />} />
         </Routes>
       </main>
 

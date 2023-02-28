@@ -21,7 +21,7 @@
     width: 100%;
 }
 
-.input-register {
+input {
     padding: 15px;
     margin: 10px 0px;
     border: 1px solid gray;
@@ -38,10 +38,10 @@ span {
     display: none;
 }
 
-.input-register:invalid[focused="true"] {
+input:invalid[focused="true"] {
     border: 1px solid red;
 }
 
-.input-register:invalid[focused=true]~span {
+input:invalid[focused=true]~span {
     display: block;
 }
