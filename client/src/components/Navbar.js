@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
 
-function Navbar() {
+export default function Navbar() {
   const navRef = useRef(); // this variable will refer to the nav tag
 
   /* each time this function is called, we will add/remove
@@ -20,8 +20,8 @@ function Navbar() {
       <SearchBar />
       <nav ref={navRef}>
         <Link to="/">Home</Link>
-        <Link to="/">Jobs</Link>
-        <Link to="/">Inbox</Link>
+        <Link to="/jobs">Jobs</Link>
+        <Link to="/inbox">Inbox</Link>
         <Link to="/profile/:userID">Profile</Link>
         <Link to="/about">About</Link>
         {/* button for full screen */}
@@ -36,5 +36,3 @@ function Navbar() {
     </header>
   );
 }
-
-export default Navbar;
