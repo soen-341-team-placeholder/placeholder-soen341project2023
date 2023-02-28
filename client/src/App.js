@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, 
+  Route, Link ,
+Routes} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ApplicantProfilePage from './pages/ApplicantProfilePage';
 
@@ -25,7 +27,6 @@ export default function App()  {
               </div>
             </div>
 
-            <Container>
                 <Routes>
           <Route exact path="/" render={() => (
             <div className="max-w-4xl mx-auto px-4 py-8">
@@ -36,7 +37,6 @@ export default function App()  {
           )} />
           <Route path="/profile/:userID" component={ApplicantProfilePage} />
               </Routes>
-            </Container>
           </main>
 
           <footer>
