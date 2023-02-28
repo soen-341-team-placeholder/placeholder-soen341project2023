@@ -1,16 +1,31 @@
-import React from 'react';
-import Navbar from './components/Navbar';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Navbar from "./components/Navbar";
 
-function App() {
+import ApplicantProfilePage from "./pages/ApplicantProfilePage";
+import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
+
+export default function App() {
   return (
-    <div className='main-div'>
-      <div>
-        <React.Fragment>
-          <Navbar />
-        </React.Fragment>
-      </div>
-    </div>
+    <Router>
+      <header>
+        <Navbar />
+      </header>
+
+      <main>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/profile/:userID" element={<ApplicantProfilePage />} />
+        </Routes>
+      </main>
+
+      <footer>
+        <div className="text-center">
+          <p>&copy; 2023 Placeholder Inc.</p>
+        </div>
+      </footer>
+    </Router>
   );
 }
-
-export default App;
