@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
 
@@ -16,25 +16,21 @@ export default function Navbar() {
       <h3>LOGO</h3>
       <SearchBar />
       <nav className={isOpen ? "responsive_nav" : ""}>
-        <NavLink exact to="/" activeClassName="active" onClick={toggleNavbar}>
+        <Link to="/" onClick={toggleNavbar}>
           Home
-        </NavLink>
-        <NavLink to="/jobs" activeClassName="active" onClick={toggleNavbar}>
+        </Link>
+        <Link to="/jobs" onClick={toggleNavbar}>
           Jobs
-        </NavLink>
-        <NavLink to="/inbox" activeClassName="active" onClick={toggleNavbar}>
+        </Link>
+        <Link to="/inbox" onClick={toggleNavbar}>
           Inbox
-        </NavLink>
-        <NavLink
-          to="/profile/:userID"
-          activeClassName="active"
-          onClick={toggleNavbar}
-        >
+        </Link>
+        <Link to="/profile/:userID" onClick={toggleNavbar}>
           Profile
-        </NavLink>
-        <NavLink to="/about" activeClassName="active" onClick={toggleNavbar}>
+        </Link>
+        <Link to="/about" onClick={toggleNavbar}>
           About
-        </NavLink>
+        </Link>
         <button className="nav-btn nav-close-btn" onClick={toggleNavbar}>
           <FaTimes />
         </button>
