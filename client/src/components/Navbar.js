@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { FaBars, FaDownload, FaTimes } from "react-icons/fa"; // import font awesome icons
-import "../styles/Navbar.css";
+import "../styles/styles.css";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
