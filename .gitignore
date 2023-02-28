@@ -1,6 +1,9 @@
 # IntelliJ IDEA project files
 .idea/
 
+# VsCode env files
+.vscode/
+
 # Node.js build files
 node_modules/
 
