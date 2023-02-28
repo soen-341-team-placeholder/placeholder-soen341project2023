@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 
 import ApplicantProfilePage from "./pages/ApplicantProfilePage"
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
