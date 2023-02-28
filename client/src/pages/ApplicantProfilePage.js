@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import data from "../tempData.json";
+import data from "./tempData.json";
 
 export default function ApplicantProfilePage(props) {
   const { userID } = props.match.params;
@@ -23,7 +23,7 @@ export default function ApplicantProfilePage(props) {
   if (!user) {
     return <div>Loading...</div>;
   }
-  
+
   return(
 
    <div className="max-w-4xl mx-auto px-4 py-8">
