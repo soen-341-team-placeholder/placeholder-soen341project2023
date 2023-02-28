@@ -1,30 +1,32 @@
-import axios from 'axios';
-import React, { useState, useEffect } from 'react';
-import data from '../tempData.json';
-
+import React, { useState, useEffect } from "react";
+import data from "../tempData.json";
 
 export default function ApplicantProfilePage(props) {
   const { userID } = props.match.params;
   const [user, setUser] = useState(null);
 
-useEffect(() => {
-  // axios.get(`/api/users/${userID}`)
-  //   .then(response => {
-  //     setUser(response.data);
-  //   })
-  //   .catch(error => {
-  //     console.error(error);
-  //   });
-  setUser(data[0]);
-}, [userID]);
+  useEffect(() => {
+    // Uncomment this code to use axios to fetch user data from an API
+    // axios.get(`/api/users/${userID}`)
+    //   .then(response => {
+    //     setUser(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
 
+    // Comment out the code below if you're using axios
+    const userData = data.find((user) => user.userID === userID);
+    setUser(userData);
+  }, [userID]);
 
   if (!user) {
     return <div>Loading...</div>;
   }
+  
+  return(
 
-  return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
+   <div className="max-w-4xl mx-auto px-4 py-8">
       <header className="mb-8">
         <h1 className="text-4xl font-bold mb-2">{user.firstName} {user.lastName}</h1>
         <div className="text-gray-600">{user.userType}</div>
@@ -33,7 +35,7 @@ useEffect(() => {
         <section className="mb-8">
           <h2 className="text-2xl font-bold mb-4">About Me</h2>
           <p className="mb-4">
-            {user.aboutCandidate}
+            {user.biography}
           </p>
         </section>
         <section className="mb-8">
@@ -53,55 +55,10 @@ useEffect(() => {
             {user.workExperience.map(item => (
               <li className="mb-4" key={item._id}>
                 <div className="font-bold">{item.position}</div>
-                <div className="text-gray-600">{item.company} ({item.startDate}-{item.endDate})</div>
+                <div className="text-gray-600">{item.companyName} ({item.startDate}-{item.endDate})</div>
                 <ul className="list-disc ml-8">
-                  <li className="mb-2">{item.description}</li>
+                  <li className="mb-2">{item.jobDescription}</li>
                 </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Projects</h2>
-          <ul>
-            {user.projects.map(item => (
-              <li className="mb-4" key={item._id}>
-                <div className="font-bold">{item.title}</div>
-                <div className="text-gray-600">{item.organization} ({item.startDate}-{item.endDate})</div>
-                <ul className="list-disc ml-8">
-                  <li className="mb-2">{item.description}</li>
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Community Involvement</h2>
-          <ul>
-            {user.communityInvolvment.map(item => (
-              <li className="mb-4" key={item._id}>
-                <div className="font-bold">{item.title}</div>
-                <div className="text-gray-600">{item.organization} ({item.startDate}-{item.endDate})</div>
-                <ul className="list-disc ml-8">
-                  <li className="mb-2">{item.description}</li>
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Interests</h2>
-          <p className="mb-4">
-            {user.interests}
-          </p>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Awards and Certifications</h2>
-          <ul>
-            {user.awardsAndCertifications.map(item => (
-              <li className="mb-4" key={item._id}>
-                <div className="font-bold">{item.title}</div>
-                <div className="text-gray-600">{item.organization} ({item.date})</div>
               </li>
             ))}
           </ul>

@@ -1,107 +1,44 @@
-[
-    {
-        "userID": "123456",
-        "firstName": "John",
-        "lastName": "Doe",
-        "email": "johndoe@example.com",
-        "phoneNumber": "(555) 123-4567",
-        "country": "United States",
-        "age": 30,
-        "userType": "Full Stack Developer",
-        "aboutCandidate": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor.",
-        "education": [
-            {
-                "_id": "1",
-                "degree": "Bachelor of Science",
-                "fieldOfStudy": "Computer Science",
-                "school": "University of XYZ",
-                "startDate": "2015",
-                "endDate": "2019"
-            },
-            {
-                "_id": "2",
-                "degree": "Master of Science",
-                "fieldOfStudy": "Computer Science",
-                "school": "University of ABC",
-                "startDate": "2019",
-                "endDate": "2021"
-            }
-        ],
-        "workExperience": [
-            {
-                "_id": "1",
-                "position": "Software Engineer",
-                "company": "Acme Inc.",
-                "startDate": "2021",
-                "endDate": "present",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor."
-            },
-            {
-                "_id": "2",
-                "position": "Frontend Developer",
-                "company": "Tech Corp.",
-                "startDate": "2019",
-                "endDate": "2021",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor."
-            },
-            {
-                "_id": "3",
-                "position": "Software Developer",
-                "company": "XYZ Corp.",
-                "startDate": "2017",
-                "endDate": "2019",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor."
-            }
-        ],
-        "projects": [
-            {
-                "_id": "1",
-                "title": "Ecommerce Website",
-                "organization": "Tech Corp.",
-                "startDate": "2020",
-                "endDate": "2021",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor."
-            },
-            {
-                "_id": "2",
-                "title": "Content Management System",
-                "organization": "XYZ Corp.",
-                "startDate": "2018",
-                "endDate": "2019",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor."
-            }
-        ],
-        "communityInvolvement": [
-            {
-                "_id": "1",
-                "title": "Volunteer",
-                "organization": "Red Cross",
-                "startDate": "2019",
-                "endDate": "present",
-                "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor."
-            }
-        ],
-        "interests": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis. Donec in tempor turpis. Sed ultrices, elit sit amet ultricies tempor, purus leo mollis risus, nec tempor ipsum nulla ut magna. Pellentesque sed lacinia dolor.",
-        "awardsAndCertifications": [
-            {
-                "_id": "1",
-                "title": "AWS Certified Solutions Architect - Associate",
-                "organization": "Amazon Web Services",
-                "date": "2021"
-            },
-            {
-                "_id": "2",
-                "title": "React Nanodegree",
-                "organization": "Udacity",
-                "date": "2020"
-            },
-            {
-                "_id": "3",
-                "title": "Certified Scrum Master",
-                "organization": "Scrum Alliance",
-                "date": "2018"
-            }
-        ],
-        "creationDate": "2022-02-01"
-    }
-]
+{
+    "userId": 1,
+    "email": "john.doe@example.com",
+    "firstName": "John",
+    "lastName": "Doe",
+    "age": 30,
+    "userType": "Full Stack Developer",
+    "biography": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis.",
+    "companyName": "Acme Inc.",
+    "education": [
+        {
+            "degree": "Bachelor of Science",
+            "fieldOfStudy": "Computer Science",
+            "school": "University of XYZ",
+            "startDate": "2015",
+            "endDate": "2019"
+        },
+        {
+            "degree": "Master of Science",
+            "fieldOfStudy": "Computer Science",
+            "school": "University of ABC",
+            "startDate": "2019",
+            "endDate": "2021"
+        }
+    ],
+    "workExperience": [
+        {
+            "position": "Software Engineer",
+            "company": "Acme Inc.",
+            "startDate": "2021",
+            "endDate": "present",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis."
+        },
+        {
+            "position": "Frontend Developer",
+            "company": "Tech Corp.",
+            "startDate": "2019",
+            "endDate": "2021",
+            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis."
+        }
+    ],
+    "jobOffers": [],
+    "creationDate": "2022-02-01"
+}
