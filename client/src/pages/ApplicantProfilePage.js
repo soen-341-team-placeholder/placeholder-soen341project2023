@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { useEffect } from 'react';
-import data from './tempData.json';
+import data from '../tempData.json';
 
 
-export default function ApplicantProfile(props) {
+export default function ApplicantProfilePage(props) {
   const { userID } = props.match.params;
   const [user, setUser] = useState(null);
 

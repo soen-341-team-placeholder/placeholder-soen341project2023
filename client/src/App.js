@@ -1,7 +1,8 @@
 import React from 'react';
 import Navbar from './components/Navbar';
 
-import CandidateProfilePage from "./pages/CandidateProfilePage"
+import ApplicantProfilePage from "./pages/ApplicantProfilePage"
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
       <Router>
         <Switch>
           <Routes>
-          <Route path="/applicant/profile/:userID" component={ApplicantProfile} />
+          <Route path="/applicant/profile/:userID" component={ApplicantProfilePage} />
         </Routes>
         </Switch>
       </Router>
