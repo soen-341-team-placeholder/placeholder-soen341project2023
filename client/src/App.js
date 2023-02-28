@@ -19,7 +19,6 @@ function App() {
         <p>hello world</p>
          <div className="appRoutes">
        <Router>
-        <Switch>
           <Route exact path="/" render={() => (
             <div className="max-w-4xl mx-auto px-4 py-8">
               <h1 className="text-4xl font-bold mb-4">Welcome to my React app</h1>
@@ -28,7 +27,6 @@ function App() {
             </div>
           )} />
           <Route path="profile/:userID" component={ApplicantProfilePage} />
-        </Switch>
       </Router>
     </div>
       </div>
