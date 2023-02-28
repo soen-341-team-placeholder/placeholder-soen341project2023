@@ -22,8 +22,8 @@ export default function App() {
             </div>
           </div>
         <Routes>
-          <Route exact path="/" component ={HomePage}/>
-          <Route path="/profile/:userID" component={ApplicantProfilePage} />
+        <Route exact path="/" component ={HomePage}/>
+          <Route path="/profile/:userID" element={<ApplicantProfilePage />} />
         </Routes>
 
 
