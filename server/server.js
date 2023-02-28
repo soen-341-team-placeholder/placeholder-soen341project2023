@@ -7,14 +7,17 @@ const mongoDB = 'mongodb+srv://' + process.env.MONGO_USERNAME + ':' + process.en
   + '?retryWrites=true&w=majority';
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.set('strictQuery', true);
 
 // Routers
 const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
+const tokenRouter = require('./routes/token');
 
 app.use(express.json());
 app.use('/users', usersRouter);
 app.use('/login', loginRouter);
+app.use('/token', tokenRouter);
 
 // Define app port
 app.listen(process.env.PORT, () => console.log('listening on port ' + process.env.PORT));
