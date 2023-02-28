@@ -1,36 +1,45 @@
-import { useRef } from "react";
-import { FaBars, FaDownload, FaTimes } from "react-icons/fa"; // import font awesome icons
-import "../styles/Navbar.css";
-import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
+import { useState } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
+import { NavLink } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
 
 export default function Navbar() {
-  const navRef = useRef(); // this variable will refer to the nav tag
+  const [isOpen, setIsOpen] = useState(false);
 
-  /* each time this function is called, we will add/remove
-    the class name from the nav tag */
-  const showNavbar = () => {
-    navRef.current.classList.toggle("responsive_nav");
+  const toggleNavbar = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
     <header>
       <h3>LOGO</h3>
       <SearchBar />
-      <nav ref={navRef}>
-        <Link to="/">Home</Link>
-        <Link to="/jobs">Jobs</Link>
-        <Link to="/inbox">Inbox</Link>
-        <Link to="/profile/:userID">Profile</Link>
-        <Link to="/about">About</Link>
-        {/* button for full screen */}
-        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
+      <nav className={isOpen ? "responsive_nav" : ""}>
+        <NavLink exact to="/" activeClassName="active" onClick={toggleNavbar}>
+          Home
+        </NavLink>
+        <NavLink to="/jobs" activeClassName="active" onClick={toggleNavbar}>
+          Jobs
+        </NavLink>
+        <NavLink to="/inbox" activeClassName="active" onClick={toggleNavbar}>
+          Inbox
+        </NavLink>
+        <NavLink
+          to="/profile/:userID"
+          activeClassName="active"
+          onClick={toggleNavbar}
+        >
+          Profile
+        </NavLink>
+        <NavLink to="/about" activeClassName="active" onClick={toggleNavbar}>
+          About
+        </NavLink>
+        <button className="nav-btn nav-close-btn" onClick={toggleNavbar}>
           <FaTimes />
         </button>
       </nav>
-      {/* button for smaller screen */}
-      <button className="nav-btn" onClick={showNavbar}>
+      <button className="nav-btn" onClick={toggleNavbar}>
         <FaBars />
       </button>
     </header>
