@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, 
-  Route, Link ,
-Routes} from 'react-router-dom';
+  Route, Link ,Routes} from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ApplicantProfilePage from './pages/ApplicantProfilePage';
 
@@ -15,20 +14,16 @@ export default function App()  {
         <Navbar />
           </header>
           <main>
-            <div className="center-contents">
-              <div className="disclaimer">
-                <div className="center-contents">
+            <div className="center-contents">    
                   <span>
                     <Link to="/about" className="not-real-site-txt">
                       This is a span
                     </Link>{" "}
                   </span>
-                </div>
-              </div>
             </div>
 
                 <Routes>
-          <Route exact path="/" render={() => (
+          <Route path="/" render={() => (
             <div className="max-w-4xl mx-auto px-4 py-8">
               <h1 className="text-4xl font-bold mb-4">Welcome to my React app</h1>
               <p className="mb-4">This is the homepage.</p>

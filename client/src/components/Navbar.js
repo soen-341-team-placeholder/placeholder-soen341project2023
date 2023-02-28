@@ -1,7 +1,10 @@
 import { useRef } from 'react';
 import { FaBars, FaDownload, FaTimes } from 'react-icons/fa'; // import font awesome icons
 import '../styles/Navbar.css';
-import SearchBar from './SearchBar';
+import { BrowserRouter as Router, 
+  Route, Link ,Routes} from 'react-router-dom';
+
+ import SearchBar from './SearchBar';
 
 function Navbar() {
     const navRef = useRef(); // this variable will refer to the nav tag
@@ -17,10 +20,10 @@ function Navbar() {
             <h3>LOGO</h3>
             <SearchBar />
             <nav ref={navRef}>
-                <a href="/#">Home</a>
-                <a href="/#">Jobs</a>
-                <a href="/#">Inbox</a>
-                <a href="/#">Profile</a>
+                <Link to ="/">Home</Link>
+                <Link to ="/">Jobs</Link>
+                <Link to = "/">Inbox</Link>
+                <Link to ="/profile/:userID">Profile</Link>
                 {/* button for full screen */}
                 <button className='nav-btn nav-close-btn' onClick={showNavbar}>
                     <FaTimes />
