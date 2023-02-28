@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 
 import ApplicantProfilePage from "./pages/ApplicantProfilePage";
 import HomePage from "./pages/HomePage";
+import AboutPage from "./pages/AboutPage";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<AboutPage />} />
           <Route path="/profile/:userID" element={<ApplicantProfilePage />} />
         </Routes>
       </main>
