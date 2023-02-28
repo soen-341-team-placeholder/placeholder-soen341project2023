@@ -7,26 +7,33 @@ const router = express.Router();
 router.get('/', authenticateToken, async (req, res) => {
     const email = req.query.email;
 
+    // Get requester user type and email
+    const userEmail = req.requester.email;
+    const userType = req.requester.userType;
+    
     // User has provided an email, thus search for a specific user with that email
     if (email != null) {
-        User.findOne({ email: email }, (err, user) => {
-            if (err) {
-                res.status(400).send('message:' + err);
-                console.log(err);
-            } else if (user) {
-                user.password = undefined;
-                res.status(200).json(user);
-            } else {
-                res.status(404).send('message: User not found');
-            }
-        });
+
+        if (userType === 'admin' || userEmail === email) {
+            User.findOne({ email: email }, (err, user) => {
+                if (err) {
+                    res.status(400).send('message:' + err);
+                    console.log(err);
+                } else if (user) {
+                    user.password = undefined;
+                    res.status(200).json(user);
+                } else {
+                    res.status(404).send('message: User not found');
+                }
+            });
+        }
+        else {
+            res.status(403).send('message: Forbidden');
+        }
         return;
     }
 
     // User has not provided an email, thus return all users
-
-    // Get requester user type
-    const userType = (await User.findOne({ email: req.email })).userType;
     if (userType != 'admin') {
         res.status(403).send('message: Forbidden');
         return;
