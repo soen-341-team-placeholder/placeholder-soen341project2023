@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FormInput from '../components/FormInput';
-import '../styles/login.css';
+import Cookies from 'universal-cookie'
+import { useNavigate } from 'react-router-dom';
+import FormInput from '../components/FormInput'
+
+const cookies = new Cookies();
 
 function LoginPage() {
+
+    const navigate = useNavigate();
 
     const [values, setValues] = useState({
         email: "",
@@ -42,12 +47,34 @@ function LoginPage() {
     };
 
     const submitForm = async () => {
-        await axios.get('http://localhost:4000/login',
+        await axios.post('http://localhost:4000/login',
             {
                 email: values.email.toLowerCase(),
                 password: values.password
-            })
+            }).then((res) => {
+                cookies.set('accessToken', res.data.accessToken, { path: '/' });
+                cookies.set('refreshToken', res.data.refreshToken, { path: '/' });
+                sendToProfile();
+            }
+            ).catch((err) => {
+                console.log(err);
+            });
     };
+
+    const sendToProfile = async () => {
+        await axios.get('http://localhost:4000/users?email=' + values.email.toLowerCase(),
+            {
+                headers:
+                {
+                    authorization: `Bearer ${cookies.get('accessToken')}`
+                }
+            })
+            .then((res) => {
+                navigate('/profile/' + res.data._id);
+            }).catch((err) => {
+                console.log(err);
+            });
+    }
 
     return (
         <div className='RegisterPage'>
