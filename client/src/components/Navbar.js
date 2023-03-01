@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa"; // import font awesome icons
 import "../styles/styles.css";
+import { Link } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
 
@@ -18,11 +19,21 @@ export default function Navbar() {
       <h3>LOGO</h3>
       <SearchBar />
       <nav ref={navRef}>
-          <Link to="/" onClick={showNavbar}>Home</Link>
-          <Link to="/jobs" onClick={showNavbar}>Jobs</Link>
-          <Link to="/inbox" onClick={showNavbar}>Inbox</Link>
-          <Link to="/profile/:userID" onClick={showNavbar}>Profile</Link>
-          <Link to="/about" onClick={showNavbar}>About</Link>
+        <Link to="/" onClick={showNavbar}>
+          Home
+        </Link>
+        <Link to="/jobs" onClick={showNavbar}>
+          Jobs
+        </Link>
+        <Link to="/inbox" onClick={showNavbar}>
+          Inbox
+        </Link>
+        <Link to="/profile/:userID" onClick={showNavbar}>
+          Profile
+        </Link>
+        <Link to="/about" onClick={showNavbar}>
+          About
+        </Link>
         {/* button for full screen */}
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
