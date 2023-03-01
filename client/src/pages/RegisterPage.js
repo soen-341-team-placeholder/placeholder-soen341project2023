@@ -92,20 +92,21 @@ function RegisterPage() {
   ]
 
   const handleSubmit = (e) => {
+    console.log(values);
     e.preventDefault();
-    submitForm();
+    submit();
   };
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const submitForm = async () => {
+  const submit = async () => {
     let valuesToSubmit = values;
     delete valuesToSubmit.confirmPassword;
     valuesToSubmit.userType = values.userType.toLowerCase();
+
     axios.post('http://localhost:4000/users', valuesToSubmit).then((res) => {
-      console.log(res);
       navigate('/login');
     }).catch((err) => {
       console.log(err);
@@ -115,7 +116,7 @@ function RegisterPage() {
   return (
     <div className='RegisterPage'>
 
-      <form>
+      <form >
         <h1>Sign Up</h1>
         <label>Account Type</label>
         <div className="customSelect">
