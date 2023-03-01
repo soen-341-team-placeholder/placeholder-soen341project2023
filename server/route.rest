@@ -1,0 +1,53 @@
+GET http://localhost:4000/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2NDUxNTIsImV4cCI6MTY3NzY0Njk1Mn0.CRdPSO72KCVwqXR7DGB2HrsMLKPPM_gWPHN5TTJ_wBo
+
+### admin: 63fe3da0bfd22ab2dd64e32a
+### 63fe157191a7238e2269f43c
+###63fe36d2bfd22ab2dd64e323
+POST http://localhost:4000/users
+Content-Type:application/json
+
+{
+    "email": "wade3outlook.com",
+    "password": "3333",
+    "firstName": "wadeh",
+    "lastName": "hama",
+    "age": 22,
+    "userType": "admin"
+}
+
+###
+GET http://localhost:4000/users/63fe157191a7238e2269f43c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2NDQ2NDQsImV4cCI6MTY3NzY0NjQ0NH0.xGbKM_swLbyRlCLEQGnVs4aRzke8-LzdW-VpcgfCA1k
+
+### yeah i did
+
+### "acessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2MDYzNDUsImV4cCI6MTY3NzYwNjM3NX0._ikk9Z0mDnm1x4UBXRdFNjh9MR17bwe5YI2n8BK1uSk",
+### "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2MDYzNDV9.iOhiX85T-QrdaUHLL1jaqjR1JczypD8iQcdqzesbLAk"
+### admin: 63fe3da0bfd22ab2dd64e32a 
+POST http://localhost:4000/login
+Content-Type:application/json
+
+{
+    "email": "wade3outlook.com",
+    "password":"3333"
+}
+
+###
+PATCH http://localhost:4000/users/63fe157191a7238e2269f43c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2NDUxNTIsImV4cCI6MTY3NzY0Njk1Mn0.CRdPSO72KCVwqXR7DGB2HrsMLKPPM_gWPHN5TTJ_wBo
+Content-Type:application/json
+
+{
+    "firstName": "walidddd",
+    "lastName": "alshhhh",
+    "age": 23,
+    "userType": "student"
+}
+
+###
+
+DELETE http://localhost:4000/users/63fe153991a7238e2269f438
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2NDUxNTIsImV4cCI6MTY3NzY0Njk1Mn0.CRdPSO72KCVwqXR7DGB2HrsMLKPPM_gWPHN5TTJ_wBo
+
+

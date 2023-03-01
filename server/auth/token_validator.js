@@ -11,7 +11,6 @@ function authenticateToken(req, res, next) {
         req.email = jwt.decode(token).email;
         next();
     });
-
 }
 
 module.exports = authenticateToken;
