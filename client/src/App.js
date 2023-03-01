@@ -9,13 +9,11 @@ import RegisterPage from "./pages/RegisterPage";
 
 export default function App() {
   return (
+    <>
     <Router>
-      <header className="main-div">
           <React.Fragment>
             <Navbar />
-          </React.Fragment>
-      </header>
-
+         </React.Fragment>
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -25,5 +23,6 @@ export default function App() {
         </Routes>
       </main>
     </Router>
+    </>
   );
 }
