@@ -1,69 +1,117 @@
 import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import "../styles/styles.css";
+
 import data from "./tempData.json";
 
-export default function ApplicantProfilePage(props) {
-  const { userID } = props.match.params;
+
+const CandidateCard = ({ children }) => (
+  <div className="candidate-card">
+    {children}
+  </div>
+);
+
+const CandidateCardHeader = ({ children }) => (
+  <div className="candidate-card-header">{children}</div>
+);
+
+const CandidateCardBody = ({ children }) => <div className="candidate-card-body">{children}</div>;
+
+export default function ApplicantProfilePage() {
+  const { userId } = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Uncomment this code to use axios to fetch user data from an API
-    // axios.get(`/api/users/${userID}`)
-    //   .then(response => {
-    //     setUser(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-
-    // Comment out the code below if you're using axios
-    const userData = data.find((user) => user.userID === userID);
+    const userData = data.find((user) => user.userId === parseInt(userId));
     setUser(userData);
-  }, [userID]);
+  }, [userId]);
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+
+    // Add user info to the PDF
+    doc.text(`Name: ${user.firstName} ${user.lastName}`, 10, 10);
+    doc.text(`Email: ${user.email}`, 10, 20);
+    doc.text(`Biography: ${user.biography}`, 10, 30);
+
+    // Add work experience to the PDF
+    const workExpData = user.workExperience.map((exp) => [exp.position, exp.company, `${exp.startDate} - ${exp.endDate}`]);
+    doc.autoTable({
+      startY: 50,
+      head: [["Position", "Company", "Dates"]],
+      body: workExpData,
+    });
+
+    // Add education to the PDF
+    const educationData = user.education.map((edu) => [edu.degree, edu.school, `${edu.startDate} - ${edu.endDate}`]);
+    doc.autoTable({
+      startY: doc.autoTable.previous.finalY + 10,
+      head: [["Degree", "School", "Dates"]],
+      body: educationData,
+    });
+
+    // Save the PDF
+    doc.save(`${user.firstName} ${user.lastName} CV.pdf`);
+  };
 
   if (!user) {
     return <div>Loading...</div>;
   }
+  return (
+    <div className="applicant_profile_container">
+      <div id="pdf-download">
+        <CandidateCard>
+          <img
+            src="/placeholder_profile_picture.png"
+            alt="Profile Picture"
+            id="profile-picture"
+          />
+          <CandidateCardHeader>
+            <h1>{`${user.firstName} ${user.lastName}`}</h1>
+            <p>{user.email}</p>
+          </CandidateCardHeader>
+          <CandidateCardBody>
+            <p>{user.biography}</p>
+            <button onClick={downloadPDF}>Download CV</button>
+          </CandidateCardBody>
+        </CandidateCard>
 
-  return(
+        <CandidateCard>
+          <CandidateCardHeader>
+            <h2>Work Experience</h2>
+          </CandidateCardHeader>
+          <CandidateCardBody>
+            {user.workExperience.map((exp) => (
+              <div key={exp.position}>
+                <h3>
+                  {exp.position} at {exp.company}
+                </h3>
+                <p>{`${exp.startDate} - ${exp.endDate}`}</p>
+                <br></br>
+              </div>
+            ))}
+          </CandidateCardBody>
+        </CandidateCard>
 
-   <div className="max-w-4xl mx-auto px-4 py-8">
-      <header className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">{user.firstName} {user.lastName}</h1>
-        <div className="text-gray-600">{user.userType}</div>
-      </header>
-      <main>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">About Me</h2>
-          <p className="mb-4">
-            {user.biography}
-          </p>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Education</h2>
-          <ul>
-            {user.education.map(item => (
-              <li className="mb-4" key={item._id}>
-                <div className="font-bold">{item.degree} in {item.fieldOfStudy}</div>
-                <div className="text-gray-600">{item.school} ({item.startDate}-{item.endDate})</div>
-              </li>
+        <CandidateCard>
+          <CandidateCardHeader>
+            <h2>Education</h2>
+          </CandidateCardHeader>
+          <CandidateCardBody>
+            {user.education.map((edu) => (
+              <div key={edu.degree}>
+                <h3>
+                  {edu.degree} at {edu.school}
+                </h3>
+                <p>{`${edu.startDate} - ${edu.endDate}`}</p>
+                <br></br>
+              </div>
             ))}
-          </ul>
-        </section>
-        <section className="mb-8">
-          <h2 className="text-2xl font-bold mb-4">Work Experience</h2>
-          <ul>
-            {user.workExperience.map(item => (
-              <li className="mb-4" key={item._id}>
-                <div className="font-bold">{item.position}</div>
-                <div className="text-gray-600">{item.companyName} ({item.startDate}-{item.endDate})</div>
-                <ul className="list-disc ml-8">
-                  <li className="mb-2">{item.jobDescription}</li>
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </section>
-      </main>
+          </CandidateCardBody>
+        </CandidateCard>
+      </div>
     </div>
   );
 }
