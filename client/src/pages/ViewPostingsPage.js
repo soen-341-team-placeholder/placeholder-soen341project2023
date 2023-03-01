@@ -34,6 +34,7 @@ export default function ViewPostings() {
                         title={posting.title}
                         description={posting.description}
                         location={posting.location}
+                        salary={posting.salary}
                     />
                 ))}
             </div>
