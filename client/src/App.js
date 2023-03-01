@@ -8,6 +8,7 @@ import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import ViewPostingsPage from "./pages/ViewPostingsPage";
 
 import "./styles/styles.css";
 
@@ -33,11 +34,8 @@ export default function App() {
                 element={<ApplicantProfilePage />}
               />
               <Route path="/login" element={<LoginPage />} />
-              <Route
-                path="/profile/:userID"
-                element={<ApplicantProfilePage />}
-              />
               <Route path="/registration" element={<RegisterPage />} />
+              <Route path="/postings" element={<ViewPostingsPage />} />
             </Routes>
           </main>
         </React.Fragment>
