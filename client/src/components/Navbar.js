@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { FaBars, FaDownload, FaTimes } from "react-icons/fa"; // import font awesome icons
+import { useRef, useState } from "react";
+import { FaBars, FaDownload, FaMoon, FaSun, FaTimes } from "react-icons/fa"; // import font awesome icons
 import "../styles/styles.css";
 import { BrowserRouter as Router, Route, Link, Routes } from "react-router-dom";
 
@@ -7,6 +7,7 @@ import SearchBar from "./SearchBar";
 
 export default function Navbar() {
   const navRef = useRef(); // this variable will refer to the nav tag
+  const [darkMode, setDarkMode] = useState(false); // state variable for dark mode
 
   /* each time this function is called, we will add/remove
     the class name from the nav tag */
@@ -14,8 +15,12 @@ export default function Navbar() {
     navRef.current.classList.toggle("responsive_nav");
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => !prevMode);
+  };
+
   return (
-    <header>
+    <header className={darkMode ? "dark-mode" : ""}>
       <h3>LOGO</h3>
       <SearchBar />
       <nav ref={navRef}>
@@ -38,6 +43,12 @@ export default function Navbar() {
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
         </button>
+
+        {/* button for toggling dark mode */}
+<button className="darkmode-toggle-btn" onClick={toggleDarkMode}>
+  {darkMode ? <FaMoon /> : <FaSun/>}
+</button>
+
       </nav>
       {/* button for smaller screen */}
       <button className="nav-btn" onClick={showNavbar}>
