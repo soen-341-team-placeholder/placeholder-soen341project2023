@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import ApplicantProfilePage from "./pages/ApplicantProfilePage";
@@ -10,14 +10,11 @@ import RegisterPage from "./pages/RegisterPage";
 export default function App() {
   return (
     <Router>
-      <div className="main-div">
-        <p> hello world</p>
-        <div>
+      <header className="main-div">
           <React.Fragment>
             <Navbar />
           </React.Fragment>
-        </div>
-      </div>
+      </header>
 
       <main>
         <Routes>
