@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import FormInput from '../components/FormInput';
 import '../styles/Register.css';
@@ -121,7 +121,7 @@ function RegisterPage() {
         <div className="customSelect">
           <select className="userSelectType" name="userType" onChange={handleSelect} required={true}>
             <option value="">Select</option>
-            <option value="Student">Student</option>
+            <option value="Candidate">Candidate</option>
             <option value="Employer">Employer</option>
           </select>
         </div>
@@ -131,7 +131,7 @@ function RegisterPage() {
           ))
         }
         <button onClick={handleSubmit}>Register</button>
-        <p>Already registered? <a href="./login" ><u>Login</u></a></p>
+        <p>Already registered? <Link to ="./login" ><u>Login</u></Link></p>
       </form>
 
 

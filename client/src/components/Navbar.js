@@ -28,7 +28,7 @@ export default function Navbar() {
         <Link to="/inbox" onClick={showNavbar}>
           Inbox
         </Link>
-        <Link to="/profile/:userID" onClick={showNavbar}>
+        <Link to="/profile/:userId" onClick={showNavbar}>
           Profile
         </Link>
         <Link to="/about" onClick={showNavbar}>
