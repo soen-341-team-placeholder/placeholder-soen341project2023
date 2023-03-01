@@ -131,7 +131,7 @@ function RegisterPage() {
             <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
           ))
         }
-        <button onClick={handleSubmit}>Register</button>
+        <button onClick={handleSubmit} className='register-btn'>Register</button>
         <p>Already registered? <a href="./login" ><u>Login</u></a></p>
       </form>
 
