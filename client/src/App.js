@@ -7,18 +7,15 @@ import RegisterPage from "./pages/RegisterPage";
 
 export default function App() {
   return (
-    <div className='main-div'>
-     <p> hello world</p>
-      <div>
-        <React.Fragment>
-          <Navbar />
-        </React.Fragment>
-      </div>
-    </div>
-  );
-}
-
     <Router>
+      <div className="main-div">
+        <p> hello world</p>
+        <div>
+          <React.Fragment>
+            <Navbar />
+          </React.Fragment>
+        </div>
+      </div>
 
       <main>
         <Routes>
@@ -28,9 +25,6 @@ export default function App() {
           <Route path="/registration" element={<RegisterPage />} />
         </Routes>
       </main>
-
-  
     </Router>
   );
-
 }
