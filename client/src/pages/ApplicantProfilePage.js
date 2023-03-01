@@ -16,7 +16,7 @@ export default function ApplicantProfilePage(props) {
     //   });
 
     // Comment out the code below if you're using axios
-    const userData = data.find((user) => user.userId === userId);
+    const userData = data.find((user) => user.userId === parseInt(userId));
     setUser(userData);
   }, [userId]);
 
@@ -24,5 +24,10 @@ export default function ApplicantProfilePage(props) {
     return <div>Loading...</div>;
   }
 
-  return <p>hello world</p>;
+  return (
+    <div>
+      <h1>applicant profile</h1>
+      <p>hello world</p>);
+    </div>
+  );
 }
