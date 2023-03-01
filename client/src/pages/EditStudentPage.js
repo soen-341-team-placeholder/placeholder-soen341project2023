@@ -1,37 +1,24 @@
 import React from 'react';
-import Navbar from '../components/student/Navbar';
 import Student from '../components/student/Student';
-import Home from '../components/student/Home';
-import Jobs from '../components/student/Jobs';
-import Inbox from '../components/student/Inbox';
+import { useParams } from 'react-router-dom';
 
 function EditStudentPage() {
 
-  let component
-  switch (window.location.pathname) {
-    case"/Profile":
-      component = <Student />
-      break
-    case"/Home":
-      component = <Home />
-      break
-    case"/Jobs":
-      component = <Jobs />
-      break
-    case"/Inbox":
-      component = <Inbox />
-      break
-    default:
-      component = <Student />
+  const userId = useParams().userId;
+  const user = {
+    firstName: "Youssef",
+    lastName: "Alsheghri",
+    email: "youssef.alsheghri@gmail.com",
+    biography: "Software Engineering Major at Concordia University",
+    location: "Montreal, Canada"
   }
 
   return (
     <div>
       <React.Fragment>
-        <Navbar />
-        {component}
+        <Student user={user} />
       </React.Fragment>
-  </div>
+    </div>
   );
 }
 

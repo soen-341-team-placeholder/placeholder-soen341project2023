@@ -21,7 +21,7 @@ export default function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/profile/:userID" element={<ApplicantProfilePage />} />
-            <Route path="/profile/edit/:userId" element={<EditStudentPage />} />
+            <Route path="/student/edit/:userId" element={<EditStudentPage />} />
             <Route path="/registration" element={<RegisterPage />} />
           </Routes>
         </main>

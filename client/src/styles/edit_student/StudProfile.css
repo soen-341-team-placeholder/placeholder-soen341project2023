@@ -3,9 +3,9 @@
     grid-template: 1fr / 1fr;
     place-items: center;
     text-align: center;
-  }
+}
 
-.container > * {
+.container>* {
     grid-column: 1 / 1;
     grid-row: 1 / 1;
 }
@@ -13,6 +13,7 @@
 .outer .below {
     z-index: 1;
 }
+
 .outer .top {
     z-index: 2;
 }
