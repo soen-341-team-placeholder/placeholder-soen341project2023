@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { FaBars, FaTimes } from "react-icons/fa"; // import font awesome icons
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+
 import "../styles/styles.css";
 
 import SearchBar from "./SearchBar";
