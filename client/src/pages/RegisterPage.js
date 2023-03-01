@@ -92,7 +92,6 @@ function RegisterPage() {
   ]
 
   const handleSubmit = (e) => {
-    console.log(values);
     e.preventDefault();
     submit();
   };
@@ -105,7 +104,6 @@ function RegisterPage() {
     let valuesToSubmit = values;
     delete valuesToSubmit.confirmPassword;
     valuesToSubmit.userType = values.userType.toLowerCase();
-
     axios.post('http://localhost:4000/users', valuesToSubmit).then((res) => {
       navigate('/login');
     }).catch((err) => {
