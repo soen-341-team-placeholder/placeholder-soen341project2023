@@ -106,7 +106,7 @@ function RegisterPage() {
     delete valuesToSubmit.confirmPassword;
     valuesToSubmit.userType = values.userType.toLowerCase();
 
-    axios.post('http://localhost:4000/users', valuesToSubmit).then((res) => {
+    (await axios.post('http://localhost:4000/users', valuesToSubmit)).then((res) => {
       navigate('/login');
     }).catch((err) => {
       console.log(err);
@@ -116,7 +116,7 @@ function RegisterPage() {
   return (
     <div className='RegisterPage'>
 
-      <form >
+      <form>
         <h1>Sign Up</h1>
         <label>Account Type</label>
         <div className="customSelect">
