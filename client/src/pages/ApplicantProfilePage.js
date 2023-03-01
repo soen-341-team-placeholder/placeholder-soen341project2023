@@ -24,5 +24,5 @@ export default function ApplicantProfilePage(props) {
     return <div>Loading...</div>;
   }
 
-  return <div>{JSON.stringify(user)}</div>;
+  return <p>hello world</p>;
 }
