@@ -1,23 +1,20 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-
 /* import font style from google fonts */
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400;700&display=swap');
 
-* {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    /* font style from google fonts */
-    font-family: 'Titillium Web', sans-serif;
-}
-
 :root {
+    --background-color: white;
+    --textColor: black;
     --mainColor: #FF5555;
     --mainColorLight: #eb7c7c;
     --secondaryColor: rgb(255, 182, 182);
+}
+
+.dark-mode {
+    --background-color: rgb(26, 29, 30);
     --textColor: white;
+    --mainColor: rgb(167, 0, 0);
+    --mainColorLight: #5c5f62;
+    --secondaryColor: rgb(255, 182, 182);
 }
 
 header {
@@ -30,65 +27,84 @@ header {
     color: var(--textColor);
 }
 
-nav a {
+/* ---------navbar -------------------------*/
+
+nav {
+    display: flex;
+    align-items: center;
+    color: white;
+
+  }
+  
+  nav a {
     margin: 0 2rem;
-    color: var(--textColor);
     text-decoration: none;
-}
+    color: white;
 
-nav a:hover {
+  }
+  
+  nav a:hover {
     color: var(--secondaryColor);
-}
-
-header .nav-btn {
+  }
+  
+  nav .nav-btn {
     padding: 5px;
     cursor: pointer;
     background: transparent;
     border: none;
-    outLine: none;
-    color: var(--textColor);
+    outline: none;
     visibility: hidden;
     opacity: 0;
     font-size: 1.8rem;
-}
-
-/* when screen is not full-screen */
-@media only screen and (max-width: 1024px) {
-    header .nav-btn {
-        visibility: visible;
-        opacity: 1;
+  }
+  
+  /* toggle button */
+  nav .darkmode-toggle-btn {
+    padding: 5px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.8rem;
+    margin-left: auto;
+  }
+  
+  /* when screen is not full-screen */
+  @media only screen and (max-width: 1024px) {
+    nav .nav-btn {
+      visibility: visible;
+      opacity: 1;
     }
-
-    header nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 1.5rem;
-        background-color: var(--mainColor);
-        transition: 1s;
-        transform: translateY(-100vh);
+  
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      background-color: var(--mainColor);
+      transition: 1s;
+      transform: translateY(-100vh);
     }
-
-    header .responsive_nav {
-        transform: none;
+  
+    nav.responsive_nav {
+      transform: none;
     }
-
+  
     nav .nav-close-btn {
-        position: absolute;
-        top: 2rem;
-        right: 2rem;
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
     }
+  }
+  
+  /*------------- search bar ---------------*/
 
-    nav a {
-        font-size: 1.5rem;
-    }
-}
+
 .visually-hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -97,4 +113,49 @@ header .nav-btn {
     position: absolute;
     white-space: nowrap;
     width: 1px;
+
+
 }
+/*------------- applicant info cards ---------------*/
+.applicant_profile_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color);
+    padding: 4rem;
+  }
+  
+  .candidate-card {
+    border: 4px solid var(--mainColor);
+    max-width: 1000px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+  }
+  
+  .candidate-card-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--textColor);
+  }
+  
+  .candidate-card-body {
+    margin-top: 10px;
+    color: var(--textColor);
+  }
+  
+  #profile-picture {
+    border: 2px solid black;
+    border-radius: 50%;
+    max-width: 111px;
+  }
+  
+  @media only screen and (max-width: 768px) {
+    .applicant_profile_container {
+      padding: 2rem;
+    }
+  }

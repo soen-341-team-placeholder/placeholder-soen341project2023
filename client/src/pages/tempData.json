@@ -1,10 +1,10 @@
-{
+[{
     "userId": 1,
     "email": "john.doe@example.com",
     "firstName": "John",
     "lastName": "Doe",
     "age": 30,
-    "userType": "Full Stack Developer",
+    "userType": "Candidate",
     "biography": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam in tincidunt elit, eget porttitor mi. Proin a nibh nec purus volutpat iaculis.",
     "companyName": "Acme Inc.",
     "education": [
@@ -41,4 +41,4 @@
     ],
     "jobOffers": [],
     "creationDate": "2022-02-01"
-}
+}]

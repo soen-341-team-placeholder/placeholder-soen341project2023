@@ -1,8 +1,8 @@
-const express = require('express');
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
-const authenticateToken = require('../auth/token_validator');
-const router = express.Router();
+const express = require('express')
+const bcrypt = require('bcrypt')
+const User = require('../models/User')
+const authenticateToken = require('../auth/token_validator')
+const router = express.Router()
 
 router.get('/', authenticateToken, async (req, res) => {
     const email = req.query.email;
@@ -67,4 +67,79 @@ router.post('/', async (req, res) => {
     });
 });
 
-module.exports = router;
+// get user by id
+router.get('/:id', getUser, authenticateToken, async (req, res) => {
+    try {
+        const updatedUser = await res.user.save()
+        res.json(updatedUser)
+    } catch (error) {
+        res.status(400).send("message" + err.message)
+    }
+})
+
+router.patch('/', async (req, res) => {
+    res.sendStatus(200)
+})
+
+//update user by id
+router.patch('/:id', authenticateToken, getUser, async (req, res) => {
+    const id = req.params.id;
+    const { firstName, lastName, age, userType } = req.body;
+
+    try{
+    const id = req.params.id;
+    const { firstName, lastName, age, userType } = req.body;
+  
+    const updatedUser = await User.findOneAndUpdate(
+      { _id: id },
+      { firstName, lastName,age, userType },
+      { new: true } // return the updated document
+    )
+  
+    if (!updatedUser) {
+      return res.status(404).send(`User with ID ${id} not found`);
+    }
+  
+    res.send(`User with ID ${id} has been updated`);
+    } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error')
+    }
+})
+
+router.delete('/:id', authenticateToken, getUser, async (req, res) => {
+
+    const id = req.params.id;
+    try {
+        // Find and delete the user with the specified ID from the database
+        const deletedUser = await User.findOneAndDelete({ _id: id });
+
+        if (!deletedUser) {
+            return res.status(404).send(`User with ID ${id} not found`);
+        }
+
+        res.send(`User with ID ${id} has been deleted`);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error');
+    }
+
+})
+
+//find user by id
+async function getUser(req, res, next) {
+    console.log("get user")
+    let user
+    try {
+        user = await User.findById(req.params.id)
+        if (user == null) {
+            return res.status(404).jason({ message: 'cannot find user' })
+        }
+    } catch (error) {
+        return res.status(500).json({ message: err.message })
+    }
+    res.user = user
+    next()
+}
+
+module.exports = router

@@ -13,7 +13,6 @@ function authenticateToken(req, res, next) {
         req.requester = await User.findOne({ email: req.email });
         next();
     });
-
 }
 
 module.exports = authenticateToken;
