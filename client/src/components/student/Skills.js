@@ -1,7 +1,18 @@
 import '../../styles/edit_student/WorkExp.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 function Skills() {
+    const [showEdDiv, setShowEdDiv] = useState(true);
+
+    const toggleDiv = () => { // toggle between static div and editable div
+        setShowEdDiv(!showEdDiv);
+    };
+
+    const handleSave = (e) => {
+        submit(e);
+        toggleDiv();
+    }
+
     const [formFields, setFormFields] = useState([
         {skill: '', placeObtained: ''}
     ])
@@ -33,57 +44,72 @@ function Skills() {
 
     const editFields = () => {
         let x = document.getElementById('skillDiv');
-        if (x.style.display === 'none') {
-            x.style.display = 'block';
-        } else {
+        if (x.style.display === 'block') {
             x.style.display = 'none';
+        } else {
+            x.style.display = 'block';
         }
     }
 
     return (
         <div className="App">
-            <div className='main'>
-                <table className='table-stud'>
-                    <tr>
-                        <td className='td-stud'><h2>Skills</h2></td>
-                        <td className='td-stud'><button onClick={editFields} className='btn'>Edit</button></td>
-                    </tr>
-                    <tr>
-                        <td className='td-stud'>
-                            <div id='skillDiv'>
-                                <form onSubmit={submit}>
-                                    <button onClick={addFields} className='btn'>Add</button>
-                                    <button onClick={submit} className='btn'>Save</button>
-                                    <br />
-                                    {formFields.map((form, index) =>  {
-                                    return (
-                                        <div key={index}>
-                                            <input
-                                                name='skill'
-                                                placeholder='Skill'
-                                                onChange={event => handleFormChange(event, index)}
-                                                value={form.skill}
-                                                className='input-stud'
-                                            />
-                                            <br />
-                                            <input
-                                                name='placeObtained'
-                                                placeholder='Education or Work Experience?'
-                                                onChange={event => handleFormChange(event, index)}
-                                                value={form.placeObtained}
-                                                className='input-stud'
-                                            />
-                                            <br />
-                                            <button onClick={() => removeFields(index)} className='btn'>Remove</button>
-                                        </div>
-                                    )
-                                    })}
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            {showEdDiv ? (
+                <div className='show-static-work-exp-div'>
+                    <table className='static-stud-prof-table'>
+                        <tr>
+                            <td><h2>Skills</h2> <hr /></td>
+                            <td><button onClick={toggleDiv} className='btn'>Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>React JS</td>
+                            <td>Education</td>
+                        </tr>
+                    </table>
+                 </div>
+            ) : (
+                <div className='show-edit-work-exp-div'>
+                    <table>
+                        <tr>
+                            <td><h2>Skills</h2> <hr /></td>
+                            <td><button onClick={editFields} className='btn'>Edit</button></td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id='skillDiv'>
+                                    <form onSubmit={submit}>
+                                        <button onClick={addFields} className='btn'>Add</button>
+                                        <button onClick={handleSave} className='btn'>Save</button>
+                                        <br />
+                                        {formFields.map((form, index) =>  {
+                                        return (
+                                            <div key={index}>
+                                                <input
+                                                    className='input-edit-stud-profile' 
+                                                    name='skill'
+                                                    placeholder='Skill'
+                                                    onChange={event => handleFormChange(event, index)}
+                                                    value={form.skill}
+                                                />
+                                                <br />
+                                                <input
+                                                    className='input-edit-stud-profile' 
+                                                    name='placeObtained'
+                                                    placeholder='Education or Work Experience?'
+                                                    onChange={event => handleFormChange(event, index)}
+                                                    value={form.placeObtained}
+                                                />
+                                                <br />
+                                                <button onClick={() => removeFields(index)} className='btn'>Remove</button>
+                                            </div>
+                                        )
+                                        })}
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            )}
         </div>
     );
 }
