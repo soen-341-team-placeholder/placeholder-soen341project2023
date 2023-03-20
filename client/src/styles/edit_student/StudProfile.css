@@ -3,9 +3,9 @@
     grid-template: 1fr / 1fr;
     place-items: center;
     text-align: center;
-}
+  }
 
-.container>* {
+.container > * {
     grid-column: 1 / 1;
     grid-row: 1 / 1;
 }
@@ -13,7 +13,6 @@
 .outer .below {
     z-index: 1;
 }
-
 .outer .top {
     z-index: 2;
 }
@@ -37,4 +36,27 @@ img {
     display: inline-block;
     padding: 0.2% 0.5%;
     text-align: center;
+}
+
+/* added css */
+
+/* .struct {
+    position: absolute;
+    display: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: white;
+    height: 70%;
+    margin-top: 10%;
+} */
+.prompt {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    top: 20%;
+    left: 25%;
+    text-align: center;
+    background: white;
 }

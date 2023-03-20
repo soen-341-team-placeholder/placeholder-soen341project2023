@@ -1,7 +1,7 @@
 import React from 'react';
 import WorkExp from './WorkExp';
 import Education from './Education';
-import Skills from './Skills';
+// import Skills from './Skills';
 import StudProfile from './StudProfile';
 
 function Student({ user }) {
