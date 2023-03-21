@@ -20,7 +20,6 @@ function WorkExp() {
 
     const submit = (e) => {
     e.preventDefault(); // prevent the page from refreshing itself when remove button is clicked
-    console.log(formFields);
     }
 
     const handleSave = (e) => {
