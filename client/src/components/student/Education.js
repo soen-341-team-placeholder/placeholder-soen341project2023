@@ -45,9 +45,9 @@ function Education() {
     }
 
     const editFields = () => {
-    let x = document.getElementById('expDiv');
+    let x = document.getElementById('edDiv');
     if (x.style.display === 'block') {
-        x.style.display = 'none';
+        x.style.display = 'block';
     } else {
         x.style.display = 'block';
     }
@@ -59,8 +59,8 @@ function Education() {
                 <div className='show-static-work-exp-div'>
                     <table className='static-stud-prof-table'>
                         <tr>
-                            <td><h2>Education</h2> <hr /></td>
-                            <td><button onClick={toggleDiv} className='btn'>Edit</button></td>
+                            <td className='tdWorkExp'><h2>Education</h2> <hr /></td>
+                            <td className='tdWorkExp'><button onClick={toggleDiv} className='btn'>Edit</button></td>
                         </tr>
                         <tr>
                             <th>Institution</th>
@@ -69,23 +69,23 @@ function Education() {
                             <th>To (mm/yyyy)</th>
                         </tr>
                         <tr>
-                            <td>Concordia University</td>
-                            <td>Bachelors in Software Engineering</td>
-                            <td>01/2022</td>
-                            <td>12/2025</td>
+                            <td className='tdWorkExp'>Concordia University</td>
+                            <td className='tdWorkExp'>Bachelors in Software Engineering</td>
+                            <td className='tdWorkExp'>01/2022</td>
+                            <td className='tdWorkExp'>12/2025</td>
                         </tr>
                     </table>
                 </div>
             ) : (
                 <div className='show-edit-work-exp-div'>
-                    <table>
+                    <table className='static-stud-prof-table'>
                         <tr>
-                            <td><h2>Education</h2> <hr /></td>
-                            <td><button onClick={editFields} className='btn'>Edit</button></td>
+                            <td className='tdWorkExp'><h2>Education</h2> <hr /></td>
+                            <td className='tdWorkExp'><button onClick={editFields} className='btn'>Edit</button></td>
                         </tr>
                         <tr>
-                            <td>
-                                <div id='expDiv'>
+                            <td className='tdWorkExp'>
+                                <div id='edDiv'>
                                     <form onSubmit={submit}>
                                         <button onClick={addFields} className='btn'>Add</button>
                                         <button onClick={handleSave} className='btn'>Save</button>

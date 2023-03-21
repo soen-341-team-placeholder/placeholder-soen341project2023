@@ -57,24 +57,24 @@ function Skills() {
                 <div className='show-static-work-exp-div'>
                     <table className='static-stud-prof-table'>
                         <tr>
-                            <td><h2>Skills</h2> <hr /></td>
-                            <td><button onClick={toggleDiv} className='btn'>Edit</button></td>
+                            <td className='tdWorkExp'><h2>Skills</h2> <hr /></td>
+                            <td className='tdWorkExp'><button onClick={toggleDiv} className='btn'>Edit</button></td>
                         </tr>
                         <tr>
-                            <td>React JS</td>
-                            <td>Education</td>
+                            <td className='tdWorkExp'>React JS</td>
+                            <td className='tdWorkExp'>Education</td>
                         </tr>
                     </table>
                  </div>
             ) : (
                 <div className='show-edit-work-exp-div'>
-                    <table>
+                    <table className='static-stud-prof-table'>
                         <tr>
-                            <td><h2>Skills</h2> <hr /></td>
-                            <td><button onClick={editFields} className='btn'>Edit</button></td>
+                            <td className='tdWorkExp'><h2>Skills</h2> <hr /></td>
+                            <td className='tdWorkExp'><button onClick={editFields} className='btn'>Edit</button></td>
                         </tr>
                         <tr>
-                            <td>
+                            <td className='tdWorkExp'>
                                 <div id='skillDiv'>
                                     <form onSubmit={submit}>
                                         <button onClick={addFields} className='btn'>Add</button>
