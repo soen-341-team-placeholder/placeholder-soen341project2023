@@ -14,7 +14,7 @@ function Education() {
     }
 
     const [formFields, setFormFields] = useState([
-    {institutionName: '', degree: '', fromDate: '', toDate: ''}
+    {institutionName: '', degree: '', startDate: '', endDate: ''}
     ])
 
     const handleFormChange = (event, index) => {
@@ -32,8 +32,8 @@ function Education() {
     let object = {
         institutionName: '',
         degree: '',
-        fromDate: '',
-        toDate: ''
+        startDate: '',
+        endDate: ''
     }
     setFormFields([...formFields, object]) // iterate over formFields so that current object doesn't override previous object
     }
@@ -43,15 +43,6 @@ function Education() {
     data.splice(index, 1)
     setFormFields(data)
     }
-
-    // const editFields = () => {
-    // let x = document.getElementById('edDiv');
-    // if (x.style.display === 'block') {
-    //     x.style.display = 'block';
-    // } else {
-    //     x.style.display = 'block';
-    // }
-    // }
 
     return (
         <div className="exp-education-main-divs">
@@ -64,9 +55,9 @@ function Education() {
                         </tr>
                         <tr>
                             <th>Institution</th>
-                            <th>Degree title and major</th>
-                            <th>From (mm/yyyy)</th>
-                            <th>To (mm/yyyy)</th>
+                            <th>Degree</th>
+                            <th>From</th>
+                            <th>To</th>
                         </tr>
                         <tr>
                             <td className='tdWorkExp'>Concordia University</td>
@@ -109,19 +100,19 @@ function Education() {
                                                 />
                                                 <br />
                                                 <input 
+                                                    type='date'
                                                     className='input-edit-stud-profile' 
-                                                    name='fromDate'
-                                                    placeholder='From (mm/yyyy)'
+                                                    name='startDate'
                                                     onChange={event => handleFormChange(event, index)}
-                                                    value={form.fromDate}
+                                                    value={form.startDate}
                                                 />
                                                 <br />
                                                 <input 
+                                                    type='date'
                                                     className='input-edit-stud-profile' 
-                                                    name='toDate'
-                                                    placeholder='To (mm/yyyy)'
+                                                    name='endDate'
                                                     onChange={event => handleFormChange(event, index)}
-                                                    value={form.toDate}
+                                                    value={form.endDate}
                                                 />
                                                 <br />
                                                 <button onClick={() => removeFields(index)} className='btn'>Remove</button>

@@ -1,5 +1,6 @@
 import '../../styles/edit_student/WorkExp.css';
 import React, { useState } from 'react';
+// import StudProfile from './StudProfile';
 
 function WorkExp() {
     const [showEdDiv, setShowEdDiv] = useState(true);
@@ -9,7 +10,7 @@ function WorkExp() {
     };
 
     const [formFields, setFormFields] = useState([
-        {title: '', employer: '', fromDate: '', toDate: ''}
+        {title: '', employer: '', startDate: '', endDate: ''}
     ])
     
     const handleFormChange = (event, index) => {
@@ -31,8 +32,8 @@ function WorkExp() {
     let object = {
         title: '',
         employer: '',
-        fromDate: '',
-        toDate: ''
+        startDate: '',
+        endDate: ''
     }
     setFormFields([...formFields, object]) // iterate over formFields so that current object doesn't override previous object
     }
@@ -42,15 +43,6 @@ function WorkExp() {
     data.splice(index, 1)
     setFormFields(data)
     }
-
-    // const editFields = () => {
-    // let x = document.getElementById('edDiv');
-    // if (x.style.display === 'block') {
-    //     x.style.display = 'block';
-    // } else {
-    //     x.style.display = 'block';
-    // }
-    // }
 
     return (
         <div className="exp-education-main-divs">
@@ -64,14 +56,14 @@ function WorkExp() {
                         <tr>
                             <th>Position</th>
                             <th>Company name</th>
-                            <th>From (mm/yyyy)</th>
-                            <th>To (mm/yyyy)</th>
+                            <th>From</th>
+                            <th>To</th>
                         </tr>
                         <tr>
-                            <td className='tdWorkExp'>Software Developer</td>
-                            <td className='tdWorkExp'>Google</td>
-                            <td className='tdWorkExp'>05/2020</td>
-                            <td className='tdWorkExp'>05/2022</td>
+                            <td className='tdWorkExp'>Software Engineer</td> {/* {formFields.title} */}
+                            <td className='tdWorkExp'>Google</td> {/* {formFields.employer} */}
+                            <td className='tdWorkExp'>05/2020</td> {/* {formFields.startDate} */}
+                            <td className='tdWorkExp'>05/2022</td> {/* {formFields.endDate} */}
                         </tr>
                     </table>
                 </div>
@@ -96,7 +88,7 @@ function WorkExp() {
                                             name='title'
                                             placeholder='Title'
                                             onChange={event => handleFormChange(event, index)}
-                                            value={form.title}
+                                            value={formFields.title}
                                         />
                                         <br />
                                         <input
@@ -104,23 +96,23 @@ function WorkExp() {
                                             name='employer'
                                             placeholder='Company Name'
                                             onChange={event => handleFormChange(event, index)}
-                                            value={form.employer}
+                                            value={formFields.employer}
                                         />
                                         <br />
                                         <input 
+                                            type='date'
                                             className='input-edit-stud-profile' 
-                                            name='fromDate'
-                                            placeholder='From (mm/yyyy)'
+                                            name='startDate'
                                             onChange={event => handleFormChange(event, index)}
-                                            value={form.fromDate}
+                                            value={formFields.startDate}
                                         />
                                         <br />
                                         <input 
+                                            type='date'
                                             className='input-edit-stud-profile' 
-                                            name='toDate'
-                                            placeholder='To (mm/yyyy)'
+                                            name='endDate'
                                             onChange={event => handleFormChange(event, index)}
-                                            value={form.toDate}
+                                            value={formFields.endDate}
                                         />
                                         <br />
                                         <button onClick={() => removeFields(index)} className='btn'>Remove</button>

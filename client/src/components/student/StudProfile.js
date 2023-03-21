@@ -17,7 +17,23 @@ const formReducer = (state, event) => {
         major: '',
         email: 'youssef.alsheghri@gmail.com',
         location: 'Montreal, Canada',
-        biography: ''
+        biography: '',
+        education: [
+            {
+                schoolName: '',
+                degree: '',
+                startDate: 0,
+                endDate: 0
+            }
+        ],
+        workExperience: [
+            {
+                companyName: '',
+                position: '',
+                startDate: 0,
+                endDate: 0
+            }
+        ],
       }
     }
     return {
@@ -38,6 +54,22 @@ function StudProfile({ firstName, lastName, email, biography, location }) {
         email,
         location,
         biography: 'Hello, this is my bio!',
+        education: [
+            {
+                schoolName: '',
+                degree: '',
+                startDate: 0,
+                endDate: 0
+            }
+        ],
+        workExperience: [
+            {
+                companyName: '',
+                position: '',
+                startDate: 0,
+                endDate: 0
+            }
+        ],
     });
 
     const [submitting, setSubmitting] = useState(false);
@@ -114,11 +146,11 @@ function StudProfile({ firstName, lastName, email, biography, location }) {
                                         <tr>
                                         <td>
                                             <p className='stud-form-edit-p-tag'>First Name</p> <br />
-                                            <input className='input-edit-stud-profile' name='fName' onChange={handleChange} value={formData.firstName || ''} />
+                                            <input className='input-edit-stud-profile' name='firstName' onChange={handleChange} value={formData.firstName || ''} />
                                         </td>
                                         <td>
                                             <p className='stud-form-edit-p-tag'>Last Name</p> <br />
-                                            <input className='input-edit-stud-profile' name='lName' onChange={handleChange} value={formData.lastName || ''} />
+                                            <input className='input-edit-stud-profile' name='lastName' onChange={handleChange} value={formData.lastName || ''} />
                                         </td>
                                         </tr>
                                         <br />
@@ -137,7 +169,6 @@ function StudProfile({ firstName, lastName, email, biography, location }) {
                                     <br />
                                     <p className='stud-form-edit-p-tag'>Biography</p>
                                     <br />
-                                    {/* <input className='input-edit-stud-profile' name='biography' onChange={handleChange} value={formData.biography || ''} type='textarea' /> */}
                                     <textarea className='input-edit-stud-profile' name='biography' onChange={handleChange} value={formData.biography || ''} />
                                     
                                     </label>
