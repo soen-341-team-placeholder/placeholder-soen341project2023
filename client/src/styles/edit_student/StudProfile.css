@@ -17,11 +17,15 @@
     z-index: 2;
 }
 
-img {
+.studImgEdit {
     border-radius: 50%;
     border: 0.078125% solid #ddd;
     padding: 0.390625%;
-    width: 19.53125%;
+    width: 20%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* width: 50%; */
 }
 
 .btn-contact {
@@ -38,19 +42,6 @@ img {
     text-align: center;
 }
 
-/* added css */
-
-/* .struct {
-    position: absolute;
-    display: none;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: white;
-    height: 70%;
-    margin-top: 10%;
-} */
 .prompt {
     position: absolute;
     width: 50%;
@@ -59,4 +50,14 @@ img {
     left: 25%;
     text-align: center;
     background: white;
+}
+
+.wrapper {
+    padding: 1% 20%;
+    resize: both;
+    overflow: auto;
+}
+
+.wrapper fieldset {
+    margin: 1% 0;
 }
