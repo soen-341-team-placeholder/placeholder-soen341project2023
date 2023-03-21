@@ -25,7 +25,6 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    /* width: 50%; */
 }
 
 .btn-contact {
@@ -60,4 +59,40 @@
 
 .wrapper fieldset {
     margin: 1% 0;
+}
+
+.stud-profile-edit-info-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.input-edit-stud-profile {
+    border: 2px solid #FF5555;
+    width: 100%;
+    padding: 8px 16px;
+    margin: 8px 0;
+}
+
+.btn {
+    background-color: white;
+    border-color: #FF5555;
+    /* border-radius: 15%; */
+    border: 2px solid #FF5555;
+    font-size: 90%;
+    margin: 0.65% 0.15625%;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    padding: 1% 5%;
+    text-align: center;
+}
+    
+button:hover {
+    color: white;
+    background-color: #FF5555;
+}
+
+.stud-form-edit-p-tag {
+    all: initial;
 }

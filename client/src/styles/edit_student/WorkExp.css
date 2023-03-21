@@ -37,7 +37,7 @@ color: white;
 background-color: #FF5555;
 }
 
-.App {
+.exp-education-main-divs {
 text-align: center;
 width: 50%;
 margin-left: auto;
@@ -46,14 +46,17 @@ margin-right: auto;
 
 .show-edit-work-exp-div {
   border: 5px outset #FF5555;
+  width: 100%;
 }
 
 .show-static-work-exp-div {
 border: 5px outset #FF5555;
+width: 100%;
 }
 
 #edDiv {
 display: block;
+width: 100%;
 }
 
 #expDiv {

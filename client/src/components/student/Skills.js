@@ -42,14 +42,14 @@ function Skills() {
         setFormFields(data)
     }
 
-    const editFields = () => {
-        let x = document.getElementById('skillDiv');
-        if (x.style.display === 'block') {
-            x.style.display = 'none';
-        } else {
-            x.style.display = 'block';
-        }
-    }
+    // const editFields = () => {
+    //     let x = document.getElementById('skillDiv');
+    //     if (x.style.display === 'block') {
+    //         x.style.display = 'none';
+    //     } else {
+    //         x.style.display = 'block';
+    //     }
+    // }
 
     return (
         <div className="App">
@@ -71,7 +71,6 @@ function Skills() {
                     <table className='static-stud-prof-table'>
                         <tr>
                             <td className='tdWorkExp'><h2>Skills</h2> <hr /></td>
-                            <td className='tdWorkExp'><button onClick={editFields} className='btn'>Edit</button></td>
                         </tr>
                         <tr>
                             <td className='tdWorkExp'>

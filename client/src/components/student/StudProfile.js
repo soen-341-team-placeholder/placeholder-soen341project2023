@@ -11,18 +11,13 @@ import '../../styles/edit_student/StudProfile.css';
 const formReducer = (state, event) => {
     if(event.reset) {
       return {
-        fName: '',
-        lName: '',
+        firstName: 'Youssef',
+        lastName: 'Alsheghri',
         schoolName: '',
         major: '',
-        email: '',
-        building: '',
-        street: '',
-        appart: '',
-        city: '',
-        province: '',
-        country: '',
-        postal: '',
+        email: 'youssef.alsheghri@gmail.com',
+        location: 'Montreal, Canada',
+        biography: ''
       }
     }
     return {
@@ -35,7 +30,16 @@ function StudProfile({ firstName, lastName, email, biography, location }) {
 
     // code for form
 
-    const [formData, setFormData] = useReducer(formReducer, {});
+    const [formData, setFormData] = useReducer(formReducer, {
+        firstName,
+        lastName,
+        schoolName: 'Concordia University',
+        major: 'Software Engineering',
+        email,
+        location,
+        biography: 'Hello, this is my bio!',
+    });
+
     const [submitting, setSubmitting] = useState(false);
 
     const handleSubmit = event => {
@@ -78,21 +82,23 @@ function StudProfile({ firstName, lastName, email, biography, location }) {
                 <br /> <br />
                     <div>
                         {showSaveButton ? (
-                            <button onClick={handleSaveClick} type='submit' disabled={submitting}>Save</button>
+                            <button onClick={handleSaveClick} type='submit' disabled={submitting} className='btn'>Save</button>
                         ) : (
                             <div>
                                 <img className='studImgEdit' src={pic} alt='profile pic' />
-                                <h3>Youssef Alsheghri</h3>
-                                <p>Software Engineering Major at Concordia University <br /> 
-                                Montreal, Canada - <Popup trigger={<button className='btn-contact'>Contact info</button>} position='right center'>
-                                <div>Email: youssef.alsheghri@gmail.com</div></Popup></p>
-                                <button onClick={toggleDiv}>Edit</button>
-                                <br /> <br /> <br /> <br /> <br />
+                                <h3>{formData.firstName} {formData.lastName}</h3>
+                                <p>{formData.major} at {formData.schoolName}  <br /> 
+                                {formData.location} - <Popup trigger={<button className='btn-contact'>Contact info</button>} position='right center'>
+                                <div>{formData.email}</div></Popup></p>
+                                <div>{formData.biography}</ div>
+                                <button onClick={toggleDiv} className='btn'>Edit</button>
+                                <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
                             </div>
                         )}
                         {showDiv && <div className='wrapper'>
                             <br />
-                        <h1>Editing Personal Info</h1>
+                        <h3>Editing Personal Info</h3>
+                        <br />
                                 {submitting && <div>
                                     Saving ...
                                     <ul>
@@ -104,60 +110,36 @@ function StudProfile({ firstName, lastName, email, biography, location }) {
                                 <form onSubmit={handleSubmit} className='edit-stud-form'>
                                 <fieldset disabled={submitting}>
                                     <label>
-                                    <table>
+                                    <table className='stud-profile-edit-info-table'>
                                         <tr>
                                         <td>
-                                            <p>First Name</p>
-                                            <input className='input-edit-stud-profile' name='fName' onChange={handleChange} value={formData.fName || ''} />
+                                            <p className='stud-form-edit-p-tag'>First Name</p> <br />
+                                            <input className='input-edit-stud-profile' name='fName' onChange={handleChange} value={formData.firstName || ''} />
                                         </td>
                                         <td>
-                                            <p>Last Name</p>
-                                            <input className='input-edit-stud-profile' name='lName' onChange={handleChange} value={formData.lName || ''} />
+                                            <p className='stud-form-edit-p-tag'>Last Name</p> <br />
+                                            <input className='input-edit-stud-profile' name='lName' onChange={handleChange} value={formData.lastName || ''} />
                                         </td>
                                         </tr>
+                                        <br />
                                     </table>
-                                    <p>Institution Name</p>
+                                    <p className='stud-form-edit-p-tag'>Institution Name &nbsp;</p>
                                     <input className='input-edit-stud-profile' name='schoolName' onChange={handleChange} value={formData.schoolName || ''} />
-                                    <p>Major</p>
+                                    <br />
+                                    <p className='stud-form-edit-p-tag'>Major &nbsp;</p>
                                     <input className='input-edit-stud-profile' name='major' onChange={handleChange} value={formData.major || ''} />
-                                    <p>Email Address</p>
+                                    <br />
+                                    <p className='stud-form-edit-p-tag'>Email Address &nbsp;</p>
                                     <input className='input-edit-stud-profile' name='email' onChange={handleChange} value={formData.email || ''} />
-                                    <hr />
-                                    <p>Address</p>
-                                    <table>
-                                        <tr>
-                                        <td>
-                                            <p>Building number</p>
-                                            <input className='input-edit-stud-profile' name='building' onChange={handleChange} value={formData.building || ''} />
-                                        </td>
-                                        <td>
-                                            <p>Street name</p>
-                                            <input className='input-edit-stud-profile' name='street' onChange={handleChange} value={formData.street || ''} />
-                                        </td>
-                                        <td>
-                                            <p>Appartment/Suite</p>
-                                            <input className='input-edit-stud-profile' name='appart' onChange={handleChange} value={formData.appart || ''} />
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                        <td>
-                                            <p>City</p>
-                                            <input className='input-edit-stud-profile' name='city' onChange={handleChange} value={formData.city || ''} />
-                                        </td>
-                                        <td>
-                                            <p>Province</p>
-                                            <input className='input-edit-stud-profile' name='province' onChange={handleChange} value={formData.province || ''} />
-                                        </td>
-                                        <td>
-                                            <p>Country</p>
-                                            <input className='input-edit-stud-profile' name='country' onChange={handleChange} value={formData.country || ''} />
-                                        </td>
-                                        <td>
-                                            <p>Postal Code</p>
-                                            <input className='input-edit-stud-profile' name='postal' onChange={handleChange} value={formData.postal || ''} />
-                                        </td>
-                                        </tr>
-                                    </table>
+                                    <br />
+                                    <p className='stud-form-edit-p-tag'>Location &nbsp;</p>
+                                    <input className='input-edit-stud-profile' name='location' onChange={handleChange} value={formData.location || ''} />
+                                    <br />
+                                    <p className='stud-form-edit-p-tag'>Biography</p>
+                                    <br />
+                                    {/* <input className='input-edit-stud-profile' name='biography' onChange={handleChange} value={formData.biography || ''} type='textarea' /> */}
+                                    <textarea className='input-edit-stud-profile' name='biography' onChange={handleChange} value={formData.biography || ''} />
+                                    
                                     </label>
                                 </fieldset>
                                 </form>

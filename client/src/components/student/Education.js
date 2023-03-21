@@ -44,22 +44,22 @@ function Education() {
     setFormFields(data)
     }
 
-    const editFields = () => {
-    let x = document.getElementById('edDiv');
-    if (x.style.display === 'block') {
-        x.style.display = 'block';
-    } else {
-        x.style.display = 'block';
-    }
-    }
+    // const editFields = () => {
+    // let x = document.getElementById('edDiv');
+    // if (x.style.display === 'block') {
+    //     x.style.display = 'block';
+    // } else {
+    //     x.style.display = 'block';
+    // }
+    // }
 
     return (
-        <div className="App">
+        <div className="exp-education-main-divs">
             {showEdDiv ? (
                 <div className='show-static-work-exp-div'>
                     <table className='static-stud-prof-table'>
                         <tr>
-                            <td className='tdWorkExp'><h2>Education</h2> <hr /></td>
+                            <th className='tdWorkExp'><h2>Education</h2> <hr /></th>
                             <td className='tdWorkExp'><button onClick={toggleDiv} className='btn'>Edit</button></td>
                         </tr>
                         <tr>
@@ -80,8 +80,7 @@ function Education() {
                 <div className='show-edit-work-exp-div'>
                     <table className='static-stud-prof-table'>
                         <tr>
-                            <td className='tdWorkExp'><h2>Education</h2> <hr /></td>
-                            <td className='tdWorkExp'><button onClick={editFields} className='btn'>Edit</button></td>
+                            <th className='tdWorkExp'><h2>Education</h2> <hr /></th>
                         </tr>
                         <tr>
                             <td className='tdWorkExp'>
