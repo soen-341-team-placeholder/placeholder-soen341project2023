@@ -70,6 +70,7 @@ function LoginPage() {
                 }
             })
             .then((res) => {
+                cookies.set('userId', res.data._id, { path: '/' });
                 navigate('/profile/' + res.data._id);
             }).catch((err) => {
                 console.log(err);
