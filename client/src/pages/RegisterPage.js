@@ -120,7 +120,7 @@ function RegisterPage() {
         <div className="customSelect">
           <select className="userSelectType" name="userType" onChange={handleSelect} required={true}>
             <option value="">Select</option>
-            <option value="Candidate">Candidate</option>
+            <option value="Student">Student</option>
             <option value="Employer">Employer</option>
           </select>
         </div>
