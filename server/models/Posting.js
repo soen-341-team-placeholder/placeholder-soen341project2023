@@ -21,13 +21,19 @@ const postingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    applicantIds: [
+    pendingApplicantsIds: [
         {
             type: mongoose.Schema.Types.ObjectId,
             required: true
         }
     ],
     acceptedApplicantIds: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
+        }
+    ],
+    rejectedApplicantIds: [
         {
             type: mongoose.Schema.Types.ObjectId,
             required: true
