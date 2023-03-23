@@ -4,8 +4,33 @@ const router = express.Router();
 const Posting = require('../models/Posting');
 
 router.get('/', authenticateToken, async (req, res) => {
+    const userId = req.query.userId;
+
     Posting.find({}).then((postings) => {
-        res.status(200).json(postings);
+        if (userId) {
+            let userInPostings = []
+
+            postings.map((posting) => {
+                if (posting.pendingApplicantsIds
+                    && posting.pendingApplicantsIds.includes(userId)) {
+                    userInPostings.push(posting);
+
+                } else if (posting.interviewApplicantIds
+                    && posting.interviewApplicantIds.includes(userId)) {
+                    userInPostings.push(posting);
+
+                } else if (posting.acceptedApplicantIds
+                    && posting.acceptedApplicantIds.includes(userId)) {
+                    userInPostings.push(posting);
+
+                } else if (posting.rejectedApplicantIds
+                    && posting.rejectedApplicantIds.includes(userId)) {
+                    userInPostings.push(posting);
+                }
+            })
+            res.status(200).json(userInPostings)
+        } else
+            res.status(200).json(postings);
     }).catch((err) => {
         res.status(400).send('message:' + err);
         console.log(err);
