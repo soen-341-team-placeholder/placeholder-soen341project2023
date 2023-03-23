@@ -2,6 +2,11 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
 
+<<<<<<< Updated upstream
+=======
+// import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+>>>>>>> Stashed changes
 import Navbar from "./components/Navbar";
 import ApplicantProfilePage from "./pages/ApplicantProfilePage";
 import HomePage from "./pages/HomePage";
