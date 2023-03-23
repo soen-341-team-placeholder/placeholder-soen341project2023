@@ -5,9 +5,10 @@ import React from "react";
 import Navbar from "./components/Navbar";
 import ApplicantProfilePage from "./pages/ApplicantProfilePage";
 import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
 import AboutPage from "./pages/AboutPage";
 import RegisterPage from "./pages/RegisterPage";
-import LoginPage from "./pages/LoginPage";
+import EditStudentPage from './pages/EditStudentPage';
 import ViewPostingsPage from "./pages/ViewPostingsPage";
 import Applicants from "./pages/Applicants";
 
@@ -25,14 +26,14 @@ export default function App() {
       <Router>
         <React.Fragment>
           <Navbar toggleDarkMode={toggleDarkMode} />
-
           <main>
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/about" element={<AboutPage />} />
-              <Route path="/profile/:userId" element={<ApplicantProfilePage />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/profile/:userId" element={<ApplicantProfilePage />}/>
               <Route path="/registration" element={<RegisterPage />} />
+              <Route path="/student/edit/:userId" element={<EditStudentPage />} />
               <Route path="/postings" element={<ViewPostingsPage />} />
               <Route path="/applicants" element={<Applicants />} />
             </Routes>
@@ -41,4 +42,5 @@ export default function App() {
       </Router>
     </div>
   );
+
 }

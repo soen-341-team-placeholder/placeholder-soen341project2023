@@ -1,0 +1,68 @@
+.tdWorkExp {
+  padding-left: 7.8125%;
+}
+
+input.input-edit-stud-profile {
+width: 70%;
+border-radius: 10%;
+margin: 0.78125% 0.15625%;
+}
+
+input:hover {
+border-color: #FF5555;
+transition: 0.6s;
+}
+
+.static-stud-prof-table {
+width: 100%;
+table-layout: fixed;
+}
+
+.btn {
+background-color: white;
+border-color: #FF5555;
+border-radius: 15%;
+font-size: 90%;
+margin: 0.65% 0.15625%;
+transition-duration: 0.4s;
+cursor: pointer;
+text-decoration: none;
+display: inline-block;
+padding: 1% 5%;
+text-align: center;
+}
+
+button:hover {
+color: white;
+background-color: #FF5555;
+}
+
+.exp-education-main-divs {
+text-align: center;
+width: 50%;
+margin-left: auto;
+margin-right: auto;
+}
+
+.show-edit-work-exp-div {
+  border: 5px outset #FF5555;
+  width: 100%;
+}
+
+.show-static-work-exp-div {
+border: 5px outset #FF5555;
+width: 100%;
+}
+
+#edDiv {
+display: block;
+width: 100%;
+}
+
+#expDiv {
+display: none;
+}
+
+#skillDiv {
+display: none;
+}
