@@ -91,20 +91,20 @@ function StudProfile({ firstName, lastName, email, biography, location }) {
         }, 3000)
     }
 
-    const submitForm = async () => {
-        await axios.post('http://localhost:4000/student/edit/:userId',
-            {
-                email: values.email.toLowerCase(),
-                password: values.password
-            }).then((res) => {
-                cookies.set('accessToken', res.data.accessToken, { path: '/' });
-                cookies.set('refreshToken', res.data.refreshToken, { path: '/' });
-                sendToProfile();
-            }
-            ).catch((err) => {
-                console.log(err);
-            });
-    };
+    // const submitForm = async () => {
+    //     await axios.post('http://localhost:4000/student/edit/:userId',
+    //         {
+    //             email: values.email.toLowerCase(),
+    //             password: values.password
+    //         }).then((res) => {
+    //             cookies.set('accessToken', res.data.accessToken, { path: '/' });
+    //             cookies.set('refreshToken', res.data.refreshToken, { path: '/' });
+    //             sendToProfile();
+    //         }
+    //         ).catch((err) => {
+    //             console.log(err);
+    //         });
+    // };
 
     const handleChange = event => {
         setFormData({
