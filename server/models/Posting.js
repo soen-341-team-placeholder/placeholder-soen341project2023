@@ -27,6 +27,12 @@ const postingSchema = new mongoose.Schema({
             required: true
         }
     ],
+    interviewApplicantIds: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
+        }
+    ],
     acceptedApplicantIds: [
         {
             type: mongoose.Schema.Types.ObjectId,
