@@ -51,7 +51,11 @@ export default function ViewPostings() {
           New Post
         </span>
       ) : (
-        <p>Fam the condition works in reverse</p>
+        <>
+          <br />
+          <br />
+          <br />
+        </>
       )}
       <PostingPopup
         trigger={buttonPopup}
