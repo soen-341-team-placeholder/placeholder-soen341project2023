@@ -1,6 +1,5 @@
 import '../../styles/edit_student/WorkExp.css';
 import React, { useState } from 'react';
-// import StudProfile from './StudProfile';
 
 function WorkExp() {
     const [showEdDiv, setShowEdDiv] = useState(true);
@@ -10,17 +9,17 @@ function WorkExp() {
     };
 
     const [formFields, setFormFields] = useState([
-        {title: '', employer: '', startDate: '', endDate: ''}
+        { title: '', employer: '', startDate: '', endDate: '' }
     ])
-    
+
     const handleFormChange = (event, index) => {
-    let data = [...formFields];
-    data[index][event.target.name] = event.target.value; // to add info to data array
-    setFormFields(data); // to type in the box
+        let data = [...formFields];
+        data[index][event.target.name] = event.target.value; // to add info to data array
+        setFormFields(data); // to type in the box
     }
 
     const submit = (e) => {
-    e.preventDefault(); // prevent the page from refreshing itself when remove button is clicked
+        e.preventDefault(); // prevent the page from refreshing itself when remove button is clicked
     }
 
     const handleSave = (e) => {
@@ -29,19 +28,19 @@ function WorkExp() {
     }
 
     const addFields = () => {
-    let object = {
-        title: '',
-        employer: '',
-        startDate: '',
-        endDate: ''
-    }
-    setFormFields([...formFields, object]) // iterate over formFields so that current object doesn't override previous object
+        let object = {
+            title: '',
+            employer: '',
+            startDate: '',
+            endDate: ''
+        }
+        setFormFields([...formFields, object]) // iterate over formFields so that current object doesn't override previous object
     }
 
     const removeFields = (index) => {
-    let data = [...formFields];
-    data.splice(index, 1)
-    setFormFields(data)
+        let data = [...formFields];
+        data.splice(index, 1)
+        setFormFields(data)
     }
 
     return (
@@ -59,72 +58,76 @@ function WorkExp() {
                             <th>From</th>
                             <th>To</th>
                         </tr>
-                        <tr>
-                            <td className='tdWorkExp'>Software Engineer</td> {/* {formFields.title} */}
-                            <td className='tdWorkExp'>Google</td> {/* {formFields.employer} */}
-                            <td className='tdWorkExp'>05/2020</td> {/* {formFields.startDate} */}
-                            <td className='tdWorkExp'>05/2022</td> {/* {formFields.endDate} */}
-                        </tr>
+                        {formFields.map((form, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td className='tdWorkExp'>{form.title}</td>
+                                    <td className='tdWorkExp'>{form.employer}</td>
+                                    <td className='tdWorkExp'>{form.startDate}</td>
+                                    <td className='tdWorkExp'>{form.endDate}</td>
+                                </tr>
+                            );
+                        })}
                     </table>
                 </div>
             ) : (
-            <div className='show-edit-work-exp-div'>
-            <table className='static-stud-prof-table'>
-                <tr>
-                    <th className='tdWorkExp'><h2>Experience</h2> <hr /></th>
-                </tr>
-                <tr>
-                    <td className='tdWorkExp'>
-                        <div id='edDiv'>
-                            <form onSubmit={submit}>
-                                <button onClick={addFields} className='btn'>Add</button>
-                                <button onClick={handleSave} className='btn'>Save</button>
-                                <br />
-                                {formFields.map((form, index) =>  {
-                                return (
-                                    <div key={index}>
-                                        <input
-                                            className='input-edit-stud-profile' 
-                                            name='title'
-                                            placeholder='Title'
-                                            onChange={event => handleFormChange(event, index)}
-                                            value={formFields.title}
-                                        />
+                <div className='show-edit-work-exp-div'>
+                    <table className='static-stud-prof-table'>
+                        <tr>
+                            <th className='tdWorkExp'><h2>Experience</h2> <hr /></th>
+                        </tr>
+                        <tr>
+                            <td className='tdWorkExp'>
+                                <div id='edDiv'>
+                                    <form onSubmit={submit}>
+                                        <button onClick={addFields} className='btn'>Add</button>
+                                        <button onClick={handleSave} className='btn'>Save</button>
                                         <br />
-                                        <input
-                                            className='input-edit-stud-profile' 
-                                            name='employer'
-                                            placeholder='Company Name'
-                                            onChange={event => handleFormChange(event, index)}
-                                            value={formFields.employer}
-                                        />
-                                        <br />
-                                        <input 
-                                            type='date'
-                                            className='input-edit-stud-profile' 
-                                            name='startDate'
-                                            onChange={event => handleFormChange(event, index)}
-                                            value={formFields.startDate}
-                                        />
-                                        <br />
-                                        <input 
-                                            type='date'
-                                            className='input-edit-stud-profile' 
-                                            name='endDate'
-                                            onChange={event => handleFormChange(event, index)}
-                                            value={formFields.endDate}
-                                        />
-                                        <br />
-                                        <button onClick={() => removeFields(index)} className='btn'>Remove</button>
-                                    </div>
-                                )
-                                })}
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-          </div>
+                                        {formFields.map((form, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <input
+                                                        className='input-edit-stud-profile'
+                                                        name='title'
+                                                        placeholder='Title'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.title}
+                                                    />
+                                                    <br />
+                                                    <input
+                                                        className='input-edit-stud-profile'
+                                                        name='employer'
+                                                        placeholder='Company Name'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.employer}
+                                                    />
+                                                    <br />
+                                                    <input
+                                                        type='date'
+                                                        className='input-edit-stud-profile'
+                                                        name='startDate'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.startDate}
+                                                    />
+                                                    <br />
+                                                    <input
+                                                        type='date'
+                                                        className='input-edit-stud-profile'
+                                                        name='endDate'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.endDate}
+                                                    />
+                                                    <br />
+                                                    <button onClick={() => removeFields(index)} className='btn'>Remove</button>
+                                                </div>
+                                            )
+                                        })}
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             )}
         </div>
     );

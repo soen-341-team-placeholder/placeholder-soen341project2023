@@ -119,7 +119,7 @@ function StudProfile(props) {
                                 </Popup></p>
                             <div>{formData.biography}</div>
                             <button onClick={toggleDiv} className='btn'>Edit</button>
-                            <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+                            <br /> <br /> <br /> <br /> <br />
                         </div>
                     )}
                     {showDiv && <div className='wrapper'>
@@ -152,6 +152,10 @@ function StudProfile(props) {
                                         </tr>
                                         <br />
                                     </table>
+                                    <p className='stud-form-edit-p-tag'>Age &nbsp;</p>
+                                    <input  className='input-edit-stud-profile' name='age' onChange={handleChange}
+                                        value={formData.age || ''} />
+                                    <br />
                                     <p className='stud-form-edit-p-tag'>Email Address &nbsp;</p>
                                     <input className='input-edit-stud-profile' name='email' onChange={handleChange}
                                         value={formData.email || ''} />
