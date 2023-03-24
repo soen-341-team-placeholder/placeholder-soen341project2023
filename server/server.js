@@ -26,3 +26,10 @@ app.use('/postings', postingsRouter);
 
 // Define app port
 app.listen(process.env.PORT, () => console.log('listening on port ' + process.env.PORT));
+
+export function getBaseURL() {
+  const { protocol, hostname, port } = window.location;
+  const out = `${protocol}//${hostname}${port ? ':' + port : ''}`;
+  console.log({out});
+  return out;  
+}

@@ -1,15 +1,20 @@
-import axios from 'axios'
-import Cookies from 'universal-cookie'
+import axios from 'axios';
+import Cookies from 'universal-cookie';
+import * as server from '~/server/server';
 
 const cookies = new Cookies();
+const baseURL = getBaseURL();
 
+export function getBaseURL(){
+    server.getBaseURL();
+}
 export function hello_world() {
   console.log("Hello, World!");
 }
 
-export const submitForm = async (values, cookies) => {
+export const submitForm = async (values) => {
   try {
-    const response = await axios.post('http://localhost:4000/login', {
+    const response = await axios.post(`${baseURL}/login`, {
       email: values.email.toLowerCase(),
       password: values.password
     });
@@ -21,9 +26,9 @@ export const submitForm = async (values, cookies) => {
   }
 };
 
-export const sendToProfile = async (values, cookies, navigate) => {
+export const sendToProfile = async (values, navigate) => {
   try {
-    const response = await axios.get('http://localhost:4000/users?email=' + values.email.toLowerCase(), {
+    const response = await axios.get(`${baseURL}/users?email=${values.email.toLowerCase()}`, {
       headers:
       {
         authorization: `Bearer ${cookies.get('accessToken')}`

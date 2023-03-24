@@ -10,7 +10,7 @@ export default function HomePage() {
     <h1>Welcome to the homepage</h1>
 
      {fn.hello_world()}
-
+   <p> {fn.getBaseURL()}</p>
   <p>Login status: {isLoggedIn}</p>
     </div>
   );
