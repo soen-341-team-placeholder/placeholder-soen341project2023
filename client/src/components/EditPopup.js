@@ -1,9 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/PostingPopup.css";
 import PostingPopupInput from "./PostingPopupInput";
 import { FaRegTimesCircle } from "react-icons/fa";
+import Cookies from "universal-cookie";
+import axios from "axios";
+
+const cookies = new Cookies();
 
 export default function PostingPopup(props) {
+  const [postings, setPostings] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/postings/" + props.postingId, {
+        headers: {
+          authorization: `Bearer ${cookies.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        setPostings(res.data);
+        console.log(res);
+        console.log("I AM PRINTING THE DATA");
+        console.log(res.data);
+        setValues({
+          companyName: res.data.title,
+          jobTitle: res.data.title,
+          location: res.data.location,
+          salary: res.data.salary,
+          description: res.data.description,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [values, setValues] = useState({
     companyName: "",
     jobTitle: "",
@@ -52,6 +82,19 @@ export default function PostingPopup(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    axios
+      .patch(`http://localhost:4000/postings/${props.postingId}`, values, {
+        headers: {
+          authorization: `Bearer ${cookies.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        props.setTrigger(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const onChange = (e) => {
@@ -59,6 +102,7 @@ export default function PostingPopup(props) {
   };
 
   console.log(values);
+  console.log("VALUESS");
   return props.trigger ? (
     <div className="popup">
       <div className="popup-inner">
@@ -79,10 +123,13 @@ export default function PostingPopup(props) {
               onChange={onChange}
             />
           ))}
+
+          <div className="popup-footer">
+            <button className="popup-submit" type="submit">
+              Submit
+            </button>
+          </div>
         </form>
-        <div className="popup-footer">
-          <button className="popup-submit">Submit</button>
-        </div>
       </div>
     </div>
   ) : (

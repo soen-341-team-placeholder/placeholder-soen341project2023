@@ -5,15 +5,19 @@ import EditPopup from "../components/EditPopup";
 import { FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
 import Cookies from "universal-cookie";
-import PostingPopup from "./PostingPopup";
 
 const cookies = new Cookies();
 
-export default function Job({ title, location, salary, description }) {
+export default function Job({
+  title,
+  location,
+  salary,
+  description,
+  postingId,
+}) {
   const [buttonMenu, setButtonMenu] = useState(false);
   const [userType, setUserType] = useState("student");
   const [editPopup, setEditPopup] = useState(false);
-  var bool;
 
   useEffect(() => {
     axios
@@ -25,11 +29,6 @@ export default function Job({ title, location, salary, description }) {
       .then((res) => {
         console.log(res);
         setUserType(res.data.userType);
-        console.log(userType);
-        {
-          userType === "student" ? (bool = false) : (bool = true);
-        }
-        console.log(bool);
       })
       .catch((err) => {
         console.log(err);
@@ -78,6 +77,7 @@ export default function Job({ title, location, salary, description }) {
                   <EditPopup
                     trigger={editPopup}
                     setTrigger={setEditPopup}
+                    postingId={postingId}
                   ></EditPopup>
                 </>
               ) : (
