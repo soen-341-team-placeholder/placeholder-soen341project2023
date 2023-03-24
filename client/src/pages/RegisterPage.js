@@ -2,13 +2,15 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+
 import FormInput from '../components/FormInput';
 import '../styles/Register.css';
 import '../styles/FormInput.css';
 
 function RegisterPage() {
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const [values, setValues] = useState({
     firstName: "",
@@ -61,9 +63,9 @@ function RegisterPage() {
       name: "password",
       type: "password",
       placeholder: "Password",
-      errorMessage: "Password should be at least 3 characters",
+      errorMessage: "Password should be at least 8 characters",
       label: "Password",
-      pattern: ".{3,}",
+      pattern: ".{8,}",
       required: true,
     },
     {
@@ -100,21 +102,30 @@ function RegisterPage() {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-  const submit = async () => {
-    let valuesToSubmit = values;
-    delete valuesToSubmit.confirmPassword;
-    valuesToSubmit.userType = values.userType.toLowerCase();
-    axios.post('http://localhost:4000/users', valuesToSubmit).then((res) => {
-      navigate('/login');
-    }).catch((err) => {
-      console.log(err);
+const submit = async () => {
+  let valuesToSubmit = values;
+  delete valuesToSubmit.confirmPassword;
+  valuesToSubmit.userType = values.userType.toLowerCase();
+  try {
+    await axios.post('http://localhost:4000/users', valuesToSubmit);
+    navigate('/login');
+  } catch (err) {
+    console.log(err);
+    inputs.forEach((input) => {
+      if (err.response && err.response.data.errors[input.name]) {
+        toast.error(err.response.data.errors[input.name]);
+      }
     });
-  };
+  }
+};
+
+
 
   return (
     <div className='RegisterPage'>
 
       <form className='form-register'>
+      
         <h1>Sign Up</h1>
         <label>Account Type</label>
         <div className="customSelect">
@@ -125,11 +136,14 @@ function RegisterPage() {
           </select>
         </div>
         {
-          inputs.map((input) => (
-            <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
-          ))
-        }
-        <button onClick={handleSubmit}>Register</button>
+  inputs.map((input) => (
+    <div key={input.id} className="form-input-wrapper">
+      <label htmlFor={input.name}>{input.label}</label>
+      <FormInput {...input} value={values[input.name]} onChange={onChange} label={null} />
+    </div>
+  ))
+}
+        <button className = 'register-btn' onClick={handleSubmit}>Register</button>
         <p>Already registered? <Link to ="./login" ><u>Login</u></Link></p>
       </form>
 

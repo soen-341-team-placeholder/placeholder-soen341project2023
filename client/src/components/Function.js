@@ -1,13 +1,25 @@
 import axios from 'axios';
-import Cookies from 'universal-cookie';
+import Cookies from 'universal-cookie'
+import { toast, ToastContainer } from 'react-toastify';
 
 const cookies = new Cookies();
 export const backendUrl = "https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io/";
 
+// Misc/ testing 
 export function hello_world() {
   return ('Hello World');
 }
 
+
+export function fancyPopup(arg) {
+  toast(arg, {
+    autoClose: 2000,
+    progressStyle: { backgroundColor: 'red' }
+  });
+}
+
+
+// API Request
 export async function submitForm(values) {
   try {
     const response = await axios.post(`${backendUrl}/login`, {

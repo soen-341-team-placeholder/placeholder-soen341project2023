@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
+import {ToastContainer } from 'react-toastify';
 
 import Navbar from "./components/Navbar";
 import ApplicantProfilePage from "./pages/ApplicantProfilePage";
@@ -30,6 +31,7 @@ export default function App() {
           <header>
           <Navbar toggleDarkMode={toggleDarkMode} />
           </header>
+          <ToastContainer />
           <main>
             <Routes>
               <Route path="/" element={<HomePage />} />

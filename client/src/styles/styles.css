@@ -170,3 +170,8 @@ nav {
       padding: 2rem;
     }
   }
+
+  .Toastify__progress-bar--default {
+    background-color: var(--toastify-color-error);
+  }
+  
