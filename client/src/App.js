@@ -25,7 +25,9 @@ export default function App() {
     <div className={darkMode ? "dark-mode" : ""}>
       <Router>
         <React.Fragment>
+          <header>
           <Navbar toggleDarkMode={toggleDarkMode} />
+          </header>
           <main>
             <Routes>
               <Route path="/" element={<HomePage />} />
@@ -38,6 +40,9 @@ export default function App() {
               <Route path="/applicants" element={<Applicants />} />
             </Routes>
           </main>
+          <footer>
+     <p>&copy; Lorem Ipsum</p>
+          </footer>
         </React.Fragment>
       </Router>
     </div>

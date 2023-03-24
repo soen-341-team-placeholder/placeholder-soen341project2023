@@ -1,22 +1,42 @@
 import { useRef, useState } from "react";
-import { FaBars, FaDownload, FaMoon, FaSun, FaTimes } from "react-icons/fa"; // import font awesome icons
+import { FaBars, FaDownload, FaMoon, FaSun, FaTimes } from "react-icons/fa";
 import "../styles/styles.css";
-import { Link } from "react-router-dom";
-
+import { Link, withRouter } from "react-router-dom";
+import Cookies from "universal-cookie";
 import SearchBar from "./SearchBar";
 
-export default function Navbar() {
-  const navRef = useRef(); // this variable will refer to the nav tag
-  const [darkMode, setDarkMode] = useState(false); // state variable for dark mode
+export default function Navbar(props) {
+  const cookies = new Cookies();
+  const isLoggedIn = !!cookies.get('refreshToken');
+  const navRef = useRef();
+  const [darkMode, setDarkMode] = useState(false);
 
-  /* each time this function is called, we will add/remove
-    the class name from the nav tag */
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
   };
 
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
+  };
+
+  const handleInboxClick = (e) => {
+    e.preventDefault();
+    if (isLoggedIn) {
+      props.history.push("/inbox");
+    } else {
+      props.history.push("/login");
+    }
+    showNavbar();
+  };
+
+  const handleProfileClick = (e) => {
+    e.preventDefault();
+    if (isLoggedIn) {
+      props.history.push(`/profile/${cookies.get("userId")}`);
+    } else {
+      props.history.push("/login");
+    }
+    showNavbar();
   };
 
   return (
@@ -30,27 +50,22 @@ export default function Navbar() {
         <Link to="/jobs" onClick={showNavbar}>
           Jobs
         </Link>
-        <Link to="/inbox" onClick={showNavbar}>
+        <Link to="/inbox" onClick={handleInboxClick}>
           Inbox
         </Link>
-        <Link to="/profile/:userId" onClick={showNavbar}>
+        <Link to="/profile/:userId" onClick={handleProfileClick}>
           Profile
         </Link>
         <Link to="/about" onClick={showNavbar}>
           About
         </Link>
-        {/* button for full screen */}
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
         </button>
-
-        {/* button for toggling dark mode */}
-<button className="darkmode-toggle-btn" onClick={toggleDarkMode}>
-  {darkMode ? <FaMoon /> : <FaSun/>}
-</button>
-
+        <button className="darkmode-toggle-btn" onClick={toggleDarkMode}>
+          {darkMode ? <FaMoon /> : <FaSun />}
+        </button>
       </nav>
-      {/* button for smaller screen */}
       <button className="nav-btn" onClick={showNavbar}>
         <FaBars />
       </button>

@@ -9,6 +9,7 @@ import Skills from './Skills';
 import WorkExp from './WorkExp';
 import 'reactjs-popup/dist/index.css';
 import '../../styles/edit_student/StudProfile.css';
+// @TODO: store images in db
 import pic from './images/youssef.jpg';
 
 function StudProfile(props) {
