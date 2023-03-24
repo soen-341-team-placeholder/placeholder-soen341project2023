@@ -12,6 +12,8 @@ import EditStudentPage from './pages/EditStudentPage';
 import ViewPostingsPage from "./pages/ViewPostingsPage";
 import Applicants from "./pages/Applicants";
 
+import * as fn from './components/Function';
+
 import "./styles/styles.css";
 
 export default function App() {

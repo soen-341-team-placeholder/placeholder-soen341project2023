@@ -24,12 +24,17 @@ app.use('/login', loginRouter);
 app.use('/token', tokenRouter);
 app.use('/postings', postingsRouter);
 
+// return backend url
+app.use((req, res, next) => {
+  const backendUrl = `${req.protocol}://${req.get('host')}:${process.env.PORT}`;
+  app.locals.backendUrl = backendUrl;
+  next();
+});
+
+// Define endpoint to return backend URL
+app.get('/backend-url', (req, res) => {
+  res.json({ backendUrl: app.locals.backendUrl });
+});
+
 // Define app port
 app.listen(process.env.PORT, () => console.log('listening on port ' + process.env.PORT));
-
-export function getBaseURL() {
-  const { protocol, hostname, port } = window.location;
-  const out = `${protocol}//${hostname}${port ? ':' + port : ''}`;
-  console.log({out});
-  return out;  
-}

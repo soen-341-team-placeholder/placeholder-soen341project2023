@@ -57,7 +57,7 @@ export default function Navbar(props) {
           Profile
         </Link>
         <Link to="/about" onClick={showNavbar}>
-          About
+        Dev 
         </Link>
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />

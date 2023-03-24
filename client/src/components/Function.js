@@ -1,20 +1,16 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import * as server from '~/server/server';
 
 const cookies = new Cookies();
-const baseURL = getBaseURL();
+export const backendUrl = "https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io/";
 
-export function getBaseURL(){
-    server.getBaseURL();
-}
 export function hello_world() {
-  console.log("Hello, World!");
+  return ('Hello World');
 }
 
-export const submitForm = async (values) => {
+export async function submitForm(values) {
   try {
-    const response = await axios.post(`${baseURL}/login`, {
+    const response = await axios.post(`${backendUrl}/login`, {
       email: values.email.toLowerCase(),
       password: values.password
     });
@@ -26,9 +22,9 @@ export const submitForm = async (values) => {
   }
 };
 
-export const sendToProfile = async (values, navigate) => {
+export async function sendToProfile(values, navigate) {
   try {
-    const response = await axios.get(`${baseURL}/users?email=${values.email.toLowerCase()}`, {
+    const response = await axios.get(`${backendUrl}/users?email=${values.email.toLowerCase()}`, {
       headers:
       {
         authorization: `Bearer ${cookies.get('accessToken')}`
