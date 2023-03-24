@@ -1,15 +1,11 @@
 import React, { useState, useReducer, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 import axios from "axios";
 import Cookies from "universal-cookie";
 
-import Education from './Education';
-import Skills from './Skills';
-import WorkExp from './WorkExp';
 import 'reactjs-popup/dist/index.css';
 import '../../styles/edit_student/StudProfile.css';
-import pic from './images/youssef.jpg';
+// import pic from './images/youssef.jpg';
 
 function StudProfile(props) {
 
@@ -109,7 +105,7 @@ function StudProfile(props) {
                             className='btn'>Save</button>
                     ) : (
                         <div>
-                            <img className='studImgEdit' src={pic} alt='profile pic' />
+                            {/* <img className='studImgEdit' src={pic} alt='profile pic' /> */}
                             <h3>{formData.firstName} {formData.lastName}</h3>
                             <p>{formData.age} years old<br />
                                 <Popup
@@ -117,7 +113,7 @@ function StudProfile(props) {
                                     position='right center'>
                                     <div>{formData.email}</div>
                                 </Popup></p>
-                            <div>{formData.biography}</div>
+                            <div>{formData.biography}</div> <br />
                             <button onClick={toggleDiv} className='btn'>Edit</button>
                             <br /> <br /> <br /> <br /> <br />
                         </div>
@@ -170,11 +166,7 @@ function StudProfile(props) {
                     </div>}
                 </div>
 
-                <Routes>
-                    <Route path='/experience' element={<WorkExp />} />
-                    <Route path='/education' element={<Education />} />
-                    <Route path='/skills' element={<Skills />} />
-                </Routes>
+                
             </div>
         </div>
     );
