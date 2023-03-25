@@ -93,6 +93,25 @@ function RegisterPage() {
 
   ]
 
+  function testPasswordLength() {
+  let password = "";
+  let confirmPassword = "";
+  for (let i = 0; i < 200; i++) {
+    password += "a";
+    confirmPassword += "a";
+    const values = {
+      password,
+      confirmPassword,
+    };
+    const pattern = values.password;
+    const regex = new RegExp(pattern);
+    const match = regex.test(values.confirmPassword);
+    if (!match) {
+      return ("Password match failed at length: ", i + 1);
+    }
+  }
+}
+
   const handleSubmit = (e) => {
     e.preventDefault();
     submit();
@@ -123,9 +142,9 @@ const submit = async () => {
 
   return (
     <div className='RegisterPage'>
-
       <form className='form-register'>
-      
+      <banner>ayo{testPasswordLength()}</banner>
+
         <h1>Sign Up</h1>
         <label>Account Type</label>
         <div className="customSelect">

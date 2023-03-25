@@ -2,7 +2,6 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
 import {ToastContainer } from 'react-toastify';
-import Cookies from 'universal-cookie';
 
 import Navbar from "./components/Navbar";
 import ApplicantProfilePage from "./pages/ApplicantProfilePage";
@@ -15,33 +14,39 @@ import ViewPostingsPage from "./pages/ViewPostingsPage";
 import Applicants from "./pages/Applicants";
 
 import * as fn from './components/Function';
-
 import "./styles/styles.css";
 
-const cookies = new Cookies();
 
+
+const cookies = fn.cookies;
 export default function App() {
+  const darkMode= useState(cookies.get("darkMode") );
+  const isLoggedIn = !!cookies.get('refreshToken');
 
-  const [darkMode, toggleDarkMode] = fn.useDarkMode();
-  
+  const universalProps = {
+    darkMode,
+    cookies,
+    isLoggedIn
+  };
+
   return (
     <div className={darkMode ? "dark-mode" : ""}>
       <Router>
         <React.Fragment>
           <header>
-          <Navbar toggleDarkMode={toggleDarkMode} />
+            <Navbar {...universalProps}/>
           </header>
           <ToastContainer />
           <main>
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/profile/:userId" element={<ApplicantProfilePage />}/>
-              <Route path="/register" element={<RegisterPage />} />
-              <Route path="/student/edit/:userId" element={<EditStudentPage />} />
-              <Route path="/postings" element={<ViewPostingsPage />} />
-              <Route path="/applicants" element={<Applicants />} />
+              <Route path="/" element={<HomePage {...universalProps} />} />
+              <Route path="/about" element={<AboutPage {...universalProps} />} />
+              <Route path="/login" element={<LoginPage {...universalProps} />} />
+              <Route path="/profile/:userId" element={<ApplicantProfilePage {...universalProps} />}/>
+              <Route path="/register" element={<RegisterPage {...universalProps} />} />
+              <Route path="/student/edit/:userId" element={<EditStudentPage {...universalProps} />} />
+              <Route path="/postings" element={<ViewPostingsPage {...universalProps} />} />
+              <Route path="/applicants" element={<Applicants {...universalProps} />} />
             </Routes>
           </main>
           <footer>
@@ -51,5 +56,4 @@ export default function App() {
       </Router>
     </div>
   );
-
 }

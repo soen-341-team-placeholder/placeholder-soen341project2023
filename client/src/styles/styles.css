@@ -175,3 +175,17 @@ nav {
     background-color: var(--toastify-color-error);
   }
   
+  .standard-btn {
+        width: fit-content;
+          height: auto;
+          padding: 1rem;
+          border: none;
+          background-color: #FF5555;
+          color: white;
+          border-radius: 5px;
+          font-weight: bold;
+          font-size: medium;
+          cursor: pointer;
+          margin-top: 15px;
+          margin-bottom: 30px;
+  }

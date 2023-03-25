@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Cookies from 'universal-cookie';
 import 'react-toastify/dist/ReactToastify.css';
 
 import * as fn from "../components/Function";
 
-const cookies = new Cookies();
-
-export default function AboutPage() {
+export default function AboutPage(props) {
+  const { cookies } = props;
   const [cookieState, setCookieState] = useState({});
 
   useEffect(() => {
     setCookieState(cookies.getAll());
-  }, []);
+  }, [cookies]);
 
   const handleClick = () => {
     fn.fancyPopup('Button clicked!');
