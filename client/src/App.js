@@ -2,6 +2,7 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import React from "react";
 import {ToastContainer } from 'react-toastify';
+import Cookies from 'universal-cookie';
 
 import Navbar from "./components/Navbar";
 import ApplicantProfilePage from "./pages/ApplicantProfilePage";
@@ -17,13 +18,12 @@ import * as fn from './components/Function';
 
 import "./styles/styles.css";
 
+const cookies = new Cookies();
+
 export default function App() {
-  const [darkMode, setDarkMode] = useState(false);
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
-
+  const [darkMode, toggleDarkMode] = fn.useDarkMode();
+  
   return (
     <div className={darkMode ? "dark-mode" : ""}>
       <Router>
@@ -38,14 +38,14 @@ export default function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/profile/:userId" element={<ApplicantProfilePage />}/>
-              <Route path="/registration" element={<RegisterPage />} />
+              <Route path="/register" element={<RegisterPage />} />
               <Route path="/student/edit/:userId" element={<EditStudentPage />} />
               <Route path="/postings" element={<ViewPostingsPage />} />
               <Route path="/applicants" element={<Applicants />} />
             </Routes>
           </main>
           <footer>
-     <p>&copy; Lorem Ipsum</p>
+            <p>&copy; Lorem Ipsum</p>
           </footer>
         </React.Fragment>
       </Router>

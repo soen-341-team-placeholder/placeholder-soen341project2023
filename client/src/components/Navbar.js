@@ -1,9 +1,12 @@
 import { useRef, useState } from "react";
 import { FaBars, FaDownload, FaMoon, FaSun, FaTimes } from "react-icons/fa";
-import "../styles/styles.css";
 import { Link, withRouter } from "react-router-dom";
 import Cookies from "universal-cookie";
+
 import SearchBar from "./SearchBar";
+import * as fn from './Function';
+import "../styles/styles.css";
+
 
 export default function Navbar(props) {
   const cookies = new Cookies();
@@ -15,9 +18,6 @@ export default function Navbar(props) {
     navRef.current.classList.toggle("responsive_nav");
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
 
   const handleInboxClick = (e) => {
     e.preventDefault();
@@ -62,9 +62,10 @@ export default function Navbar(props) {
         <button className="nav-btn nav-close-btn" onClick={showNavbar}>
           <FaTimes />
         </button>
-        <button className="darkmode-toggle-btn" onClick={toggleDarkMode}>
-          {darkMode ? <FaMoon /> : <FaSun />}
-        </button>
+        <button className="darkmode-toggle-btn" onClick={fn.useToggleDarkMode}>
+  {darkMode ? <FaMoon /> : <FaSun />}
+</button>
+
       </nav>
       <button className="nav-btn" onClick={showNavbar}>
         <FaBars />

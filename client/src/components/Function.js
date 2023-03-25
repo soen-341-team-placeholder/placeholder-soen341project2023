@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Cookies from 'universal-cookie'
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
+import React, { useState } from 'react';
 
 const cookies = new Cookies();
 export const backendUrl = "https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io/";
@@ -16,6 +17,34 @@ export function fancyPopup(arg) {
     autoClose: 2000,
     progressStyle: { backgroundColor: 'red' }
   });
+}
+
+export function useDarkMode() {
+  const [darkMode, setDarkMode] = useState(() => {
+    const isDarkMode = cookies.get('darkMode') === 'true';
+    if (isDarkMode) {
+      return true;
+    } else {
+      cookies.set('darkMode', 'false', { path: '/' });
+      return false;
+    }
+  });
+
+  return [darkMode, setDarkMode];
+}
+
+export function useToggleDarkMode() {
+  const [darkMode, setDarkMode] = useDarkMode();
+
+  const toggleDarkMode = () => {
+    setDarkMode((prevMode) => {
+      const newMode = !prevMode;
+      cookies.set('darkMode', newMode.toString(), { path: '/' });
+      return newMode;
+    });
+  };
+
+  return toggleDarkMode;
 }
 
 
