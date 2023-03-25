@@ -79,7 +79,7 @@ function LoginPage() {
 
     return (
         <div className='RegisterPage'>
-            <form onSubmit={handleSubmit}>
+            <form className='form-register'>
                 <h1>Login</h1>
                 {
                     inputs.map((input) => (

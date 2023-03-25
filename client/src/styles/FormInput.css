@@ -19,9 +19,8 @@
     border-radius: 50px;
     padding: 1vh 1vw;
     width: 100%;
-}
 
-/*input {
+.input-register {
     padding: 15px;
     margin: 10px 0px;
     border: 1px solid gray;
@@ -38,10 +37,10 @@ label {
     display: none;
 }
 
-input:invalid[focused="true"] {
+.input-register:invalid[focused="true"] {
     border: 1px solid red;
 }
 
-input:invalid[focused=true]~span {
+.input-register:invalid[focused=true]~span {
     display: block;
 }
