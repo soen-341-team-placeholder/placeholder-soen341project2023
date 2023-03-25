@@ -1,6 +1,7 @@
 import React from "react"
 import *  as fn from "../components/Function";
 
+
 export default function AboutPage() {
   return (
     <div>
@@ -8,6 +9,12 @@ export default function AboutPage() {
       {fn.hello_world()}
       <p>Backend URL: {fn.backendUrl}<br></br>
       if this is wrong, change components/Functions.js</p>
+      <br>
+      </br>
+
+      <p> Current Cookies:
+        {cookies.getAll()}
+      </p>
       {/* <p>Login status: {isLoggedIn}</p> */}
     </div>
   );
