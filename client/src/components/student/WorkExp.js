@@ -2,20 +2,21 @@ import '../../styles/edit_student/WorkExp.css';
 import React, { useState } from 'react';
 
 function WorkExp() {
+    
     const [showEdDiv, setShowEdDiv] = useState(true);
 
     const toggleDiv = () => { // toggle between static div and editable div
         setShowEdDiv(!showEdDiv);
     };
 
-    const [formFields, setFormFields] = useState([
-        { title: '', employer: '', startDate: '', endDate: '' }
+    const [formData, setFormData] = useState([
+        { position: '', companyName: '', startDate: '', endDate: '' }
     ])
 
     const handleFormChange = (event, index) => {
-        let data = [...formFields];
+        let data = [...formData];
         data[index][event.target.name] = event.target.value; // to add info to data array
-        setFormFields(data); // to type in the box
+        setFormData(data); // to type in the box
     }
 
     const submit = (e) => {
@@ -29,18 +30,18 @@ function WorkExp() {
 
     const addFields = () => {
         let object = {
-            title: '',
-            employer: '',
+            position: '',
+            companyName: '',
             startDate: '',
             endDate: ''
         }
-        setFormFields([...formFields, object]) // iterate over formFields so that current object doesn't override previous object
+        setFormData([...formData, object]) // iterate over formFields so that current object doesn't override previous object
     }
 
     const removeFields = (index) => {
-        let data = [...formFields];
+        let data = [...formData];
         data.splice(index, 1)
-        setFormFields(data)
+        setFormData(data)
     }
 
     return (
@@ -58,11 +59,11 @@ function WorkExp() {
                             <th>From</th>
                             <th>To</th>
                         </tr>
-                        {formFields.map((form, index) => {
+                        {formData.map((form, index) => {
                             return (
                                 <tr key={index}>
-                                    <td className='tdWorkExp'>{form.title}</td>
-                                    <td className='tdWorkExp'>{form.employer}</td>
+                                    <td className='tdWorkExp'>{form.position}</td>
+                                    <td className='tdWorkExp'>{form.companyName}</td>
                                     <td className='tdWorkExp'>{form.startDate}</td>
                                     <td className='tdWorkExp'>{form.endDate}</td>
                                 </tr>
@@ -83,23 +84,23 @@ function WorkExp() {
                                         <button onClick={addFields} className='btn'>Add</button>
                                         <button onClick={handleSave} className='btn'>Save</button>
                                         <br />
-                                        {formFields.map((form, index) => {
+                                        {formData.map((form, index) => {
                                             return (
                                                 <div key={index}>
                                                     <input
                                                         className='input-edit-stud-profile'
-                                                        name='title'
-                                                        placeholder='Title'
+                                                        name='position'
+                                                        placeholder='Position'
                                                         onChange={event => handleFormChange(event, index)}
-                                                        value={form.title}
+                                                        value={form.position}
                                                     />
                                                     <br />
                                                     <input
                                                         className='input-edit-stud-profile'
-                                                        name='employer'
+                                                        name='companyName'
                                                         placeholder='Company Name'
                                                         onChange={event => handleFormChange(event, index)}
-                                                        value={form.employer}
+                                                        value={form.companyName}
                                                     />
                                                     <br />
                                                     <input

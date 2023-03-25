@@ -5,7 +5,7 @@ import Cookies from "universal-cookie";
 
 import 'reactjs-popup/dist/index.css';
 import '../../styles/edit_student/StudProfile.css';
-// import pic from './images/youssef.jpg';
+import '../../styles/edit_student/WorkExp.css';
 
 function StudProfile(props) {
 
@@ -105,7 +105,6 @@ function StudProfile(props) {
                             className='btn'>Save</button>
                     ) : (
                         <div>
-                            {/* <img className='studImgEdit' src={pic} alt='profile pic' /> */}
                             <h3>{formData.firstName} {formData.lastName}</h3>
                             <p>{formData.age} years old<br />
                                 <Popup
@@ -149,7 +148,7 @@ function StudProfile(props) {
                                         <br />
                                     </table>
                                     <p className='stud-form-edit-p-tag'>Age &nbsp;</p>
-                                    <input  className='input-edit-stud-profile' name='age' onChange={handleChange}
+                                    <input className='input-edit-stud-profile' name='age' onChange={handleChange}
                                         value={formData.age || ''} />
                                     <br />
                                     <p className='stud-form-edit-p-tag'>Email Address &nbsp;</p>
@@ -165,8 +164,6 @@ function StudProfile(props) {
                         </form>
                     </div>}
                 </div>
-
-                
             </div>
         </div>
     );
