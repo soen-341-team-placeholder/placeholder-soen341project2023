@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Cookies from 'universal-cookie'
+import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/FormInput'
 import * as fn from "../components/Function";

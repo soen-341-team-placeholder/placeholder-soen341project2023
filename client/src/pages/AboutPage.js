@@ -1,20 +1,26 @@
-import React from "react"
-import *  as fn from "../components/Function";
+import React, { useEffect, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
 
+import * as fn from "../components/Function";
 
-export default function AboutPage() {
+export default function AboutPage(props) {
+  const { cookies } = props;
+  const [cookieState, setCookieState] = useState({});
+
+  useEffect(() => {
+    setCookieState(cookies.getAll());
+  }, [cookies]);
+
+  const handleClick = () => {
+    fn.fancyPopup('Button clicked!');
+  };
+
   return (
     <div>
       <h1>welcome to the about page</h1>
       {fn.hello_world()}
-      <p>Backend URL: {fn.backendUrl}<br></br>
+      <p>Backend URL: {fn.backendUrl}<br />
       if this is wrong, change components/Functions.js</p>
-      <br>
-      </br>
-
-      <p> Current Cookies:
-        {cookies.getAll()}
-      </p>
       {/* <p>Login status: {isLoggedIn}</p> */}
     </div>
   );

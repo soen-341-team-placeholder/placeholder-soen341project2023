@@ -37,96 +37,7 @@ footer {
   text-align: center;
   padding: 2rem;
 }
-/* ---------navbar -------------------------*/
 
-nav {
-    display: flex;
-    align-items: center;
-    color: white;
-
-  }
-  
-  nav a {
-    margin: 0 2rem;
-    text-decoration: none;
-    color: white;
-
-  }
-  
-  nav a:hover {
-    color: var(--secondaryColor);
-    cursor: pointer;
-  }
-  
-  nav .nav-btn {
-    padding: 5px;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    outline: none;
-    visibility: hidden;
-    opacity: 0;
-    font-size: 1.8rem;
-  }
-  
-  /* toggle button */
-  nav .darkmode-toggle-btn {
-    padding: 5px;
-    cursor: pointer;
-    background: transparent;
-    border: none;
-    outline: none;
-    font-size: 1.8rem;
-    margin-left: auto;
-  }
-  
-  /* when screen is not full-screen */
-  @media only screen and (max-width: 1024px) {
-    nav .nav-btn {
-      visibility: visible;
-      opacity: 1;
-    }
-  
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 1.5rem;
-      background-color: var(--mainColor);
-      transition: 1s;
-      transform: translateY(-100vh);
-    }
-  
-    nav.responsive_nav {
-      transform: none;
-    }
-  
-    nav .nav-close-btn {
-      position: absolute;
-      top: 2rem;
-      right: 2rem;
-    }
-  }
-  
-  /*------------- search bar ---------------*/
-
-
-.visually-hidden {
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
-
-
-}
 /*------------- applicant info cards ---------------*/
 .applicant_profile_container {
     display: flex;
@@ -169,4 +80,23 @@ nav {
     .applicant_profile_container {
       padding: 2rem;
     }
+  }
+
+  .Toastify__progress-bar--default {
+    background-color: var(--toastify-color-error);
+  }
+  
+  .standard-btn {
+        width: fit-content;
+          height: auto;
+          padding: 1rem;
+          border: none;
+          background-color: #FF5555;
+          color: white;
+          border-radius: 5px;
+          font-weight: bold;
+          font-size: medium;
+          cursor: pointer;
+          margin-top: 15px;
+          margin-bottom: 30px;
   }

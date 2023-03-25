@@ -1,23 +1,20 @@
 import { useRef, useState } from "react";
 import { FaBars, FaDownload, FaMoon, FaSun, FaTimes } from "react-icons/fa";
-import "../styles/styles.css";
 import { Link, withRouter } from "react-router-dom";
-import Cookies from "universal-cookie";
+
 import SearchBar from "./SearchBar";
+import * as fn from './Function';
+import "../styles/styles.css"
+import '../styles/Navbar.css'
 
 export default function Navbar(props) {
-  const cookies = new Cookies();
-  const isLoggedIn = !!cookies.get('refreshToken');
+  const { isLoggedIn, cookies, darkMode, toggleDarkMode } = props;
   const navRef = useRef();
-  const [darkMode, setDarkMode] = useState(false);
 
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
-  };
 
   const handleInboxClick = (e) => {
     e.preventDefault();
@@ -39,8 +36,13 @@ export default function Navbar(props) {
     showNavbar();
   };
 
+  const handleDarkModeToggle = () => {
+    fn.toggleDarkMode();
+    console.log(`darkMode = ${cookies.get("darkMode")}`);
+  };
+
   return (
-    <header className={darkMode ? "dark-mode" : ""}>
+    <div className='nav-container'>
       <h3>LOGO</h3>
       <SearchBar />
       <nav ref={navRef}>
@@ -59,16 +61,14 @@ export default function Navbar(props) {
         <Link to="/about" onClick={showNavbar}>
         Dev 
         </Link>
-        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-          <FaTimes />
-        </button>
-        <button className="darkmode-toggle-btn" onClick={toggleDarkMode}>
+        <button className="darkmode-toggle-btn" onClick={handleDarkModeToggle}>
           {darkMode ? <FaMoon /> : <FaSun />}
         </button>
+
       </nav>
-      <button className="nav-btn" onClick={showNavbar}>
+      <button className="hamburger-menu" onClick={showNavbar}>
         <FaBars />
       </button>
-    </header>
+    </div>
   );
 }
