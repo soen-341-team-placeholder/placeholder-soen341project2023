@@ -14,7 +14,7 @@ export function hello_world() {
 
 
 export function fancyPopup(arg) {
-  toast(arg, {
+  toast.error(arg, {
     position: toast.POSITION.TOP_CENTER,
     autoClose: 2000,
     // progressStyle: { backgroundColor: 'red' },
@@ -165,5 +165,18 @@ export async function fetchUserProfile(userId) {
   } catch (error) {
     console.log(error);
     return null;
+  }
+}
+
+export async function registerUser(values) {
+  const { email, password, userType, firstName, lastName } = values;
+  const user = { email, password, userType: userType.toLowerCase(), firstName, lastName };
+  try {
+    await axios.post(`${backendUrl}/users`, user);
+    return true;
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || "An error occurred while submitting the form.";
+    fancyPopup(errorMessage);
+    return false;
   }
 }

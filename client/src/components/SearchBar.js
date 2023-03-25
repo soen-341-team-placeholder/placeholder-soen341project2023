@@ -1,7 +1,12 @@
-
-
 const SearchBar = ({keyword, onChange}) => {
-  const BarStyle = {width:"20rem",background:"#F0F0F0", border:"none", padding:"0.5rem"};
+  const BarStyle = {
+    width: "20rem",
+    background: "#F0F0F0",
+    border: "none",
+    borderRadius: "999px",
+    margin: "0rem 1rem",
+    padding: "0.7rem 1rem"
+  };
   return (
     <input 
      style={BarStyle}

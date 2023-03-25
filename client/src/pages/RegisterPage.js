@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
-import { toast } from 'react-toastify';
 
 import FormInput from '../components/FormInput';
 import '../styles/Register.css';
 import '../styles/FormInput.css';
+import * as fn from "../components/Function";
 
 function RegisterPage() {
 
@@ -63,7 +62,7 @@ function RegisterPage() {
       name: "password",
       type: "password",
       placeholder: "Password",
-      errorMessage: "Password should be at least 8 characters",
+      errorMessage: "Password should be between 8-20 characters",
       label: "Password",
       pattern: ".{8,}",
       required: true,
@@ -86,65 +85,32 @@ function RegisterPage() {
       errorMessage: "You must be thirteen or older to register",
       label: "Age",
       required: true,
-      min: 13,
-      max: 100
+      min: 13
     },
 
 
   ]
 
-  function testPasswordLength() {
-  let password = "";
-  let confirmPassword = "";
-  for (let i = 0; i < 200; i++) {
-    password += "a";
-    confirmPassword += "a";
-    const values = {
-      password,
-      confirmPassword,
-    };
-    const pattern = values.password;
-    const regex = new RegExp(pattern);
-    const match = regex.test(values.confirmPassword);
-    if (!match) {
-      return ("Password match failed at length: ", i + 1);
+const handleSubmit = (e) => {
+  e.preventDefault();
+  fn.registerUser(values).then((confirm) => {
+    if (confirm) {
+      navigate('/');
     }
-  }
-}
+  });
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    submit();
-  };
 
   const onChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
-const submit = async () => {
-  let valuesToSubmit = values;
-  delete valuesToSubmit.confirmPassword;
-  valuesToSubmit.userType = values.userType.toLowerCase();
-  try {
-    await axios.post('http://localhost:4000/users', valuesToSubmit);
-    navigate('/login');
-  } catch (err) {
-    console.log(err);
-    inputs.forEach((input) => {
-      if (err.response && err.response.data.errors[input.name]) {
-        toast.error(err.response.data.errors[input.name]);
-      }
-    });
-  }
-};
 
 
 
   return (
     <div className='RegisterPage'>
       <form className='form-register'>
-      <banner>ayo{testPasswordLength()}</banner>
-
         <h1>Sign Up</h1>
         <label>Account Type</label>
         <div className="customSelect">

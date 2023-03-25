@@ -36,8 +36,8 @@ export default function App() {
           <header>
             <Navbar {...universalProps}/>
           </header>
-          <ToastContainer />
           <main>
+                      <ToastContainer />
             <Routes>
               <Route path="/" element={<HomePage {...universalProps} />} />
               <Route path="/about" element={<AboutPage {...universalProps} />} />

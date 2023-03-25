@@ -4,8 +4,8 @@ import { Link, withRouter } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
 import * as fn from './Function';
-import "../styles/styles.css";
-
+import "../styles/styles.css"
+import '../styles/Navbar.css'
 
 export default function Navbar(props) {
   const { isLoggedIn, cookies, darkMode, toggleDarkMode } = props;
@@ -42,7 +42,7 @@ export default function Navbar(props) {
   };
 
   return (
-    <header className={darkMode ? "dark-mode" : ""}>
+    <div className='nav-container'>
       <h3>LOGO</h3>
       <SearchBar />
       <nav ref={navRef}>
@@ -61,17 +61,14 @@ export default function Navbar(props) {
         <Link to="/about" onClick={showNavbar}>
         Dev 
         </Link>
-        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-          <FaTimes />
-        </button>
         <button className="darkmode-toggle-btn" onClick={handleDarkModeToggle}>
           {darkMode ? <FaMoon /> : <FaSun />}
         </button>
 
       </nav>
-      <button className="nav-btn" onClick={showNavbar}>
+      <button className="hamburger-menu" onClick={showNavbar}>
         <FaBars />
       </button>
-    </header>
+    </div>
   );
 }

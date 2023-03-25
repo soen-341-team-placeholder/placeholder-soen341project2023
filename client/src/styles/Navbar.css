@@ -1,0 +1,74 @@
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background-color: var(--mainColor);
+    color: white;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav a {
+    margin: 0 2rem;
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover {
+    color: var(--secondaryColor);
+    cursor: pointer;
+}
+
+.hamburger-menu{
+    display: none;
+
+}
+
+/* toggle button */
+nav .darkmode-toggle-btn {
+    padding: 5px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: 1.8rem;
+    margin-left: auto;
+}
+
+/* when screen is not full-screen */
+@media only screen and (max-width: 1024px) {
+    nav .hamburger-menu {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        background-color: var(--mainColor);
+        transition: 1s;
+        transform: translateY(-100vh);
+    }
+
+    nav.responsive_nav {
+        transform: none;
+    }
+
+    nav .nav-close-btn {
+        position: absolute;
+        top: 2rem;
+        right: 2rem;
+    }
+}
