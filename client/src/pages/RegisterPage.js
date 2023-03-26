@@ -109,9 +109,10 @@ const handleSubmit = (e) => {
 };
 
 
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+  function onChange(e) {
+  setValues({ ...values, [e.target.name]: e.target.value });
+}
+
 
 
 
