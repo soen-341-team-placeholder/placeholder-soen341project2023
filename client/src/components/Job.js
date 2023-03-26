@@ -37,6 +37,7 @@ export default function Job({
 
   console.log(title, location, salary, description);
 
+
   // added code for Apply button popup form
   const [showModal, setShowModal] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -59,6 +60,7 @@ export default function Job({
     setShowModal(false);
   };
   // added code for Apply button popup form ends here
+
 
   return (
     <div className="post-container">
@@ -107,6 +109,7 @@ export default function Job({
               ) : (
                 <>
                   <li className="dropdown-button" onClick={handleApplyClick}>Apply</li>
+
                   <li className="dropdown-button">Save</li>
                 </>
               )}
@@ -144,6 +147,7 @@ export default function Job({
               )}
             </div>
             {/* added code for Apply button popup ends here */}
+
           </div>
         )}
       </div>

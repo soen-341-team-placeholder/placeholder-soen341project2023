@@ -114,7 +114,7 @@ function RegisterPage() {
   return (
     <div className='RegisterPage'>
 
-      <form >
+      <form className='form-register'>
         <h1>Sign Up</h1>
         <label>Account Type</label>
         <div className="customSelect">
