@@ -1,8 +1,6 @@
 import React, { useState, useReducer, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import Popup from 'reactjs-popup';
-import axios from "axios";
-import Cookies from "universal-cookie";
 
 import Education from './Education';
 import Skills from './Skills';
@@ -11,94 +9,99 @@ import 'reactjs-popup/dist/index.css';
 import '../../styles/edit_student/StudProfile.css';
 // @TODO: store images in db
 import pic from './images/youssef.jpg';
+import * as fn from '../Function';
 
 function StudProfile(props) {
+  const cookies = props.cookies;
+  const { userId } = useParams();
+  const [user, setUser] = useState(null);
 
-    const cookies = new Cookies();
-
-    const initialState = {
-        firstName: props.user.firstName || '',
-        lastName: props.user.lastName || '',
-        age: props.user.age || '',
-        email: props.user.email || '',
-        biography: props.user.biography || '',
-        education: props.user.education || [
-            {
-                schoolName: '',
-                degree: '',
-                startDate: 0,
-                endDate: 0
-            }
-        ],
-        workExperience: props.user.workExperience || [
-            {
-                companyName: '',
-                position: '',
-                startDate: 0,
-                endDate: 0
-            }
-        ]
+  useEffect(() => {
+    async function fetchData() {
+      const user = await fn.fetchUserProfile(userId);
+      setUser(user);
     }
+    fetchData();
+  }, [userId]);
 
-    const formReducer = () => (state, event) => {
-        if (event.reset) {
-            return initialState;
-        }
-        return {
-            ...state,
-            [event.name]: event.value
-        }
+  const initialState = {
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    age: user?.age || '',
+    email: user?.email || '',
+    biography: user?.biography || '',
+    education: user?.education || [
+      {
+        schoolName: '',
+        degree: '',
+        startDate: 0,
+        endDate: 0
+      }
+    ],
+    workExperience: user?.workExperience || [
+      {
+        companyName: '',
+        position: '',
+        startDate: 0,
+        endDate: 0
+      }
+    ]
+  };
+
+  const formReducer = () => (state, event) => {
+    if (event.reset) {
+      return initialState;
     }
-    // code for form
-    const [formData, setFormData] = useReducer(formReducer(), initialState);
-    const [submitting, setSubmitting] = useState(false);
-
-    useEffect(() => {
-        setFormData({
-            reset: true
-        });
-    }, [props]);
-
-    const handleSubmit = event => {
-        event.preventDefault();
-        setSubmitting(true);
-
-        setTimeout(() => {
-            setSubmitting(false);
-            setFormData({
-                reset: true
-            })
-        }, 3000)
-    }
-
-    const handleChange = event => {
-        setFormData({
-            name: event.target.name,
-            value: event.target.value,
-        });
-    }
-
-    // code for form ends here
-
-    const [showDiv, setShowDiv] = useState(false);
-    const [showSaveButton, setShowSaveButton] = useState(false);
-
-    const toggleDiv = () => {
-        setShowDiv(!showDiv);
-        setShowSaveButton(true);
+    return {
+      ...state,
+      [event.name]: event.value
     };
+  };
+  // code for form
+  const [formData, setFormData] = useReducer(formReducer(), initialState);
+  const [submitting, setSubmitting] = useState(false);
 
-    const handleSaveClick = () => {
-        setShowDiv(false);
-        setShowSaveButton(false);
-        axios.patch('http://localhost:4000/users/' + props.userId, formData, {
-            headers: {
-                'authorization': `Bearer ${cookies.get('accessToken')}`
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
-    };
+  useEffect(() => {
+    setFormData({
+      reset: true
+    });
+  }, [user]);
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    setSubmitting(true);
+
+    const result = await fn.updateUserProfile(userId, formData);
+
+    if (result) {
+      fn.fancyPopup('Profile updated');
+    }
+
+    setSubmitting(false);
+    setFormData({
+      reset: true
+    });
+  };
+
+  const handleChange = event => {
+    setFormData({
+      name: event.target.name,
+      value: event.target.value
+    });
+  };
+
+  const [showDiv, setShowDiv] = useState(false);
+  const [showSaveButton, setShowSaveButton] = useState(false);
+
+  const toggleDiv = () => {
+    setShowDiv(!showDiv);
+    setShowSaveButton(true);
+  };
+
+  const handleSaveClick = () => {
+    setShowDiv(false);
+    setShowSaveButton(false);
+  };
 
     return (
         <div className='container'>

@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
 import FormInput from '../components/FormInput'
 import * as fn from "../components/Function";
 
-const cookies = new Cookies();
 
-export default function LoginPage() {
+export default function LoginPage(props) {
+    const { isLoggedIn, cookies, darkMode} = props;
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
     email: "",
     password: ""
   });
+
+   if (isLoggedIn) {
+    navigate('/');
+    fn.fancyPopup('Already logged in!');
+    return null;
+  } else{
 
   const inputs = [
     {
@@ -37,9 +41,11 @@ export default function LoginPage() {
     }
   ]
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    fn.submitForm(values, cookies);
+    fn.loginUser(values, cookies);
+
   };
 
   const onChange = (e) => {
@@ -60,4 +66,5 @@ export default function LoginPage() {
       </form>
     </div>
   )
+}
 }

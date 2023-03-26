@@ -16,7 +16,8 @@ const CandidateCardHeader = ({ children }) => (
 
 const CandidateCardBody = ({ children }) => <div className="candidate-card-body">{children}</div>;
 
-export default function ApplicantProfilePage() {
+export default function ApplicantProfilePage(props) {
+    const { isLoggedIn, cookies, darkMode} = props;
   const { userId } = useParams();
   const [user, setUser] = useState(null);
 

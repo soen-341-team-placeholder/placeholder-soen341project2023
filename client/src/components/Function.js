@@ -2,10 +2,11 @@ import axios from 'axios';
 import Cookies from 'universal-cookie'
 import { toast } from 'react-toastify';
 import React, { useState } from 'react';
+import { Navigate, BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 
 export const cookies = new Cookies();
-export const backendUrl = "https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io/";
+export const backendUrl = "http://walidoow.com";//"https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io";
 
 // Misc/ testing 
 export function hello_world() {
@@ -125,8 +126,19 @@ export function downloadCV (user) {
   });
 }
 
+export function loginRedirector() {
+  fancyPopup('Please log in first');
+  return <Navigate to='/login' />;
+}
+
+
 // API Request
-export async function submitForm(values) {
+
+export function isLoggedIn() {
+  return !!cookies.get('refreshToken');
+}
+
+export async function loginUser(values) {
   try {
     const response = await axios.post(`${backendUrl}/login`, {
       email: values.email.toLowerCase(),
@@ -140,7 +152,11 @@ export async function submitForm(values) {
   }
 };
 
-export async function sendToProfile(values, navigate) {
+export async function sendToProfile(values){
+  if (!isLoggedIn()) {
+    fancyPopup('Please log in first.');
+    return;
+  }
   try {
     const response = await axios.get(`${backendUrl}/users?email=${values.email.toLowerCase()}`, {
       headers:
@@ -148,13 +164,15 @@ export async function sendToProfile(values, navigate) {
         authorization: `Bearer ${cookies.get('accessToken')}`
       }
     })
-    navigate('/profile/' + response.data._id);
   } catch (error) {
     console.log(error);
   }
 }
 
 export async function fetchUserProfile(userId) {
+  if (!isLoggedIn()) {
+    return null;
+  }
   try {
     const response = await axios.get(`${backendUrl}/users/${userId}`, {
       headers: {
@@ -172,7 +190,7 @@ export async function registerUser(values) {
   const { email, password, userType, firstName, lastName } = values;
   const user = { email, password, userType: userType.toLowerCase(), firstName, lastName };
   try {
-    await axios.post(`${backendUrl}/users`, user);
+    const response = await axios.post(`${backendUrl}/users`, JSON.stringify(user));
     return true;
   } catch (error) {
     const errorMessage = error.response?.data?.message || "An error occurred while submitting the form.";
@@ -180,3 +198,45 @@ export async function registerUser(values) {
     return false;
   }
 }
+
+
+export async function getPostings() {
+  try {
+    if (!isLoggedIn()) {
+      fancyPopup('Please log in first.');
+      return;
+    }
+    const response = await axios.get(`${backendUrl}/postings`, {
+      headers: {
+        authorization: `Bearer ${cookies.get('refreshToken')}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    fancyPopup(error); 
+  }
+}
+
+export async function updateUserProfile(userId, data) {
+  try {
+    if (!isLoggedIn()) {
+      fancyPopup('Please login first');
+      return false;
+    }
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    await axios.patch(`${backendUrl}/users/${userId}`, formData, {
+      headers: {
+        'authorization': `Bearer ${cookies.get('refreshToken')}`
+      }
+    });
+    return true;
+  } catch (error) {
+    const errorMessage = error.response?.data?.message || "An error occurred while updating the user profile.";
+    fancyPopup(errorMessage);
+    return false;
+  }
+}
+

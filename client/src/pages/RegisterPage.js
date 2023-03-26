@@ -7,11 +7,10 @@ import '../styles/Register.css';
 import '../styles/FormInput.css';
 import * as fn from "../components/Function";
 
-function RegisterPage() {
-
-  const navigate = useNavigate()
-
-  const [values, setValues] = useState({
+function RegisterPage(props) {
+    const { isLoggedIn, cookies, darkMode} = props;
+  const navigate = useNavigate();
+    const [values, setValues] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -20,6 +19,15 @@ function RegisterPage() {
     age: "",
     userType: "",
   });
+  
+  
+  if (isLoggedIn) {
+    navigate('/');
+    fn.fancyPopup('Already logged in!');
+    return null;
+  } else
+{
+
 
   const handleSelect = (event) => {
     const { name, value } = event.target;
@@ -136,5 +144,5 @@ const handleSubmit = (e) => {
     </div>
   );
 }
-
+}
 export default RegisterPage;

@@ -1,43 +1,34 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "universal-cookie";
 import Job from "../components/Job";
-import axios from "axios";
 import '../styles/ViewPostings.css';
 
-const cookies = new Cookies();
+import * as fn from '../components/Function';
 
-export default function ViewPostings() {
-
+export default function ViewPostings(props) {
+      const { isLoggedIn, cookies, darkMode} = props;
     const [postings, setPostings] = useState([]);
 
-    useEffect(() => {
-        axios.get('http://localhost:4000/postings',
-            {
-                headers:
-                {
-                    authorization: `Bearer ${cookies.get('accessToken')}`
-                }
-            })
-            .then((res) => {
-                setPostings(res.data);
-            }).catch((err) => {
-                console.log(err);
-            });
-    }, []);
+useEffect(() => {
+    const fetchData = async () => {
+        const data = await fn.getPostings();
+        setPostings(data);
+    }
+    fetchData();
+}, []);
 
-    return (
-        <>
-            <span className="new-post">New Post</span>
-            <div className="jobs">
-                {postings.map((posting) => (
-                    <Job
-                        title={posting.title}
-                        description={posting.description}
-                        location={posting.location}
-                        salary={posting.salary}
-                    />
-                ))}
-            </div>
-        </>
-    );
-}
+return (
+    <>
+        <span className="new-post">New Post</span>
+        <div className="jobs">
+            {postings.map((posting) => (
+                <Job
+                    title={posting.title}
+                    description={posting.description}
+                    location={posting.location}
+                    salary={posting.salary}
+                />
+            ))}
+        </div>
+    </>
+);
+            }

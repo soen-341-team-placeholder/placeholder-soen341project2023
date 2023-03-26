@@ -7,6 +7,12 @@
     color: white;
 }
 
+.nav-container h3 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 800;
+    font-size: x-large;
+}
+
 nav {
     display: flex;
     justify-content: center;
