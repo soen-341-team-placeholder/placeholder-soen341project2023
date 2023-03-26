@@ -69,7 +69,7 @@ export default function LoginPage(props) {
   ))
 }
         <button className = 'register-btn' onClick={handleSubmit}>Log in</button>
-        <p>New User?<Link to ="/register" ><u>Register</u></Link></p>
+        <p>New User? <Link to ="/register" ><u>Register</u></Link></p>
       </form>
 
 
