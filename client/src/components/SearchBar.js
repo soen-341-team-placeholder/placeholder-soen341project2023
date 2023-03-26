@@ -5,7 +5,8 @@ const SearchBar = ({keyword, onChange}) => {
     border: "none",
     borderRadius: "999px",
     margin: "0rem 1rem",
-    padding: "0.7rem 1rem"
+    padding: "0.7rem 1rem",
+    color:'black'
   };
   return (
     <input 

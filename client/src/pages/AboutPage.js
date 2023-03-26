@@ -23,6 +23,7 @@ export default function AboutPage(props) {
       <p>Backend URL: {fn.backendUrl}<br />
       if this is wrong, change components/Functions.js</p>
       <p>Login status: {isLoggedIn}</p>
+      <p>Current cookies:</p>
       <ul>
         {Object.keys(cookieState).map((key) => (
           <li key={key}>{`${key}: ${cookieState[key]}`}</li>
