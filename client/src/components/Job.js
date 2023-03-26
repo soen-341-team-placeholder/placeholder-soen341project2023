@@ -36,6 +36,30 @@ export default function Job({
   }, []);
 
   console.log(title, location, salary, description);
+
+  // added code for Apply button popup form
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+
+  const handleApplyClick = () => {
+    setShowModal(true);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    // Handle form submission logic here, e.g. sending data to server
+    setShowModal(false);
+    setShowConfirmation(true);
+    setTimeout(() => {
+      setShowConfirmation(false);
+    }, 2000);
+  };
+
+  const handleModalClose = () => {
+    setShowModal(false);
+  };
+  // added code for Apply button popup form ends here
+
   return (
     <div className="post-container">
       <div className="logo">
@@ -82,11 +106,44 @@ export default function Job({
                 </>
               ) : (
                 <>
-                  <li className="dropdown-button">Apply</li>
+                  <li className="dropdown-button" onClick={handleApplyClick}>Apply</li>
                   <li className="dropdown-button">Save</li>
                 </>
               )}
             </ul>
+            {/* added code for Apply button popup form */}
+            <div>
+              {showModal && (
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#FF5555', padding: '20px', borderRadius: '10%' }}>
+                  <h2>Apply</h2>
+                  <form onSubmit={handleSubmit}>
+                    <label>
+                      Upload Resume: &nbsp;
+                      <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+                    </label>
+                    <br /><br />
+                    <label>
+                      Upload Cover Letter: &nbsp;
+                      <input type="file" name="cover-letter" accept=".pdf,.doc,.docx" required />
+                    </label>
+                    <br /><br />
+                    <label>
+                      Upload Transcript: &nbsp;
+                      <input type="file" name="transcript" accept=".pdf,.doc,.docx" required />
+                    </label>
+                    <br /><br />
+                    <button className="dropdown-button" type="submit">Submit</button>
+                  </form>
+                  <button className="dropdown-button" onClick={handleModalClose}>Close</button>
+                </div>
+              )}
+              {showConfirmation && (
+                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'green', padding: '20px', borderRadius: '10%' }}>
+                  <h2>Application sent!</h2>
+                </div>
+              )}
+            </div>
+            {/* added code for Apply button popup ends here */}
           </div>
         )}
       </div>
