@@ -87,7 +87,21 @@ const userSchema = new mongoose.Schema({
         type: Date,
         default: Date.now(),
         immutable: true
-    }
+    },
+    subscribedTo: [
+        {
+            type: String,
+            required: true
+        }
+    ]
+    ,
+    savedPostings: [
+        {
+            type: String,
+            required: true
+        }
+    ]
+    
 });
 
 module.exports = mongoose.model('User', userSchema);
