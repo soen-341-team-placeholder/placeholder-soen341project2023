@@ -4,8 +4,44 @@ const router = express.Router();
 const Posting = require('../models/Posting');
 
 router.get('/', authenticateToken, async (req, res) => {
+    const employerId = req.query.employerId;
+    const studentId = req.query.userId;
+
+    if (employerId != null) {
+        Posting.find({employerId: employerId}).then((postings) => {
+            res.status(200).json(postings);
+        }).catch((err) => {
+            res.status(400).send('message:' + err);
+            console.log(err);
+        });
+        return;
+    }
+
     Posting.find({}).then((postings) => {
-        res.status(200).json(postings);
+        if (studentId) {
+            let userInPostings = []
+
+            postings.map((posting) => {
+                if (posting.pendingApplicantsIds
+                    && posting.pendingApplicantsIds.includes(studentId)) {
+                    userInPostings.push(posting);
+
+                } else if (posting.interviewApplicantIds
+                    && posting.interviewApplicantIds.includes(studentId)) {
+                    userInPostings.push(posting);
+
+                } else if (posting.acceptedApplicantIds
+                    && posting.acceptedApplicantIds.includes(studentId)) {
+                    userInPostings.push(posting);
+
+                } else if (posting.rejectedApplicantIds
+                    && posting.rejectedApplicantIds.includes(studentId)) {
+                    userInPostings.push(posting);
+                }
+            })
+            res.status(200).json(userInPostings)
+        } else
+            res.status(200).json(postings);
     }).catch((err) => {
         res.status(400).send('message:' + err);
         console.log(err);
@@ -36,7 +72,7 @@ router.get('/:id', authenticateToken, async (req, res) => {
             res.status(404).send('message: Posting not found');
             return;
         }
-        
+
         res.status(200).json(posting);
     }).catch((err) => {
         res.status(400).send('message:' + err);

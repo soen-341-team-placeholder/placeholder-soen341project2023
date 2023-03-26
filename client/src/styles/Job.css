@@ -20,7 +20,7 @@
     display: flex ;
     flex-direction: column ;
     flex-grow: 1 ;
-    padding-right: 70px ;
+    padding-right: 50px ;
 }
 
 .company {
@@ -60,6 +60,7 @@
     display: flex ;
     flex-wrap: wrap ;
     justify-content: space-between ;
+    padding-right: 30px;
 }
 
 .description {
@@ -68,4 +69,23 @@
     font-weight: 700 ;
     padding: 0.5rem ;
     border-radius: 10px ;
+}
+.button-menu{
+    cursor: pointer;
+}
+.dropdown-menu{
+    position: absolute;
+    background-color: #FF5555;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px 14px 10px 14px;
+    left: 82.5%;
+}
+.dropdown-list{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.dropdown-button{
+    cursor: pointer;
 }

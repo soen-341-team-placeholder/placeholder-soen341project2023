@@ -52,6 +52,7 @@ export default function LoginPage(props) {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
 
+
   return (
     <div className='RegisterPage'>
       <form className='form-register'>
