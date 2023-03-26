@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
+import '../styles/styles.css';
 
 import * as fn from "../components/Function";
 
 export default function AboutPage(props) {
-  const { cookies } = props;
+  const { cookies,isLoggedIn, darkMode } = props;
   const [cookieState, setCookieState] = useState({});
 
   useEffect(() => {
@@ -21,7 +22,12 @@ export default function AboutPage(props) {
       {fn.hello_world()}
       <p>Backend URL: {fn.backendUrl}<br />
       if this is wrong, change components/Functions.js</p>
-      {/* <p>Login status: {isLoggedIn}</p> */}
+      <p>Login status: {isLoggedIn}</p>
+      <ul>
+        {Object.keys(cookieState).map((key) => (
+          <li key={key}>{`${key}: ${cookieState[key]}`}</li>
+        ))}
+      </ul>
     </div>
   );
 }

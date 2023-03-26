@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from 'axios';
+
 import "../styles/styles.css";
+import "../styles/Applicant.css";
 import * as fn from "../components/Function";
 
 const CandidateCard = ({ children }) => (
