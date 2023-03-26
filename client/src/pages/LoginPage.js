@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+
 import FormInput from '../components/FormInput'
 import * as fn from "../components/Function";
+import '../styles/Register.css';
 
 
 export default function LoginPage(props) {
@@ -59,13 +61,18 @@ export default function LoginPage(props) {
       <form className='form-register'>
         <h1>Login</h1>
         {
-          inputs.map((input) => (
-            <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
-          ))
-        }
-        <button onClick={handleSubmit} className='register-btn'>Login</button>
-        <p>New User? <a href="./registration" ><u>Register here</u></a></p>
+  inputs.map((input) => (
+    <div key={input.id} className="form-input-wrapper">
+      <label htmlFor={input.name}>{input.label}</label>
+      <FormInput {...input} value={values[input.name]} onChange={onChange} label={null} />
+    </div>
+  ))
+}
+        <button className = 'register-btn' onClick={handleSubmit}>Log in</button>
+        <p>New User?<Link to ="/register" ><u>Register</u></Link></p>
       </form>
+
+
     </div>
   )
 }

@@ -138,7 +138,7 @@ const handleSubmit = (e) => {
   ))
 }
         <button className = 'register-btn' onClick={handleSubmit}>Register</button>
-        <p>Already registered? <Link to ="./login" ><u>Login</u></Link></p>
+        <p>Already registered? <Link to ="/login" ><u>Login</u></Link></p>
       </form>
 
 
