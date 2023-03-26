@@ -1,40 +1,34 @@
 import React, { useEffect, useState } from "react";
 import Job from "../components/Job";
-import '../styles/ViewPostings.css';
+import "../styles/ViewPostings.css";
 import PostingPopup from "../components/PostingPopup";
-
-
-import * as fn from '../components/Function';
-
+import * as fn from "../components/Function";
 
 export default function ViewPostings(props) {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [userType, setUserType] = useState("student");
-  const { isLoggedIn, cookies, darkMode} = props;
-    const [postings, setPostings] = useState([]);
-
-useEffect(() => {
-    const fetchData = async () => {
-        const data = await fn.getPostings();
-        setPostings(data);
-    }
-    fetchData();
-}, []);
+  const { isLoggedIn, cookies, darkMode } = props;
+  const [postings, setPostings] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/users/" + cookies.get("userId"), {
-        headers: {
-          authorization: `Bearer ${cookies.get("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
+    const fetchData = async () => {
+      const data = await fn.getPostings();
+      setPostings(data);
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fn.fetchUserProfile();
         setUserType(res.data.userType);
-      })
-      .catch((err) => {
+        console.log(res);
+      } catch (err) {
         console.log(err);
-      });
+      }
+    };
+    fetchData();
   }, []);
 
   return (
@@ -50,13 +44,11 @@ useEffect(() => {
           <br />
         </>
       )}
-      <PostingPopup
-        trigger={buttonPopup}
-        setTrigger={setButtonPopup}
-      ></PostingPopup>
+      <PostingPopup trigger={buttonPopup} setTrigger={setButtonPopup} />
       <div className="jobs">
         {postings.map((posting) => (
           <Job
+            key={posting._id}
             title={posting.title}
             description={posting.description}
             location={posting.location}

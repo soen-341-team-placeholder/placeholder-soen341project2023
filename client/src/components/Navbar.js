@@ -39,8 +39,8 @@ export default function Navbar(props) {
         <Link to="/" onClick={showNavbar}>
           Hub
         </Link>
-        <Link to="/job" onClick={fn.loginRedirector}>
-          Jobs
+        <Link to="/postings" onClick={fn.loginRedirector}>
+          View Postings
         </Link>
         <Link to="/inbox" onClick={fn.loginRedirector}>
           Inbox
