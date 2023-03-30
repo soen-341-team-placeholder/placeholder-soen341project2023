@@ -7,6 +7,9 @@
   },
   "scripts": {
   "start": "concurrently \"cd ./client && npm start\" \"cd ./server && npm start\""
-}
+},
 
+    "immutable": "^4.3.0",
+    "react-query": "^3.39.3"
+  }
 }
