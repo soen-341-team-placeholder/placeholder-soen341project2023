@@ -2,14 +2,12 @@ import React, { useState, useReducer, useEffect } from 'react';
 import { Routes, Route, useParams } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 
-import Education from './Education';
-import Skills from './Skills';
-import WorkExp from './WorkExp';
 import 'reactjs-popup/dist/index.css';
 import '../../styles/edit_student/StudProfile.css';
 // @TODO: store images in db
 import pic from './images/youssef.jpg';
 import * as fn from '../Function';
+import '../../styles/edit_student/WorkExp.css';
 
 function StudProfile(props) {
   const cookies = props.cookies;
@@ -113,7 +111,6 @@ function StudProfile(props) {
                             className='btn'>Save</button>
                     ) : (
                         <div>
-                            <img className='studImgEdit' src={pic} alt='profile pic' />
                             <h3>{formData.firstName} {formData.lastName}</h3>
                             <p>{formData.age} years old<br />
                                 <Popup
@@ -121,9 +118,9 @@ function StudProfile(props) {
                                     position='right center'>
                                     <div>{formData.email}</div>
                                 </Popup></p>
-                            <div>{formData.biography}</div>
+                            <div>{formData.biography}</div> <br />
                             <button onClick={toggleDiv} className='btn'>Edit</button>
-                            <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+                            <br /> <br /> <br /> <br /> <br />
                         </div>
                     )}
                     {showDiv && <div className='wrapper'>
@@ -156,6 +153,10 @@ function StudProfile(props) {
                                         </tr>
                                         <br />
                                     </table>
+                                    <p className='stud-form-edit-p-tag'>Age &nbsp;</p>
+                                    <input className='input-edit-stud-profile' name='age' onChange={handleChange}
+                                        value={formData.age || ''} />
+                                    <br />
                                     <p className='stud-form-edit-p-tag'>Email Address &nbsp;</p>
                                     <input className='input-edit-stud-profile' name='email' onChange={handleChange}
                                         value={formData.email || ''} />
@@ -169,12 +170,6 @@ function StudProfile(props) {
                         </form>
                     </div>}
                 </div>
-
-                <Routes>
-                    <Route path='/experience' element={<WorkExp />} />
-                    <Route path='/education' element={<Education />} />
-                    <Route path='/skills' element={<Skills />} />
-                </Routes>
             </div>
         </div>
     );

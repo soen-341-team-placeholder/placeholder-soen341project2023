@@ -1,15 +1,14 @@
 {
   "dependencies": {
+    "nodemailer": "^6.9.1",
     "reactjs-popup": "^2.0.5"
   },
   "devDependencies": {
     "concurrently": "^7.6.0"
   },
   "scripts": {
-  "start": "concurrently \"cd ./client && npm start\" \"cd ./server && npm start\""
-},
-
-    "immutable": "^4.3.0",
-    "react-query": "^3.39.3"
-  }
-
+    "start": "concurrently \"cd ./client && npm start\" \"cd ./server && npm start\""
+  },
+  "immutable": "^4.3.0",
+  "react-query": "^3.39.3"
+}

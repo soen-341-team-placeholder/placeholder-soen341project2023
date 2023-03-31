@@ -29,7 +29,7 @@
 label {
     font-size: 10px;
     font-weight: bold;
-}*/
+}
 
 .your-span {
   color: red;
@@ -41,6 +41,6 @@ label {
     border: 1px solid red;
 }
 
-.input-register:invalid[focused=true]~span {
+.input-register:invalid[focused=true] ~ span {
     display: block;
 }

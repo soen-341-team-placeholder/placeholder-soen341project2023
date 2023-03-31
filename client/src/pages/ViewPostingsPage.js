@@ -17,7 +17,7 @@ export default function ViewPostings(props) {
     };
     fetchData();
   }, []);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,6 +30,34 @@ export default function ViewPostings(props) {
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    async function getStudentApplicationStatus() {
+      const response = await axios.get("http://localhost:4000/postings", {
+        headers: {
+          Authorization: `Bearer ${cookies.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        setUserType(res.data.userType);
+        console.log(res);
+      } catch (err) {
+        console.log(err);
+      });
+
+      setApplicationStatuses(updatedApplicationStatuses);
+    }
+
+    getStudentApplicationStatus();
+  }, []);
+
+  function getUserStatus(postingId) {
+    const status = applicationStatuses.find(
+      (status) => status.postingId === postingId
+    );
+    return status ? status.status : "Want to Apply?";
+  }
 
   return (
     <>
@@ -54,6 +82,7 @@ export default function ViewPostings(props) {
             location={posting.location}
             salary={posting.salary}
             postingId={posting._id}
+            status={getUserStatus(posting._id)}
           />
         ))}
       </div>

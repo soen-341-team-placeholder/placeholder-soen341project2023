@@ -14,6 +14,7 @@ export default function Job({
   salary,
   description,
   postingId,
+  status,
 }) {
   const [buttonMenu, setButtonMenu] = useState(false);
   const [userType, setUserType] = useState("student");
@@ -35,12 +36,12 @@ export default function Job({
       });
   }, []);
 
-  console.log(title, location, salary, description);
+
+  console.log(title, location, salary, description,status);
   return (
     <div className="post-container">
       <div className="logo">
-        <FaPlay style={{ fontSize: "3em", color: "white" }} />
-        {/* <img src="/images/postIcon.jpg" alt="img"></img> */}
+        <p>Status: {status}</p>
       </div>
       <div className="part1">
         <div className="company">

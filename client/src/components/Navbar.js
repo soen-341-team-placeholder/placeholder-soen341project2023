@@ -1,6 +1,9 @@
 import { useRef, useState } from "react";
 import { FaBars, FaDownload, FaMoon, FaSun, FaTimes } from "react-icons/fa";
 import { Link, withRouter } from "react-router-dom";
+import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa"; // import font awesome icons
+import "../styles/styles.css";
+import { Link } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
 import * as fn from './Function';
