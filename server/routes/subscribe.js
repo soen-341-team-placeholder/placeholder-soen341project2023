@@ -41,44 +41,6 @@ router.post('/', async (req, res) => {
 });
 
 
-
-// router.patch('/:id', authenticateToken, async (req, res) => { //adding subscriber's IDs to "subscribers" array
-
-//     const userId = req.params.id;
-//     const newSavedPosting = req.body.savedPostings;
-
-//     try {
-//         const user = await User.findById(userId);
-
-//     if (!user) {
-//       res.status(404).send('User not found');
-//       return;
-//     }
-
-//     const existingPostings = user.savedPostings;
-//     const uniquePostings = [];
-//     newSavedPosting.forEach(name => {
-//       if (!existingPostings.includes(name)) {
-//         uniquePostings.push(name);
-//       }
-//     });
-
-//     if (uniqueNames.length === 0) {
-//       res.status(400).send('Name(s) already exist');
-//       return;
-//     }
-//     user.subscribers = [...existingPostings, ...uniquePostings];
-
-//     await user.save();
-
-//     res.status(200).send('Emplyer Name(s) added successfully');
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send('Error adding name(s)');
-//   }
-//   });
-  
-
 function subscribe(email){
     // User has provided an email, thus search for a specific user with that email
     return new Promise ((resolve , reject) => {
