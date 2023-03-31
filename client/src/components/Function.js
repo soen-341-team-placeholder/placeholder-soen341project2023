@@ -1,19 +1,22 @@
-import axios from 'axios';
-import Cookies from 'universal-cookie'
-import { toast } from 'react-toastify';
-import React, { useState } from 'react';
-import { Navigate, BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { Document, Packer, Paragraph, TextRun } from "docx";
+import axios from 'axios'; // Importing axios module for making HTTP requests
+import Cookies from 'universal-cookie' // Importing universal-cookie module for handling cookies
+import { toast } from 'react-toastify'; // Importing react-toastify module for showing notifications
+import React, { useState } from 'react'; // Importing react module and useState hook
+import { Navigate, BrowserRouter as Router, Route, Routes } from "react-router-dom"; // Importing react-router-dom module for routing
+import { Document, Packer, Paragraph, TextRun } from "docx"; // Importing docx module for creating Word documents
 
-export const cookies = new Cookies();
+export const cookies = new Cookies(); // Creating an instance of Cookies
 export const backendUrl = "http://127.0.0.1:4000";//"https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io";
 
 // Misc/ testing 
 export function hello_world() {
-  return ('Hello World');
+  return ('Hello World'); // Returns 'Hello World' string
 }
 
-
+/**
+ * Function to show a fancy popup notification
+ * @param {string} arg - The message to be shown in the notification
+ */
 export function fancyPopup(arg) {
   toast.error(arg, {
     position: toast.POSITION.TOP_CENTER,
@@ -22,7 +25,10 @@ export function fancyPopup(arg) {
   });
 }
 
-
+/**
+ * Function to toggle dark mode
+ * @returns {boolean} - The new value of the darkMode cookie
+ */
 export function toggleDarkMode() {
   const darkMode = cookies.get('darkMode');
   console.log('darkmode ' + darkMode);
@@ -41,6 +47,10 @@ export function toggleDarkMode() {
   }
 }
 
+/**
+ * Function to create and download a Word document with user information
+ * @param {object} user - The user object containing firstName, lastName, email, biography, workExperience, and education
+ */
 export function downloadCV (user) {
   const doc = new Document();
 
@@ -126,6 +136,10 @@ export function downloadCV (user) {
   });
 }
 
+/**
+ * Function to redirect to login page and show a notification if user is not logged in
+ * @returns {JSX.Element} - The Navigate component that redirects to the login page
+ */
 export function loginRedirector() {
   fancyPopup('Please log in first');
   return <Navigate to='/login' />;
@@ -134,10 +148,18 @@ export function loginRedirector() {
 
 // API Request
 
+/**
+ * Function to check if user is logged in
+ * @returns {boolean} - Returns true if user is logged in, false otherwise
+ */
 export function isLoggedIn() {
   return !!cookies.get('refreshToken');
 }
 
+/**
+ * Function to log in user with provided email and password
+ * @param {object} values - An object containing email and password values
+ */
 export async function loginUser(values) {
   try {
     const response = await axios.post(`${backendUrl}/login`, {
@@ -152,6 +174,10 @@ export async function loginUser(values) {
   }
 }
 
+/**
+ * Function to send user to their profile page after logging in
+ * @param {object} values - An object containing email and password values
+ */
 export async function sendToProfile(values){
   if (!isLoggedIn()) {
     fancyPopup('Please log in first.');
@@ -171,6 +197,11 @@ export async function sendToProfile(values){
   }
 }
 
+/**
+ * Function to fetch user profile information
+ * @param {string} userId - The id of the user whose profile to fetch
+ * @returns {object|null} - The user profile object, or null if not logged in or an error occurred
+ */
 export async function fetchUserProfile(userId) {
   if (!isLoggedIn()) {
     return null;
@@ -188,6 +219,12 @@ export async function fetchUserProfile(userId) {
   }
 }
 
+
+/**
+ * Function to register a new user
+ * @param {object} values - An object containing email, password, userType, firstName, and lastName values
+ * @returns {boolean} - Returns true if user registration was successful, false otherwise
+ */
 export async function registerUser(values) {
   const { email, password, userType, firstName, lastName } = values;
   const user = { email, password, userType: userType.toLowerCase(), firstName, lastName };
@@ -201,7 +238,10 @@ export async function registerUser(values) {
   }
 }
 
-
+/**
+ * Function to get all job postings
+ * @returns {object|null} - The job postings object, or null if not logged in or an error occurred
+ */
 export async function getPostings() {
   try {
     if (!isLoggedIn()) {
@@ -219,6 +259,12 @@ export async function getPostings() {
   }
 }
 
+/**
+ * Function to update user profile
+ * @param {string} userId - The id of the user whose profile to update
+ * @param {object} data - An object containing user profile data
+ * @returns {boolean} - Returns true if user profile update was successful, false otherwise
+ */
 export async function updateUserProfile(userId, data) {
   try {
     if (!isLoggedIn()) {
@@ -241,4 +287,3 @@ export async function updateUserProfile(userId, data) {
     return false;
   }
 }
-
