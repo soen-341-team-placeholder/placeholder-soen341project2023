@@ -249,7 +249,7 @@ export async function getPostings() {
     }
     const response = await axios.get(`${backendUrl}/postings`, {
       headers: {
-        authorization: `Bearer ${cookies.get('refreshToken')}`
+        authorization: `Bearer ${cookies.get('accessToken')}`
       }
     });
     return response.data;
@@ -276,7 +276,7 @@ export async function updateUserProfile(userId, data) {
     });
     await axios.patch(`${backendUrl}/users/${userId}`, formData, {
       headers: {
-        'authorization': `Bearer ${cookies.get('refreshToken')}`
+        'authorization': `Bearer ${cookies.get('accessToken')}`
       }
     });
     return true;
