@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { FaBars, FaDownload, FaMoon, FaSun, FaTimes } from "react-icons/fa"; // import font awesome icons
+import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa"; // import font awesome icons
 import "../styles/styles.css";
 import { Link } from "react-router-dom";
 
