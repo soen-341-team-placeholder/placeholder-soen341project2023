@@ -6,7 +6,7 @@ import { Navigate, BrowserRouter as Router, Route, Routes } from "react-router-d
 import { Document, Packer, Paragraph, TextRun } from "docx";
 
 export const cookies = new Cookies();
-export const backendUrl = "http://walidoow.com";//"https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io";
+export const backendUrl = "http://127.0.0.1:4000";//"https://4000-walidoow-placeholdersoe-sz79zpqxbl2.ws-us92.gitpod.io";
 
 // Misc/ testing 
 export function hello_world() {
@@ -146,11 +146,11 @@ export async function loginUser(values) {
     });
     cookies.set('accessToken', response.data.accessToken, { path: '/' });
     cookies.set('refreshToken', response.data.refreshToken, { path: '/' });
-    sendToProfile();
+    await sendToProfile(values);
   } catch (error) {
     console.log(error);
   }
-};
+}
 
 export async function sendToProfile(values){
   if (!isLoggedIn()) {
@@ -158,12 +158,14 @@ export async function sendToProfile(values){
     return;
   }
   try {
+    console.log(values)
     const response = await axios.get(`${backendUrl}/users?email=${values.email.toLowerCase()}`, {
       headers:
       {
         authorization: `Bearer ${cookies.get('accessToken')}`
       }
     })
+    cookies.set('userId', response.data._id, { path: '/' });
   } catch (error) {
     console.log(error);
   }
