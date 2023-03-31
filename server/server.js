@@ -15,6 +15,7 @@ const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const tokenRouter = require('./routes/token');
 const postingsRouter = require('./routes/postings');
+const subscribeRouter = require('./routes/subscribe');
 
 app.options("*", cors());
 app.use(cors());
@@ -23,6 +24,7 @@ app.use('/users', usersRouter);
 app.use('/login', loginRouter);
 app.use('/token', tokenRouter);
 app.use('/postings', postingsRouter);
+app.use('/subscribe', subscribeRouter);
 
 // Define app port
 app.listen(process.env.PORT, () => console.log('listening on port ' + process.env.PORT));
