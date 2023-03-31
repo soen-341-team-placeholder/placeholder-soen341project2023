@@ -226,10 +226,10 @@ export async function fetchUserProfile(userId) {
  * @returns {boolean} - Returns true if user registration was successful, false otherwise
  */
 export async function registerUser(values) {
-  const { email, password, userType, firstName, lastName } = values;
-  const user = { email, password, userType: userType.toLowerCase(), firstName, lastName };
+  const { email, password, userType, firstName, lastName, age } = values;
+  const user = { email, password, userType: userType.toLowerCase(), firstName, lastName, age };
   try {
-    const response = await axios.post(`${backendUrl}/users`, JSON.stringify(user));
+    const response = await axios.post(`${backendUrl}/users`, user);
     return true;
   } catch (error) {
     const errorMessage = error.response?.data?.message || "An error occurred while submitting the form.";
