@@ -184,7 +184,6 @@ export async function sendToProfile(values){
     return;
   }
   try {
-    console.log(values)
     const response = await axios.get(`${backendUrl}/users?email=${values.email.toLowerCase()}`, {
       headers:
       {
