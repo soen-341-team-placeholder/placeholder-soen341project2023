@@ -3,12 +3,14 @@ import Job from "../components/Job";
 import "../styles/ViewPostings.css";
 import PostingPopup from "../components/PostingPopup";
 import * as fn from "../components/Function";
+import axios from "axios";
 
 export default function ViewPostings(props) {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [userType, setUserType] = useState("student");
   const { isLoggedIn, cookies, darkMode } = props;
   const [postings, setPostings] = useState([]);
+  const [applicationStatuses, setApplicationStatuses] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -17,7 +19,7 @@ export default function ViewPostings(props) {
     };
     fetchData();
   }, []);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,20 +35,17 @@ export default function ViewPostings(props) {
 
   useEffect(() => {
     async function getStudentApplicationStatus() {
-      const response = await axios.get("http://localhost:4000/postings", {
-        headers: {
-          Authorization: `Bearer ${cookies.get("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setUserType(res.data.userType);
-        console.log(res);
+      try {
+        const response = await axios.get("http://localhost:4000/postings", {
+          headers: {
+            Authorization: `Bearer ${cookies.get("accessToken")}`,
+          },
+        });
+        console.log(response);
+        setApplicationStatuses(response.data);
       } catch (err) {
         console.log(err);
-      });
-
-      setApplicationStatuses(updatedApplicationStatuses);
+      }
     }
 
     getStudentApplicationStatus();
