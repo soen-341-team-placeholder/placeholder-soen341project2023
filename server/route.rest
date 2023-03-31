@@ -8,43 +8,51 @@ POST http://localhost:4000/users
 Content-Type:application/json
 
 {
-    "email": "wade3.hama@outlook.com",
+    "email": "wade333.com",
     "password": "3333",
     "firstName": "wadeh",
     "lastName": "hama",
     "age": 22,
-    "userType": "admin"
+    "userType": "employer"
 }
 
 ### 641d11c48fe77e7af17d0823
 GET http://localhost:4000/users/641d11c48fe77e7af17d0823
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzk2Mjk1MTIsImV4cCI6MTY3OTYzMTMxMn0.lxTExp2L92CQmzhVkvU5o-8vgFJs1yzree8hrEOG5V0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2ODAwOTkyODIsImV4cCI6MTY4MDEwMTA4Mn0.9rqh0GsLvr9j0-Zaxanh7oL8bkNl1UGSWoYu_SMi_rc
 
 ### "acessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2MDYzNDUsImV4cCI6MTY3NzYwNjM3NX0._ikk9Z0mDnm1x4UBXRdFNjh9MR17bwe5YI2n8BK1uSk",
 ### "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2Nzc2MDYzNDV9.iOhiX85T-QrdaUHLL1jaqjR1JczypD8iQcdqzesbLAk"
 ### admin: 63fe3da0bfd22ab2dd64e32a 
+ # "email": "wade3.hama@outlook.com",
+    # "password":"3333"
 POST http://localhost:4000/login
 Content-Type:application/json
 
 {
-    "email": "wade3.hama@outlook.com",
+    "email": "wade3outlook.com",
     "password":"3333"
 }
 
 ###
-PATCH http://localhost:4000/users/641dba3d41756e238ccd1cfb
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzLmhhbWFAb3V0bG9vay5jb20iLCJpYXQiOjE2Nzk3OTAwMjksImV4cCI6MTY3OTc5MTgyOX0.To0lcYad7jor605RXZfdwJaUSihG9Xf5eR9rep0fiOk
+PATCH http://localhost:4000/users/642461c3f45b952f3b4e915f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2ODAyMzM4NjcsImV4cCI6MTY4MDIzNTY2N30.I21Sm2js7tWyH0V8zT6gZbDminyEjGRkQvqTTfSvP9c
 Content-Type:application/json
 
 {
-    "firstName": "walidddd",
-    "lastName": "alshhhh",
-    "age": 23,
-    "userType": "student",
-    "subscribedTo" : ["Company f"],
-    "savedPostings" : ["post 2"]
+    "firstName": "wadeh",
+    "lastName": "ha",
+    "age": 24,
+    "userType": "employer"
 }
 
+###
+PATCH http://localhost:4000/users/savePosting/642461c3f45b952f3b4e915f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2ODAyMzE5NzUsImV4cCI6MTY4MDIzMzc3NX0.8KswrEdt-1v6Gs3492HcQfMMqDy_2emV21NBoEAv6HI
+Content-Type:application/json
+
+{
+    "savedPostings": ["post1"]
+}
 ###
 
 DELETE http://localhost:4000/users/63fe153991a7238e2269f438
@@ -52,7 +60,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb
 
 ###
 
-POST http://localhost:4000/subscribe
+POST http://localhost:4000/subscribe/sendEmail
 Content-Type:application/json
 
 {
@@ -61,14 +69,44 @@ Content-Type:application/json
 
 ###
 
-PATCH http://localhost:4000/subscribe/641dba3d41756e238ccd1cfb
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzLmhhbWFAb3V0bG9vay5jb20iLCJpYXQiOjE2Nzk3OTAwMjksImV4cCI6MTY3OTc5MTgyOX0.To0lcYad7jor605RXZfdwJaUSihG9Xf5eR9rep0fiOk
+PATCH http://localhost:4000/users/642642136997f2bb58617779
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2ODAyMzE0NjMsImV4cCI6MTY4MDIzMzI2M30.wBDYTN9H0-7MTaynManQlrGYySsXEvbH0NHdbw_a0zA
 Content-Type:application/json
-
 {
-    "subscribedTo" : ["Company g"]
+    "firstName": "wadehhhh",
+    "lastName": "hamati",
+    "age": 24,
 }
 
 ### 641d11c48fe77e7af17d0823
-GET http://localhost:4000/users/641dba3d41756e238ccd1cfb
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzLmhhbWFAb3V0bG9vay5jb20iLCJpYXQiOjE2Nzk3OTAwMjksImV4cCI6MTY3OTc5MTgyOX0.To0lcYad7jor605RXZfdwJaUSihG9Xf5eR9rep0fiOk
+GET http://localhost:4000/users/642461c3f45b952f3b4e915f
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndhZGUzb3V0bG9vay5jb20iLCJpYXQiOjE2ODAyMzE5NzUsImV4cCI6MTY4MDIzMzc3NX0.8KswrEdt-1v6Gs3492HcQfMMqDy_2emV21NBoEAv6HI
+
+### employerID: 641dba3d41756e238ccd1cfb
+
+POST http://localhost:4000/subscribe/
+Content-Type:application/json
+
+{
+    "student": "642461c3f45b952f3b4e915f",
+    "employer": "641dba3d41756e238ccd1cfb"
+}
+
+
+
+# {
+#   "email": "wade3.com",
+#   "firstName": "wadeh",
+#   "lastName": "hama",
+#   "age": 22,
+#   "userType": "admin",
+#   "jobOffers": [],
+#   "creationDate": "2023-03-29T16:04:16.437Z",
+#   "subscribers": [],
+#   "savedPostings": [],
+#   "_id": "642461c3f45b952f3b4e915f",
+#   "education": [],
+#   "workExperience": [],
+#   "__v": 0
+# }
+

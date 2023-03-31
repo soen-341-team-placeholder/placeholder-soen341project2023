@@ -88,20 +88,19 @@ const userSchema = new mongoose.Schema({
         default: Date.now(),
         immutable: true
     },
-    subscribedTo: [
+    subscribers: [
         {
-            type: String,
-            required: true
-        }
-    ]
-    ,
+        type: String,
+        ref: 'User'
+      }
+    ],
     savedPostings: [
         {
             type: String,
-            required: true
         }
     ]
-    
 });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

@@ -66,66 +66,83 @@ router.get('/:id', getUser, authenticateToken, async (req, res) => {
         const updatedUser = await res.user.save()
         res.json(updatedUser)
     } catch (error) {
-        res.status(400).send("message" + err.message)
+        res.status(400).send("message" + error.message)
     }
 })
 
-router.patch('/', async (req, res) => {
-    res.sendStatus(200)
-})
+// router.patch('/', async (req, res) => {
+//     res.sendStatus(200)
+// })
 
 //update user by id
 router.patch('/:id', authenticateToken, async (req, res) => {
-    const newEmployer = req.body.subscribedTo;
-    const newSavedPosting = req.body.savedPostings;
+    const id = req.params.id;
+    const updates = req.body;
+
+  try {
+    // Find user by ID
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update properties
+    user.firstName = updates.firstName;
+    user.lastName = updates.lastName;
+    user.age = updates.age;
+    user.biography = updates.biography;
+    user.companyName = updates.companyName;
+    user.jobOffers = updates.jobOffers;
+    user.workExperience = updates.workExperience;
+    user.education = updates.education;
+    user.userType = updates.userType;
+    user.subscribers = updates.subscribers;
+
+    // Save updated user
+    const updatedUser = await user.save();
+
+    res.status(200).json(updatedUser);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+  
+});
+
+router.patch('/savePosting/:id', authenticateToken, async (req, res) => {
     const userId = req.params.id;
-    try{
-        const user = await User.findById(userId);
-        const { firstName, lastName, age, userType } = req.body;
-        const updatedUser = await User.findOneAndUpdate(
-            { _id: userId },
-            { firstName, lastName,age, userType },
-            { new: true } // return the updated document
-        )
-        if (!updatedUser) {
-            return res.status(404).send(`User with ID ${userId} not found`);
+    const newPosting = req.body.savedPostings;
+  
+    try {
+      const user = await User.findById(userId);
+  
+      if (!user) {
+        res.status(404).send('User not found');
+        return;
+      }
+  
+      const existingPostings = user.savedPostings;
+      const uniquePostings = [];
+  
+      newPosting.forEach(posting => {
+        if (!existingPostings.includes(posting)) {
+          uniquePostings.push(posting);
         }
-
-        const existingEmployers = user.subscribedTo;
-        const uniqueEmployers = [];
-        const existingSavedPostings = user.savedPostings;
-        const uniqueSavedPostings = [];
-
-        newEmployer.forEach(name => {
-            if (!existingEmployers.includes(name)) {
-                uniqueEmployers.push(name);
-            }
-          });
-
-        if (uniqueEmployers.length === 0) {
-            res.status(400).send('All names already exist');
-            return;
-        }
-
-        newEmployer.forEach(name => {
-            if (!existingSavedPostings.includes(name)) {
-                uniqueSavedPostings.push(name);
-            }
-          });
-
-        if (uniqueSavedPostings.length === 0) {
-            res.status(400).send('All names already exist');
-            return;
-        }
-        
-        user.subscribedTo = [...existingEmployers, ...uniqueEmployers];
-        user.savedPostings = [...user.existingSavedPostings, ...uniqueSavedPostings];
-        await user.save();
-        res.send(`User with ID ${userId} has been updated`);
-
+      });
+  
+      if (uniquePostings.length === 0) {
+        res.status(400).send('This posting is already saved');
+        return;
+      }
+  
+      user.savedPostings = [...existingPostings, ...uniquePostings];
+  
+      await user.save();
+  
+      res.status(200).send('Posting added successfully');
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error')
+      console.error(error);
+      res.status(500).send('Error adding posting');
     }
 })
 

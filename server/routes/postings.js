@@ -1,4 +1,5 @@
 const express = require('express');
+// const axios = require('axios');
 const authenticateToken = require('../auth/token_validator');
 const router = express.Router();
 const Posting = require('../models/Posting');
@@ -12,6 +13,7 @@ router.get('/', authenticateToken, async (req, res) => {
     });
 });
 
+// let idsss;
 router.post('/', authenticateToken, async (req, res) => {
     const userType = req.requester.userType;
 
@@ -20,7 +22,8 @@ router.post('/', authenticateToken, async (req, res) => {
         return;
     }
 
-    new Posting(req.body).save((err, posting) => {
+    const newPosting = new Posting(req.body)
+    await newPosting.save((err, posting) => {
         if (err) {
             res.status(400).send('message:' + err);
             console.log(err);
@@ -28,6 +31,11 @@ router.post('/', authenticateToken, async (req, res) => {
             res.status(200).json(posting);
         }
     });
+
+    // console.log(`Employer's id: ${newPosting.employerId}`);
+    // idsss = newPosting.employerId;
+    // const getUsersResponse = await axios.get('/users');
+    // console.log('All users:', getUsersResponse.data);
 });
 
 router.get('/:id', authenticateToken, async (req, res) => {

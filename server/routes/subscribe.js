@@ -4,50 +4,79 @@ const User = require('../models/User')
 const authenticateToken = require('../auth/token_validator')
 const nodemailer = require('nodemailer')
 
-router.post('/', (req,res) => { //sending the email
+router.post('/sendEmail', (req,res) => { //sending the email
     const email = req.body.email
     subscribe(email)
     .then(response => res.send(response.message))
     .catch(error => res.status(500).send(error.message))
 })
 
-router.patch('/:id', authenticateToken, async (req, res) => {
+// POST /subscribe endpoint
+router.post('/', async (req, res) => {
+  try {
+    const studentId = req.body.student;
+    const employerId = req.body.employer;
 
-    const userId = req.params.id;
-    const newEmployer = req.body.subscribedTo;
+    // find the student and employer users
+    const student = await User.findById(studentId);
+    const employer = await User.findById(employerId);
+    console.log(student);
+    console.log(employer);
 
-    try {
-        const user = await User.findById(userId);
-
-    if (!user) {
-      res.status(404).send('User not found');
-      return;
+    if (!student || !employer) {
+      return res.status(404).send('User not found');
     }
 
-    const existingNames = user.subscribedTo;
-    const uniqueNames = [];
+    // add the student to the employer's subscribers array
+    employer.subscribers.push(student._id);
 
-    newEmployer.forEach(name => {
-      if (!existingNames.includes(name)) {
-        uniqueNames.push(name);
-      }
-    });
+    // save the changes to the employer document
+    await employer.save();
 
-    if (uniqueNames.length === 0) {
-      res.status(400).send('Name(s) already exist');
-      return;
-    }
-
-    user.subscribedTo = [...existingNames, ...uniqueNames];
-
-    await user.save();
-
-    res.status(200).send('Emplyer Name(s) added successfully');
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error adding name(s)');
+    res.send(`Student ${student._id} subscribed to employer ${employer.id}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Internal Server Error');
   }
-  });
+});
+
+
+
+// router.patch('/:id', authenticateToken, async (req, res) => { //adding subscriber's IDs to "subscribers" array
+
+//     const userId = req.params.id;
+//     const newSavedPosting = req.body.savedPostings;
+
+//     try {
+//         const user = await User.findById(userId);
+
+//     if (!user) {
+//       res.status(404).send('User not found');
+//       return;
+//     }
+
+//     const existingPostings = user.savedPostings;
+//     const uniquePostings = [];
+//     newSavedPosting.forEach(name => {
+//       if (!existingPostings.includes(name)) {
+//         uniquePostings.push(name);
+//       }
+//     });
+
+//     if (uniqueNames.length === 0) {
+//       res.status(400).send('Name(s) already exist');
+//       return;
+//     }
+//     user.subscribers = [...existingPostings, ...uniquePostings];
+
+//     await user.save();
+
+//     res.status(200).send('Emplyer Name(s) added successfully');
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).send('Error adding name(s)');
+//   }
+//   });
   
 
 function subscribe(email){
