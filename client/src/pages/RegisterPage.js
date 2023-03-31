@@ -84,7 +84,7 @@ function RegisterPage() {
       errorMessage: "You must be thirteen or older to register",
       label: "Age",
       required: true,
-      min: 13,
+      min: 14,
       max: 100
     },
 
@@ -130,7 +130,7 @@ function RegisterPage() {
           ))
         }
         <button onClick={handleSubmit}>Register</button>
-        <p>Already registered? <Link to ="./login" ><u>Login</u></Link></p>
+        <p>Already registered? <Link to ="../login" ><u>Login</u></Link></p>
       </form>
 
 

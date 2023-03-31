@@ -11,6 +11,7 @@ export default function ViewPostings() {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [postings, setPostings] = useState([]);
   const [userType, setUserType] = useState("student");
+  const [applicationStatuses, setApplicationStatuses] = useState([]);
 
   useEffect(() => {
     axios
@@ -27,7 +28,7 @@ export default function ViewPostings() {
         console.log(err);
       });
   }, []);
-
+  
   useEffect(() => {
     axios
       .get("http://localhost:4000/users/" + cookies.get("userId"), {
@@ -43,6 +44,55 @@ export default function ViewPostings() {
         console.log(err);
       });
   }, []);
+
+  useEffect(() => {
+    async function getStudentApplicationStatus() {
+      const response = await axios.get("http://localhost:4000/postings", {
+        headers: {
+          Authorization: `Bearer ${cookies.get("accessToken")}`,
+        },
+      });
+
+      const postings = response.data;
+
+      const userId = cookies.get("userId");
+      const updatedApplicationStatuses = [];
+
+      postings.forEach((posting) => {
+        const {
+          pendingApplicantsIds,
+          interviewApplicantIds,
+          acceptedApplicantIds,
+          rejectedApplicantIds,
+        } = posting;
+
+        let status = "Apply?";
+
+        if (pendingApplicantsIds.includes(userId)) {
+          status = "Pending";
+        } else if (interviewApplicantIds.includes(userId)) {
+          status = "Interview";
+        } else if (acceptedApplicantIds.includes(userId)) {
+          status = "Accepted";
+        } else if (rejectedApplicantIds.includes(userId)) {
+          status = "Rejected";
+        }
+        
+        updatedApplicationStatuses.push({ postingId: posting.postingId, status });
+      });
+
+      setApplicationStatuses(updatedApplicationStatuses);
+    }
+
+    getStudentApplicationStatus();
+  }, []);
+
+  function getUserStatus(postingId) {
+    const status = applicationStatuses.find(
+      (status) => status.postingId === postingId
+    );
+    return status ? status.status : "Want to Apply?";
+  }
 
   return (
     <>
@@ -69,6 +119,7 @@ export default function ViewPostings() {
             location={posting.location}
             salary={posting.salary}
             postingId={posting._id}
+            status={getUserStatus(posting._id)}
           />
         ))}
       </div>
