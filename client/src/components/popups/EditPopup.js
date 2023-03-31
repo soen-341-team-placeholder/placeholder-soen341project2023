@@ -1,10 +1,39 @@
-import React, { useState } from "react";
-import "../styles/PostingPopup.css";
+import React, { useEffect, useState } from "react";
+import "../../styles/PostingPopup.css"
 import PostingPopupInput from "./PostingPopupInput";
 import { FaRegTimesCircle } from "react-icons/fa";
+import Cookies from "universal-cookie";
 import axios from "axios";
 
+const cookies = new Cookies();
+
 export default function PostingPopup(props) {
+  const [postings, setPostings] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:4000/postings/" + props.postingId, {
+        headers: {
+          authorization: `Bearer ${cookies.get("accessToken")}`,
+        },
+      })
+      .then((res) => {
+        setPostings(res.data);
+        console.log(res);
+        console.log("I AM PRINTING THE DATA");
+        console.log(res.data);
+        setValues({
+          companyName: res.data.title,
+          jobTitle: res.data.title,
+          location: res.data.location,
+          salary: res.data.salary,
+          description: res.data.description,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const [values, setValues] = useState({
     companyName: "",
     jobTitle: "",
@@ -54,16 +83,14 @@ export default function PostingPopup(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .fetch(`http://localhost:4000/postings/`, values, {
-        method: "POST",
+      .patch(`http://localhost:4000/postings/${props.postingId}`, values, {
         headers: {
-          "Content-Type": "application/json",
+          authorization: `Bearer ${cookies.get("accessToken")}`,
         },
-        body: JSON.stringify(values),
       })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
+      .then((res) => {
+        console.log(res);
+        props.setTrigger(false);
       })
       .catch((err) => {
         console.log(err);
@@ -76,11 +103,12 @@ export default function PostingPopup(props) {
 
 
   console.log(values);
+  console.log("VALUESS");
   return props.trigger ? (
     <div className="popup">
       <div className="popup-inner">
         <div className="popup-header">
-          <h1 className="popup-title">Post a Job</h1>
+          <h1 className="popup-title">Edit Job</h1>
         </div>
         <div className="close-btn" onClick={() => props.setTrigger(false)}>
           {" "}
@@ -96,12 +124,13 @@ export default function PostingPopup(props) {
               onChange={onChange}
             />
           ))}
+
+          <div className="popup-footer">
+            <button className="popup-submit" type="submit">
+              Submit
+            </button>
+          </div>
         </form>
-        <div className="popup-footer">
-          <button className="popup-submit" type="submit" onClick={handleSubmit}>
-            Submit
-          </button>
-        </div>
       </div>
     </div>
   ) : (

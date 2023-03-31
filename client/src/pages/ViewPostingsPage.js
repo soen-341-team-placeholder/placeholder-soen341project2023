@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Job from "../components/Job";
 import "../styles/ViewPostings.css";
-import PostingPopup from "../components/PostingPopup";
+import PostingPopup from "../components/popups/PostingPopup";
 import * as fn from "../components/Function";
 import axios from "axios";
 

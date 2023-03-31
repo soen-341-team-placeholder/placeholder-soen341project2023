@@ -40,13 +40,13 @@ export default function Navbar(props) {
         <Link to="/" onClick={showNavbar}>
           Hub
         </Link>
-        <Link to="/postings" onClick={fn.loginRedirector}>
+        <Link to="/postings" onClick={showNavbar}>
           View Postings
         </Link>
-        <Link to="/inbox" onClick={fn.loginRedirector}>
+        <Link to="/inbox">
           Inbox
         </Link>
-        <Link to="/profile/:userId" onClick={fn.loginRedirector}>
+        <Link to="/profile/:userId" onClick={showNavbar}>
           Profile
         </Link>
         <Link to="/about" onClick={showNavbar}>

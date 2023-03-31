@@ -141,8 +141,9 @@ export function downloadCV (user) {
  * @returns {JSX.Element} - The Navigate component that redirects to the login page
  */
 export function loginRedirector() {
+  console.log('login redirected!');
   fancyPopup('Please log in first');
-  return <Navigate to='/login' />;
+  return <Navigate to='../login' />;
 }
 
 

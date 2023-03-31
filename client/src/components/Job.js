@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import "../styles/Job.css";
-import EditPopup from "../components/EditPopup";
+import EditPopup from "./popups/EditPopup";
 import { FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
 import Cookies from "universal-cookie";
