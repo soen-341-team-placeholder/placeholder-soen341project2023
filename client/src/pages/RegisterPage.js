@@ -103,7 +103,7 @@ const handleSubmit = (e) => {
   e.preventDefault();
   fn.registerUser(values).then((confirm) => {
     if (confirm) {
-      navigate('/');
+      navigate('/login');
     }
   });
 };
