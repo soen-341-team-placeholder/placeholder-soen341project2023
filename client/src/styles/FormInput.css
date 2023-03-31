@@ -19,6 +19,7 @@
     border-radius: 50px;
     padding: 1vh 1vw;
     width: 100%;
+}
 
 .input-register {
     padding: 15px;
@@ -29,7 +30,7 @@
 label {
     font-size: 10px;
     font-weight: bold;
-}*/
+}
 
 .your-span {
     font-size: 12px;
@@ -41,6 +42,6 @@ label {
     border: 1px solid red;
 }
 
-.input-register:invalid[focused=true]~span {
+.input-register:invalid[focused=true] ~ span {
     display: block;
 }
