@@ -1,59 +1,68 @@
 import { useRef, useState } from "react";
+import { Link, withRouter } from "react-router-dom";
 import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa"; // import font awesome icons
 import "../styles/styles.css";
-import { Link } from "react-router-dom";
 
 import SearchBar from "./SearchBar";
+import * as fn from './Function';
 
-export default function Navbar() {
-  const navRef = useRef(); // this variable will refer to the nav tag
-  const [darkMode, setDarkMode] = useState(false); // state variable for dark mode
+import "../styles/styles.css";
+import "../styles/Navbar.css";
 
-  /* each time this function is called, we will add/remove
-    the class name from the nav tag */
+export default function Navbar(props) {
+  // Destructure props to get required variables
+  const { isLoggedIn, cookies, darkMode } = props;
+
+  // Create a ref to access the nav element
+  const navRef = useRef();
+
+  // Function to toggle the navbar menu
   const showNavbar = () => {
     navRef.current.classList.toggle("responsive_nav");
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode((prevMode) => !prevMode);
+  // Function to handle dark mode toggle
+  const handleDarkModeToggle = () => {
+    fn.toggleDarkMode();
+    console.log(`darkMode = ${cookies.get("darkMode")}`);
   };
 
   return (
-    <header className={darkMode ? "dark-mode" : ""}>
-      <h3>LOGO</h3>
+    <div className="nav-container">
+      {/* Placeholder logo */}
+      <h3>PlaceHolder</h3>
+
+      {/* Search bar component */}
       <SearchBar />
+
+      {/* Navigation menu */}
       <nav ref={navRef}>
         <Link to="/" onClick={showNavbar}>
-          Home
+          Hub
         </Link>
-        <Link to="/jobs" onClick={showNavbar}>
-          Jobs
+        <Link to="/postings" onClick={fn.loginRedirector}>
+          View Postings
         </Link>
-        <Link to="/inbox" onClick={showNavbar}>
+        <Link to="/inbox" onClick={fn.loginRedirector}>
           Inbox
         </Link>
-        <Link to="/profile/:userId" onClick={showNavbar}>
+        <Link to="/profile/:userId" onClick={fn.loginRedirector}>
           Profile
         </Link>
         <Link to="/about" onClick={showNavbar}>
-          About
+          Dev
         </Link>
-        {/* button for full screen */}
-        <button className="nav-btn nav-close-btn" onClick={showNavbar}>
-          <FaTimes />
+
+        {/* Dark mode toggle button */}
+        <button className="darkmode-toggle-btn" onClick={handleDarkModeToggle}>
+          {darkMode ? <FaMoon /> : <FaSun />}
         </button>
-
-        {/* button for toggling dark mode */}
-<button className="darkmode-toggle-btn" onClick={toggleDarkMode}>
-  {darkMode ? <FaMoon /> : <FaSun/>}
-</button>
-
       </nav>
-      {/* button for smaller screen */}
-      <button className="nav-btn" onClick={showNavbar}>
+
+      {/* Hamburger menu button */}
+      <button className="hamburger-menu" onClick={showNavbar}>
         <FaBars />
       </button>
-    </header>
+    </div>
   );
 }

@@ -48,16 +48,25 @@ router.get('/', authenticateToken, async (req, res) => {
 // Create a new user
 router.post('/', async (req, res) => {
     const newUser = new User(req.body)
-    newUser.password = await bcrypt.hash(newUser.password, 10)
-    newUser.save((err, user) => {
-        if (err) {
-            res.status(400).send('message:' + err)
-            console.log(err)
-        } else {
-            user.password = undefined
-            res.status(201).json(user)
-        }
-    })
+    if (!newUser.password) {
+        res.status(400).json('message: missing password')
+        return
+    }
+    try {
+        newUser.password = await bcrypt.hash(newUser.password, 10)
+        newUser.save((err, user) => {
+            if (err) {
+                res.status(400).send('message:' + err)
+                console.log(err)
+            } else {
+                user.password = undefined
+                res.status(201).json(user)
+            }
+        })
+    } catch (error) {
+        res.status()
+        console.log(error)
+    }
 })
 
 // get user by id

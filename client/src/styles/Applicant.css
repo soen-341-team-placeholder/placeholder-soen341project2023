@@ -1,0 +1,43 @@
+/*------------- applicant info cards ---------------*/
+.applicant_profile_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--background-color);
+    padding: 4rem;
+}
+
+.candidate-card {
+    border: 4px solid var(--mainColor);
+    max-width: 1000px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    background-color: white;
+}
+
+.candidate-card-header {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: var(--textColor);
+}
+
+.candidate-card-body {
+    margin-top: 10px;
+    color: var(--textColor);
+}
+
+#profile-picture {
+    border: 2px solid black;
+    border-radius: 50%;
+    max-width: 111px;
+}
+
+@media only screen and (max-width: 768px) {
+    .applicant_profile_container {
+        padding: 2rem;
+    }
+}

@@ -97,9 +97,10 @@ export default function PostingPopup(props) {
       });
   };
 
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
+  function onChange(e) {
+  setValues({ ...values, [e.target.name]: e.target.value });
+}
+
 
   console.log(values);
   console.log("VALUESS");
