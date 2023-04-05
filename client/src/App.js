@@ -15,7 +15,7 @@ import ViewPostingsPage from "./pages/ViewPostingsPage";
 import Applicants from "./pages/Applicants";
 import Calendar from './pages/Calendar';
 import Inbox from './components/student/Inbox';
-
+import ProtectedRoute from "./components/ProtectedRoute";
 import * as fn from './components/Function';
 import "./styles/styles.css";
 
@@ -31,6 +31,8 @@ export default function App() {
     isLoggedIn
   };
 
+
+
   return (
     <div className={darkMode ? "dark-mode" : ""}>
       <Router>
@@ -39,7 +41,7 @@ export default function App() {
             <Navbar {...universalProps}/>
           </header>
           <main>
-                      <ToastContainer />
+            <ToastContainer />
             <Routes>
               <Route path="/" element={<HomePage {...universalProps} />} />
               <Route path="/about" element={<AboutPage {...universalProps} />} />
@@ -47,31 +49,59 @@ export default function App() {
               <Route path="/register" element={<RegisterPage {...universalProps} />} />
               <Route
                 path="/profile/:userId"
-                element={isLoggedIn ? <ApplicantProfilePage {...universalProps} /> :  <Navigate to='/login' />}
+                element={
+                  <ProtectedRoute>
+                    <ApplicantProfilePage {...universalProps} />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/student/edit/:userId"
-                element={isLoggedIn ? <EditStudentPage {...universalProps} /> :  <Navigate to='/login' />}
+                element={
+                  <ProtectedRoute>
+                    <EditStudentPage {...universalProps} />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/postings"
-                element={isLoggedIn ? <ViewPostingsPage {...universalProps} /> :  <Navigate to='/login' />}
+                element={
+                  <ProtectedRoute>
+                    <ViewPostingsPage {...universalProps} />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/applicants"
-                element={isLoggedIn ? <Applicants {...universalProps} /> :  <Navigate to='/login' />}
+                element={
+                  <ProtectedRoute>
+                    <Applicants {...universalProps} />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/student/:userId"
-                element={isLoggedIn ? <Student {...universalProps} /> :  <Navigate to='/login' />}
+                element={
+                  <ProtectedRoute>
+                    <Student {...universalProps} />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/calendar"
-                element={isLoggedIn ? <Calendar {...universalProps} /> :  <Navigate to='/login' />}
+                element={
+                  <ProtectedRoute>
+                    <Calendar {...universalProps} />
+                  </ProtectedRoute>
+                }
               />
               <Route
                 path="/inbox"
-                element={isLoggedIn ? <Inbox {...universalProps} /> :  <Navigate to='/login' />}
+                element={
+                  <ProtectedRoute>
+                    <Inbox {...universalProps} />
+                  </ProtectedRoute>
+                }
               />
             </Routes>
           </main>

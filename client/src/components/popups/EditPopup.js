@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../styles/PostingPopup.css";
+import "../../styles/PostingPopup.css"
 import PostingPopupInput from "./PostingPopupInput";
 import { FaRegTimesCircle } from "react-icons/fa";
 import Cookies from "universal-cookie";
