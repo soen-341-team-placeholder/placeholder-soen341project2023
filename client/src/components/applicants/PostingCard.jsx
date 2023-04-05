@@ -1,20 +1,44 @@
-import React from 'react';
+import React, {useState} from 'react';
 import * as Accordion from '@radix-ui/react-accordion';
 import PostingActions from "./PostingActions";
 import classNames from 'classnames';
 import {ChevronDownIcon} from '@radix-ui/react-icons';
 import '../../styles/Accordion.css'
 
-const PostingCard = ({firstName, lastName, postingTitle, userBio, canInterview, canAccept, canRescind}) => (
-    <Accordion.Root className="AccordionRoot" type="single" defaultValue="item-1" collapsible>
-        <Accordion.Item className="AccordionItem" value="item-1">
-            <AccordionTrigger> <span>{firstName} {lastName} - <u>{postingTitle}</u></span></AccordionTrigger>
-            <AccordionContent>{userBio}</AccordionContent>
-            <PostingActions canInterview={canInterview} canAccept={canAccept} canRescind={canRescind}/>
-        </Accordion.Item>
+export default function PostingCard({
+                                        firstName,
+                                        lastName,
+                                        postingTitle,
+                                        postingId,
+                                        biography,
+                                        studentId,
+                                        canInterview,
+                                        canAccept,
+                                        canRescind
+                                    }) {
 
-    </Accordion.Root>
-);
+    const [isVisible, setIsVisible] = useState(true);
+
+    const hidePostingCard = () => {
+        setIsVisible(false);
+    };
+
+    return (
+        isVisible &&
+        (<Accordion.Root className="AccordionRoot" type="single" defaultValue="item-1" collapsible>
+            <Accordion.Item className="AccordionItem" value="item-1">
+                <AccordionTrigger> <span>{firstName} {lastName} - <u>{postingTitle}</u></span></AccordionTrigger>
+                <AccordionContent>{biography}</AccordionContent>
+                <PostingActions studentId={studentId} postingId={postingId} canInterview={canInterview}
+                                canAccept={canAccept}
+                                canRescind={canRescind}
+                                onHidePostingCard={hidePostingCard}
+                />
+            </Accordion.Item>
+        </Accordion.Root>)
+    )
+
+}
 
 const AccordionTrigger = React.forwardRef(({children, className}, forwardedRef) => (
     <Accordion.Header className="AccordionHeader">
@@ -34,5 +58,3 @@ const AccordionContent = React.forwardRef(({children, className, ...props}, forw
         <div className="AccordionContentText">{children}</div>
     </Accordion.Content>
 ));
-
-export default PostingCard

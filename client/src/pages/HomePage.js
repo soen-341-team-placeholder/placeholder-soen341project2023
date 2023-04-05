@@ -1,10 +1,10 @@
-import React from 'react';
 
-export default function HomePage() {
+export default function HomePage(props) {
+    const { isLoggedIn, cookies, darkMode} = props;
   return (
     <div>
-    <h1>Welcome to the homepage</h1>
-      <p>Hello world</p>
+      <h1>Welcome to the Placeholder Hub </h1>
+      <p>some debug info available in Dev</p>
     </div>
   );
 }

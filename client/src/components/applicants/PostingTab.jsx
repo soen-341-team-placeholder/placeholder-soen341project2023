@@ -2,7 +2,7 @@ import * as Tabs from '@radix-ui/react-tabs';
 import PostingCard from "./PostingCard";
 import "../../styles/Tabs.css"
 
-const PostingTab = ({applicants}) => {
+const PostingTab = ({pendingApplicationsList, interviewApplicationsList, acceptedApplicationsList}) => {
 
     return (
         <Tabs.Root className="TabsRoot" defaultValue="tab1">
@@ -12,23 +12,27 @@ const PostingTab = ({applicants}) => {
                 <Tabs.Trigger className="TabsTrigger" value="tab3">Accepted</Tabs.Trigger>
             </Tabs.List>
             <Tabs.Content className="TabsContent" value="tab1">
-                {applicants.map((applicant) => (
+                {pendingApplicationsList.map((applicant) => (
                     <PostingCard firstName={applicant.firstName}
                                  lastName={applicant.lastName}
                                  postingTitle={applicant.postingTitle}
-                                 userBio={applicant.userBio}
+                                 postingId={applicant.postingId}
+                                 biography={applicant.biography}
+                                 studentId={applicant.studentId}
                                  canInterview={true}
                                  canAccept={true}
                                  canRescind={true}
                     />
-                ))}
+                    ))}
             </Tabs.Content>
             <Tabs.Content className="TabsContent" value="tab2">
-                {applicants.map((applicant) => (
+                {interviewApplicationsList.map((applicant) => (
                     <PostingCard firstName={applicant.firstName}
                                  lastName={applicant.lastName}
                                  postingTitle={applicant.postingTitle}
-                                 userBio={applicant.userBio}
+                                 postingId={applicant.postingId}
+                                 biography={applicant.biography}
+                                 studentId={applicant.studentId}
                                  canInterview={false}
                                  canAccept={true}
                                  canRescind={true}
@@ -36,11 +40,13 @@ const PostingTab = ({applicants}) => {
                 ))}
             </Tabs.Content>
             <Tabs.Content className="TabsContent" value="tab3">
-                {applicants.map((applicant) => (
+                {acceptedApplicationsList.map((applicant) => (
                     <PostingCard firstName={applicant.firstName}
                                  lastName={applicant.lastName}
                                  postingTitle={applicant.postingTitle}
-                                 userBio={applicant.userBio}
+                                 postingId={applicant.postingId}
+                                 biography={applicant.biography}
+                                 studentId={applicant.studentId}
                                  canInterview={false}
                                  canAccept={false}
                                  canRescind={true}
