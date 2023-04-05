@@ -23,9 +23,8 @@ export default function ViewPostings(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fn.fetchUserProfile();
-        setUserType(res.data.userType);
-        console.log(res);
+        const res = await fn.fetchUserProfile(cookies.get('userId'));
+        setUserType(res.userType);
       } catch (err) {
         console.log(err);
       }
@@ -41,7 +40,6 @@ export default function ViewPostings(props) {
             Authorization: `Bearer ${cookies.get("accessToken")}`,
           },
         });
-        console.log(response);
         setApplicationStatuses(response.data);
       } catch (err) {
         console.log(err);
