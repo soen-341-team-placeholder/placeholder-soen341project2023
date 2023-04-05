@@ -14,7 +14,6 @@ import Student from './components/student/Student';
 import ViewPostingsPage from "./pages/ViewPostingsPage";
 import Applicants from "./pages/Applicants";
 import Calendar from './pages/Calendar';
-import ViewPostings from "./pages/ViewPostingsPage";
 import Inbox from './components/student/Inbox';
 import ProtectedRoute from "./components/ProtectedRoute";
 import * as fn from './components/Function';

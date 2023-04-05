@@ -1,155 +1,138 @@
-import React, { useEffect, useState } from "react";
-import { FaPlay } from "react-icons/fa";
+import React, {useEffect, useState} from "react";
 import "../styles/Job.css";
 import EditPopup from "./popups/EditPopup";
 import { FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
 import Cookies from "universal-cookie";
+import * as fn from "../components/Function"
+import {stringify} from "querystring";
 
 const cookies = new Cookies();
 
 export default function Job({
-  title,
-  location,
-  salary,
-  description,
-  postingId,
-  status,
-}) {
-  const [buttonMenu, setButtonMenu] = useState(false);
-  const [userType, setUserType] = useState("student");
-  const [editPopup, setEditPopup] = useState(false);
+                                title,
+                                location,
+                                salary,
+                                description,
+                                postingId,
+                                status,
+                            }) {
+    const [buttonMenu, setButtonMenu] = useState(false);
+    const [userType, setUserType] = useState("student");
+    const [editPopup, setEditPopup] = useState(false);
+    const userId = cookies.get('userId')
 
-  useEffect(() => {
-    axios
-      .get("http://localhost:4000/users/" + cookies.get("userId"), {
-        headers: {
-          authorization: `Bearer ${cookies.get("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setUserType(res.data.userType);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
-  console.log(title, location, salary, description);
+    useEffect(() => {
+        axios
+            .get("http://localhost:4000/users/" + userId, {
+                headers: {
+                    authorization: `Bearer ${cookies.get("accessToken")}`,
+                },
+            })
+            .then((res) => {
+                setUserType(res.data.userType);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
 
 
-  // added code for Apply button popup form
-  const [showModal, setShowModal] = useState(false);
-  const [showConfirmation, setShowConfirmation] = useState(false);
+    // added code for Apply button popup form
+    const [showConfirmation, setShowConfirmation] = useState(false);
 
-  const handleApplyClick = () => {
-    setShowModal(true);
-  };
+    const handleApplyClick = () => {
+        fn.getPosting(postingId).then((posting) => {
+            const alreadyApplied = (
+                () => {
+                    return posting.pendingApplicantsIds.includes(userId)
+                        || posting.acceptedApplicantIds.includes(userId)
+                        || posting.rejectedApplicantIds.includes(userId)
+                        || posting.interviewApplicantIds.includes(userId);
+                }
+            )();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here, e.g. sending data to server
-    setShowModal(false);
-    setShowConfirmation(true);
-    setTimeout(() => {
-      setShowConfirmation(false);
-    }, 2000);
-  };
+            if (!alreadyApplied) {
+                posting.pendingApplicantsIds.push(userId)
+                fn.fancyConfirmationPopup("Applied successfully!")
+                fn.updatePosting(postingId, posting)
+            } else {
+                fn.fancyPopup("You have already applied to this posting!")
+            }
+            setButtonMenu(!buttonMenu)
+        })
+    };
 
-  const handleModalClose = () => {
-    setShowModal(false);
-  };
-  // added code for Apply button popup form ends here
-
-  return (
-    <div className="post-container">
-      <div className="logo">
-        <p>Status: {status}</p>
-      </div>
-      <div className="part1">
-        <div className="company">
-          <span className="cname">"Company name"</span>
-        </div>
-        <div className="title-position">{title}</div>
-        <div className="details">
-          <span>${salary}/h</span>
-          <span>&nbsp;•&nbsp;</span>
-          <span>Location: {location}</span>
-        </div>
-      </div>
-      <div className="part2">
-        <span className="description">{description}</span>
-      </div>
-      <div className="posting-button">
-        <FaEllipsisV
-          className="button-menu"
-          style={{ color: "black" }}
-          onClick={() => setButtonMenu(!buttonMenu)}
-        />
-        {buttonMenu && (
-          <div className="dropdown-menu">
-            <ul className="dropdown-list">
-              {userType === "employer" ? (
-                <>
-                  <li
-                    className="dropdown-button"
-                    onClick={() => setEditPopup(true)}
-                  >
-                    Edit
-                  </li>
-                  <li className="dropdown-button">Delete</li>
-                  <EditPopup
-                    trigger={editPopup}
-                    setTrigger={setEditPopup}
-                    postingId={postingId}
-                  ></EditPopup>
-                </>
-              ) : (
-                <>
-                  <li className="dropdown-button" onClick={handleApplyClick}>Apply</li>
-
-                  <li className="dropdown-button">Save</li>
-                </>
-              )}
-            </ul>
-            {/* added code for Apply button popup form */}
-            <div>
-              {showModal && (
-                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: '#FF5555', padding: '20px', borderRadius: '10%' }}>
-                  <h2>Apply</h2>
-                  <form onSubmit={handleSubmit}>
-                    <label>
-                      Upload Resume: &nbsp;
-                      <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-                    </label>
-                    <br /><br />
-                    <label>
-                      Upload Cover Letter: &nbsp;
-                      <input type="file" name="cover-letter" accept=".pdf,.doc,.docx" required />
-                    </label>
-                    <br /><br />
-                    <label>
-                      Upload Transcript: &nbsp;
-                      <input type="file" name="transcript" accept=".pdf,.doc,.docx" required />
-                    </label>
-                    <br /><br />
-                    <button className="dropdown-button" type="submit">Submit</button>
-                  </form>
-                  <button className="dropdown-button" onClick={handleModalClose}>Close</button>
-                </div>
-              )}
-              {showConfirmation && (
-                <div style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'green', padding: '20px', borderRadius: '10%' }}>
-                  <h2>Application sent!</h2>
-                </div>
-              )}
+    return (
+        <div className="post-container">
+            <div className="logo">
+                <p>Status: {status}</p>
             </div>
-            {/* added code for Apply button popup ends here */}
-
-          </div>
-        )}
-      </div>
-    </div>
-  );
+            <div className="part1">
+                <div className="company">
+                    <span className="cname">"Company name"</span>
+                </div>
+                <div className="title-position">{title}</div>
+                <div className="details">
+                    <span>${salary}/h</span>
+                    <span>&nbsp;•&nbsp;</span>
+                    <span>Location: {location}</span>
+                </div>
+            </div>
+            <div className="part2">
+                <span className="description">{description}</span>
+            </div>
+            <div className="posting-button">
+                <FaEllipsisV
+                    className="button-menu"
+                    style={{color: "black"}}
+                    onClick={() => setButtonMenu(!buttonMenu)}
+                />
+                {buttonMenu && (
+                    <div className="dropdown-menu">
+                        {userType === "employer" ? (
+                            <>
+                                <ul className="dropdown-list">
+                                    <li
+                                        className="dropdown-button"
+                                        onClick={() => setEditPopup(true)}
+                                    >
+                                        Edit
+                                    </li>
+                                    <li className="dropdown-button">Delete</li>
+                                    <EditPopup
+                                        trigger={editPopup}
+                                        setTrigger={setEditPopup}
+                                        postingId={postingId}
+                                    ></EditPopup>
+                                </ul>
+                            </>
+                        ) : (
+                            <>
+                                <div>
+                                    {showConfirmation && (
+                                        <div style={{
+                                            position: 'fixed',
+                                            top: '50%',
+                                            left: '50%',
+                                            transform: 'translate(-50%, -50%)',
+                                            backgroundColor: 'green',
+                                            padding: '20px',
+                                            borderRadius: '10%'
+                                        }}>
+                                            <h2>Application sent!</h2>
+                                        </div>
+                                    )}
+                                </div>
+                                <ul className="dropdown-list">
+                                    <li className="dropdown-button" onClick={handleApplyClick}>Apply</li>
+                                    <li className="dropdown-button">Save</li>
+                                </ul>
+                            </>
+                        )}
+                    </div>
+                )}
+            </div>
+        </div>
+    );
 }

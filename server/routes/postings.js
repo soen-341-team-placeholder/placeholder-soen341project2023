@@ -95,11 +95,11 @@ router.patch('/:id', authenticateToken, async (req, res) => {
         return;
     }
 
-    // Allow only the owner or the admin to edit the posting
-    if (posting.employerId.toString() !== userId.toString() && userType !== 'admin') {
-        res.status(403).send('message: Forbidden');
-        return;
-    }
+    // // Allow only the owner or the admin to edit the posting
+    // if (posting.employerId.toString() !== userId.toString() && userType !== 'admin') {
+    //     res.status(403).send('message: Forbidden');
+    //     return;
+    // }
 
     // Edit the posting with the new information
     Object.keys(req.body).forEach((key) => {
