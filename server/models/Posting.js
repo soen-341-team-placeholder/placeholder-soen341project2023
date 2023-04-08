@@ -10,10 +10,6 @@ const postingSchema = new mongoose.Schema({
         required: true
     },
     company: {
-        companyId: {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true
-        },
         companyName: {
             type: String,
             required: true

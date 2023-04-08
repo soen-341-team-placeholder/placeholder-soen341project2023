@@ -192,6 +192,26 @@ export async function loginUser(values) {
   }
 }
 
+export async function refreshToken() {
+  const body =  {
+      refreshToken: cookies.get("refreshToken")
+  }
+
+  try {
+    await axios.post(`${backendUrl}/tokens`, body)
+        .then((res) => {
+            cookies.set("accessToken", res.data.accessToken)
+        });
+    return true;
+  } catch (error) {
+    const errorMessage =
+        error.response?.data?.message ||
+        "Invalid Token"
+    fancyPopup(errorMessage);
+    return false;
+  }
+}
+
 /**
  * Function to send user to their profile page after logging in
  * @param {object} values - An object containing email and password values
@@ -345,6 +365,7 @@ export async function updatePosting(postingId, data) {
         authorization: `Bearer ${cookies.get("accessToken")}`,
       },
     });
+    fancyConfirmationPopup("Posting edited")
     return true;
   } catch (error) {
     const errorMessage =
@@ -352,6 +373,28 @@ export async function updatePosting(postingId, data) {
       "An error occurred while updating the the posting with " +
         "id=" +
         postingId;
+    fancyPopup(errorMessage);
+    return false;
+  }
+}
+
+export async function addNewPosting(data) {
+  try {
+    if (!isLoggedIn()) {
+      fancyPopup("Please log in first.");
+      return;
+    }
+    await axios.post(`${backendUrl}/postings`, data, {
+      headers: {
+        authorization: `Bearer ${cookies.get("accessToken")}`,
+      },
+    });
+    fancyConfirmationPopup("Posting created")
+    return true;
+  } catch (error) {
+    const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred while creating the the posting"
     fancyPopup(errorMessage);
     return false;
   }
