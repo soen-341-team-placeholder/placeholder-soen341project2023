@@ -1,16 +1,16 @@
 import React from 'react'
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
+
 import FormInput from '../components/FormInput';
 import '../styles/Register.css';
 import '../styles/FormInput.css';
+import * as fn from "../components/Function";
 
-function RegisterPage() {
-
+function RegisterPage(props) {
+    const { isLoggedIn, cookies, darkMode} = props;
   const navigate = useNavigate();
-
-  const [values, setValues] = useState({
+    const [values, setValues] = useState({
     firstName: "",
     lastName: "",
     email: "",
@@ -19,6 +19,15 @@ function RegisterPage() {
     age: "",
     userType: "",
   });
+  
+  
+  if (isLoggedIn) {
+    navigate('/');
+    fn.fancyPopup('Already logged in!');
+    return null;
+  } else
+{
+
 
   const handleSelect = (event) => {
     const { name, value } = event.target;
@@ -61,9 +70,9 @@ function RegisterPage() {
       name: "password",
       type: "password",
       placeholder: "Password",
-      errorMessage: "Password should be at least 3 characters",
+      errorMessage: "Password should be between 8-20 characters",
       label: "Password",
-      pattern: ".{3,}",
+      pattern: ".{8,}",
       required: true,
     },
     {
@@ -84,36 +93,32 @@ function RegisterPage() {
       errorMessage: "You must be thirteen or older to register",
       label: "Age",
       required: true,
-      min: 14,
-      max: 100
+      min: 14
     },
 
 
   ]
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    submit();
-  };
-
-  const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-
-  const submit = async () => {
-    let valuesToSubmit = values;
-    delete valuesToSubmit.confirmPassword;
-    valuesToSubmit.userType = values.userType.toLowerCase();
-    axios.post('http://localhost:4000/users', valuesToSubmit).then((res) => {
+const handleSubmit = (e) => {
+  e.preventDefault();
+  fn.registerUser(values).then((confirm) => {
+    if (confirm) {
       navigate('/login');
-    }).catch((err) => {
-      console.log(err);
-    });
-  };
+    }
+  });
+};
+
+
+  function onChange(e) {
+  setValues({ ...values, [e.target.name]: e.target.value });
+}
+
+
+
+
 
   return (
     <div className='RegisterPage'>
-
       <form className='form-register'>
         <h1>Sign Up</h1>
         <label>Account Type</label>
@@ -125,11 +130,14 @@ function RegisterPage() {
           </select>
         </div>
         {
-          inputs.map((input) => (
-            <FormInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
-          ))
-        }
-        <button onClick={handleSubmit}>Register</button>
+  inputs.map((input) => (
+    <div key={input.id} className="form-input-wrapper">
+      <label htmlFor={input.name}>{input.label}</label>
+      <FormInput {...input} value={values[input.name]} onChange={onChange} label={null} />
+    </div>
+  ))
+}
+        <button className = 'register-btn' onClick={handleSubmit}>Register</button>
         <p>Already registered? <Link to ="../login" ><u>Login</u></Link></p>
       </form>
 
@@ -137,5 +145,5 @@ function RegisterPage() {
     </div>
   );
 }
-
+}
 export default RegisterPage;
