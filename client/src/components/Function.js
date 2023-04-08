@@ -399,3 +399,25 @@ export async function addNewPosting(data) {
     return false;
   }
 }
+
+export async function deletePosting(postingId) {
+  try {
+    if (!isLoggedIn()) {
+      fancyPopup("Please log in first.");
+      return;
+    }
+    await axios.delete(`${backendUrl}/postings/${postingId}`, {
+      headers: {
+        authorization: `Bearer ${cookies.get("accessToken")}`,
+      },
+    });
+    fancyConfirmationPopup("Posting deleted")
+    return true;
+  } catch (error) {
+    const errorMessage =
+        error.response?.data?.message ||
+        "An error occurred while deleting the the posting"
+    fancyPopup(errorMessage);
+    return false;
+  }
+}
