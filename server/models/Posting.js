@@ -9,6 +9,16 @@ const postingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    company: {
+        companyId: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true
+        },
+        companyName: {
+            type: String,
+            required: true
+        }
+    },
     description: {
         type: String,
         required: true
