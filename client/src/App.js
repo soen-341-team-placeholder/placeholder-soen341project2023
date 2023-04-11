@@ -105,7 +105,7 @@ export default function App() {
               />
             </Routes>
           </main>
-          <footer>
+          <footer data-testid="footer-1">
             <p>&copy; Lorem Ipsum</p>
           </footer>
         </React.Fragment>
