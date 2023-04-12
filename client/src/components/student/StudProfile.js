@@ -5,7 +5,6 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import '../../styles/edit_student/StudProfile.css';
 // @TODO: store images in db
-import pic from './images/youssef.jpg';
 import * as fn from '../Function';
 import '../../styles/edit_student/WorkExp.css';
 

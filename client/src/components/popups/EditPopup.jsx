@@ -1,4 +1,4 @@
-import '../styles/PostingPopupInput.css';
+import '../../styles/PostingPopupInput.css';
 
 const PostingPopupInput = (props) => {
     const {label, onChange, id, ...inputProps} = props;
