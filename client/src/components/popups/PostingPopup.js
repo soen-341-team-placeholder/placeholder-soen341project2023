@@ -2,12 +2,13 @@ import React, {useState} from "react";
 import "../../styles/PostingPopup.css";
 import PostingPopupInput from "./PostingPopupInput";
 import {FaRegTimesCircle} from "react-icons/fa";
-import axios from "axios";
+import * as fn from "../Function"
+import {cookies} from "../Function";
 
 export default function PostingPopup(props) {
     const [values, setValues] = useState({
         companyName: "",
-        jobTitle: "",
+        title: "",
         location: "",
         salary: "",
         description: "",
@@ -23,7 +24,7 @@ export default function PostingPopup(props) {
         },
         {
             id: 2,
-            name: "jobTitle",
+            name: "title",
             type: "text",
             placeholder: "Job Title",
             label: "Job Title",
@@ -53,18 +54,12 @@ export default function PostingPopup(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        axios
-            .fetch(`http://localhost:4000/postings/`, values, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values),
-            })
-            .then((response) => response.json())
-            .catch((err) => {
-                console.log(err);
-            });
+        values.company = {
+            companyName: values.companyName
+        }
+        delete values.companyName
+        values.employerId = cookies.get("userId")
+        fn.addNewPosting(values).then(r => props.setTrigger(!props.trigger))
     };
 
     function onChange(e) {

@@ -1,7 +1,7 @@
 import '../../styles/PostingPopupInput.css';
 
 const PostingPopupInput = (props) => {
-    const{label, onChange, id, ...inputProps} = props;
+    const {label, onChange, id, ...inputProps} = props;
     return (
         <div className="form-popup">
             {/*<label>{label}</label>*/}
