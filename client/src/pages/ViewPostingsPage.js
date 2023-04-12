@@ -16,6 +16,7 @@ export default function ViewPostings(props) {
     const fetchData = async () => {
       const data = await fn.getPostings();
       setPostings(data);
+      console.log(data);
     };
     fetchData();
   }, []);
@@ -23,7 +24,7 @@ export default function ViewPostings(props) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fn.fetchUserProfile(cookies.get('userId'));
+        const res = await fn.fetchUserProfile(cookies.get("userId"));
         setUserType(res.userType);
       } catch (err) {
         console.log(err);
@@ -74,6 +75,7 @@ export default function ViewPostings(props) {
         {postings.map((posting) => (
           <Job
             key={posting._id}
+            companyName={posting.company.companyName}
             title={posting.title}
             description={posting.description}
             location={posting.location}

@@ -9,6 +9,12 @@ const postingSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    company: {
+        companyName: {
+            type: String,
+            required: true
+        }
+    },
     description: {
         type: String,
         required: true
