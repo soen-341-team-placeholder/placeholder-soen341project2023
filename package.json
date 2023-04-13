@@ -5,13 +5,15 @@
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
-    "gh-pages": "^5.0.0"
+    "eslint-config-react-app": "^7.0.1",
+    "gh-pages": "^5.0.0",
+    "react-scripts": "^5.0.1"
   },
   "scripts": {
+    "build": "cd ./client && react-scripts build",
     "start": "concurrently \"cd ./client && npm start\" \"cd ./server && npm start\"",
-    "predeploy": "npm run build",
     "deploy": "npm run build && node deploy.js"
-    },
+  },
   "immutable": "^4.3.0",
   "react-query": "^3.39.3"
 }
