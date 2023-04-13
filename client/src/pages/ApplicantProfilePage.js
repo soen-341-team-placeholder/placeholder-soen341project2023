@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import jsPDF from "jspdf";
-import "jspdf-autotable";
+
 import "../styles/styles.css";
-
-import data from "./tempData.json";
-
+import "../styles/Applicant.css";
+import * as fn from "../components/Function";
 
 const CandidateCard = ({ children }) => (
   <div className="candidate-card">
@@ -19,42 +17,18 @@ const CandidateCardHeader = ({ children }) => (
 
 const CandidateCardBody = ({ children }) => <div className="candidate-card-body">{children}</div>;
 
-export default function ApplicantProfilePage() {
+export default function ApplicantProfilePage(props) {
+    const { isLoggedIn, cookies, darkMode} = props;
   const { userId } = useParams();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userData = data.find((user) => user.userId === parseInt(userId));
-    setUser(userData);
+    async function fetchData() {
+      const user = await fn.fetchUserProfile(userId);
+      setUser(user);
+    }
+    fetchData();
   }, [userId]);
-
-  const downloadPDF = () => {
-    const doc = new jsPDF();
-
-    // Add user info to the PDF
-    doc.text(`Name: ${user.firstName} ${user.lastName}`, 10, 10);
-    doc.text(`Email: ${user.email}`, 10, 20);
-    doc.text(`Biography: ${user.biography}`, 10, 30);
-
-    // Add work experience to the PDF
-    const workExpData = user.workExperience.map((exp) => [exp.position, exp.company, `${exp.startDate} - ${exp.endDate}`]);
-    doc.autoTable({
-      startY: 50,
-      head: [["Position", "Company", "Dates"]],
-      body: workExpData,
-    });
-
-    // Add education to the PDF
-    const educationData = user.education.map((edu) => [edu.degree, edu.school, `${edu.startDate} - ${edu.endDate}`]);
-    doc.autoTable({
-      startY: doc.autoTable.previous.finalY + 10,
-      head: [["Degree", "School", "Dates"]],
-      body: educationData,
-    });
-
-    // Save the PDF
-    doc.save(`${user.firstName} ${user.lastName} CV.pdf`);
-  };
 
   if (!user) {
     return <div>Loading...</div>;
@@ -74,7 +48,7 @@ export default function ApplicantProfilePage() {
           </CandidateCardHeader>
           <CandidateCardBody>
             <p>{user.biography}</p>
-            <button onClick={downloadPDF}>Download CV</button>
+            <button className = 'standard-btn' onClick={() => fn.downloadCV(user)}>Download CV</button>
           </CandidateCardBody>
         </CandidateCard>
 

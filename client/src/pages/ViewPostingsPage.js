@@ -1,48 +1,61 @@
 import React, { useEffect, useState } from "react";
-import Cookies from "universal-cookie";
 import Job from "../components/Job";
-import axios from "axios";
 import "../styles/ViewPostings.css";
-import PostingPopup from "../components/PostingPopup";
+import PostingPopup from "../components/popups/PostingPopup";
+import * as fn from "../components/Function";
+import axios from "axios";
 
-const cookies = new Cookies();
-
-export default function ViewPostings() {
+export default function ViewPostings(props) {
   const [buttonPopup, setButtonPopup] = useState(false);
-  const [postings, setPostings] = useState([]);
   const [userType, setUserType] = useState("student");
+  const { isLoggedIn, cookies, darkMode } = props;
+  const [postings, setPostings] = useState([]);
+  const [applicationStatuses, setApplicationStatuses] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/postings", {
-        headers: {
-          authorization: `Bearer ${cookies.get("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        setPostings(res.data);
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    const fetchData = async () => {
+      const data = await fn.getPostings();
+      setPostings(data);
+      console.log(data);
+    };
+    fetchData();
   }, []);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/users/" + cookies.get("userId"), {
-        headers: {
-          authorization: `Bearer ${cookies.get("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        setUserType(res.data.userType);
-      })
-      .catch((err) => {
+    const fetchData = async () => {
+      try {
+        const res = await fn.fetchUserProfile(cookies.get("userId"));
+        setUserType(res.userType);
+      } catch (err) {
         console.log(err);
-      });
+      }
+    };
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    async function getStudentApplicationStatus() {
+      try {
+        const response = await axios.get("http://localhost:4000/postings", {
+          headers: {
+            Authorization: `Bearer ${cookies.get("accessToken")}`,
+          },
+        });
+        setApplicationStatuses(response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    getStudentApplicationStatus();
+  }, []);
+
+  function getUserStatus(postingId) {
+    const status = applicationStatuses.find(
+      (status) => status.postingId === postingId
+    );
+    return status ? status.status : "Want to Apply?";
+  }
 
   return (
     <>
@@ -57,18 +70,18 @@ export default function ViewPostings() {
           <br />
         </>
       )}
-      <PostingPopup
-        trigger={buttonPopup}
-        setTrigger={setButtonPopup}
-      ></PostingPopup>
+      <PostingPopup trigger={buttonPopup} setTrigger={setButtonPopup} />
       <div className="jobs">
         {postings.map((posting) => (
           <Job
+            key={posting._id}
+            companyName={posting.company.companyName}
             title={posting.title}
             description={posting.description}
             location={posting.location}
             salary={posting.salary}
             postingId={posting._id}
+            status={getUserStatus(posting._id)}
           />
         ))}
       </div>

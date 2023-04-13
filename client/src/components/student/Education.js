@@ -14,34 +14,33 @@ function Education() {
     }
 
     const [formFields, setFormFields] = useState([
-    {institutionName: '', degree: '', startDate: '', endDate: ''}
+        { institutionName: '', degree: '', startDate: '', endDate: '' }
     ])
 
     const handleFormChange = (event, index) => {
-    let data = [...formFields];
-    data[index][event.target.name] = event.target.value; // to add info to data array
-    setFormFields(data); // to type in the box
+        let data = [...formFields];
+        data[index][event.target.name] = event.target.value; // to add info to data array
+        setFormFields(data); // to type in the box
     }
 
     const submit = (e) => {
-    e.preventDefault(); // prevent the page from refreshing itself when remove button is clicked
-    console.log(formFields);
+        e.preventDefault(); // prevent the page from refreshing itself when remove button is clicked
     }
 
     const addFields = () => {
-    let object = {
-        institutionName: '',
-        degree: '',
-        startDate: '',
-        endDate: ''
-    }
-    setFormFields([...formFields, object]) // iterate over formFields so that current object doesn't override previous object
+        let object = {
+            institutionName: '',
+            degree: '',
+            startDate: '',
+            endDate: ''
+        }
+        setFormFields([...formFields, object]) // iterate over formFields so that current object doesn't override previous object
     }
 
     const removeFields = (index) => {
-    let data = [...formFields];
-    data.splice(index, 1)
-    setFormFields(data)
+        let data = [...formFields];
+        data.splice(index, 1)
+        setFormFields(data)
     }
 
     return (
@@ -59,12 +58,16 @@ function Education() {
                             <th>From</th>
                             <th>To</th>
                         </tr>
-                        <tr>
-                            <td className='tdWorkExp'>Concordia University</td>
-                            <td className='tdWorkExp'>Bachelors in Software Engineering</td>
-                            <td className='tdWorkExp'>01/2022</td>
-                            <td className='tdWorkExp'>12/2025</td>
-                        </tr>
+                        {formFields.map((form, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td className='tdWorkExp'>{form.institutionName}</td>
+                                    <td className='tdWorkExp'>{form.degree}</td>
+                                    <td className='tdWorkExp'>{form.startDate}</td>
+                                    <td className='tdWorkExp'>{form.endDate}</td>
+                                </tr>
+                            );
+                        })}
                     </table>
                 </div>
             ) : (
@@ -80,44 +83,44 @@ function Education() {
                                         <button onClick={addFields} className='btn'>Add</button>
                                         <button onClick={handleSave} className='btn'>Save</button>
                                         <br />
-                                        {formFields.map((form, index) =>  {
-                                        return (
-                                            <div key={index}>
-                                                <input
-                                                    className='input-edit-stud-profile' 
-                                                    name='institutionName'
-                                                    placeholder='Institution Name'
-                                                    onChange={event => handleFormChange(event, index)}
-                                                    value={form.institutionName}
-                                                />
-                                                <br />
-                                                <input
-                                                    className='input-edit-stud-profile' 
-                                                    name='degree'
-                                                    placeholder='Degree'
-                                                    onChange={event => handleFormChange(event, index)}
-                                                    value={form.degree}
-                                                />
-                                                <br />
-                                                <input 
-                                                    type='date'
-                                                    className='input-edit-stud-profile' 
-                                                    name='startDate'
-                                                    onChange={event => handleFormChange(event, index)}
-                                                    value={form.startDate}
-                                                />
-                                                <br />
-                                                <input 
-                                                    type='date'
-                                                    className='input-edit-stud-profile' 
-                                                    name='endDate'
-                                                    onChange={event => handleFormChange(event, index)}
-                                                    value={form.endDate}
-                                                />
-                                                <br />
-                                                <button onClick={() => removeFields(index)} className='btn'>Remove</button>
-                                            </div>
-                                        )
+                                        {formFields.map((form, index) => {
+                                            return (
+                                                <div key={index}>
+                                                    <input
+                                                        className='input-edit-stud-profile'
+                                                        name='institutionName'
+                                                        placeholder='Institution Name'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.institutionName}
+                                                    />
+                                                    <br />
+                                                    <input
+                                                        className='input-edit-stud-profile'
+                                                        name='degree'
+                                                        placeholder='Degree'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.degree}
+                                                    />
+                                                    <br />
+                                                    <input
+                                                        type='date'
+                                                        className='input-edit-stud-profile'
+                                                        name='startDate'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.startDate}
+                                                    />
+                                                    <br />
+                                                    <input
+                                                        type='date'
+                                                        className='input-edit-stud-profile'
+                                                        name='endDate'
+                                                        onChange={event => handleFormChange(event, index)}
+                                                        value={form.endDate}
+                                                    />
+                                                    <br />
+                                                    <button onClick={() => removeFields(index)} className='btn'>Remove</button>
+                                                </div>
+                                            )
                                         })}
                                     </form>
                                 </div>

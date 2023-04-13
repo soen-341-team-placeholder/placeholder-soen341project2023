@@ -1,103 +1,104 @@
 import React, { useState, useReducer, useEffect } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useParams } from 'react-router-dom';
 import Popup from 'reactjs-popup';
-import axios from "axios";
-import Cookies from "universal-cookie";
 
-import Education from './Education';
-import Skills from './Skills';
-import WorkExp from './WorkExp';
 import 'reactjs-popup/dist/index.css';
 import '../../styles/edit_student/StudProfile.css';
-import pic from './images/youssef.jpg';
+// @TODO: store images in db
+import * as fn from '../Function';
+import '../../styles/edit_student/WorkExp.css';
 
 function StudProfile(props) {
+  const cookies = props.cookies;
+  const { userId } = useParams();
+  const [user, setUser] = useState(null);
 
-    const cookies = new Cookies();
-
-    const initialState = {
-        firstName: props.user.firstName || '',
-        lastName: props.user.lastName || '',
-        age: props.user.age || '',
-        email: props.user.email || '',
-        biography: props.user.biography || '',
-        education: props.user.education || [
-            {
-                schoolName: '',
-                degree: '',
-                startDate: 0,
-                endDate: 0
-            }
-        ],
-        workExperience: props.user.workExperience || [
-            {
-                companyName: '',
-                position: '',
-                startDate: 0,
-                endDate: 0
-            }
-        ]
+  useEffect(() => {
+    async function fetchData() {
+      const user = await fn.fetchUserProfile(userId);
+      setUser(user);
     }
+    fetchData();
+  }, [userId]);
 
-    const formReducer = () => (state, event) => {
-        if (event.reset) {
-            return initialState;
-        }
-        return {
-            ...state,
-            [event.name]: event.value
-        }
+  const initialState = {
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    age: user?.age || '',
+    email: user?.email || '',
+    biography: user?.biography || '',
+    education: user?.education || [
+      {
+        schoolName: '',
+        degree: '',
+        startDate: 0,
+        endDate: 0
+      }
+    ],
+    workExperience: user?.workExperience || [
+      {
+        companyName: '',
+        position: '',
+        startDate: 0,
+        endDate: 0
+      }
+    ]
+  };
+
+  const formReducer = () => (state, event) => {
+    if (event.reset) {
+      return initialState;
     }
-    // code for form
-    const [formData, setFormData] = useReducer(formReducer(), initialState);
-    const [submitting, setSubmitting] = useState(false);
-
-    useEffect(() => {
-        setFormData({
-            reset: true
-        });
-    }, [props]);
-
-    const handleSubmit = event => {
-        event.preventDefault();
-        setSubmitting(true);
-
-        setTimeout(() => {
-            setSubmitting(false);
-            setFormData({
-                reset: true
-            })
-        }, 3000)
-    }
-
-    const handleChange = event => {
-        setFormData({
-            name: event.target.name,
-            value: event.target.value,
-        });
-    }
-
-    // code for form ends here
-
-    const [showDiv, setShowDiv] = useState(false);
-    const [showSaveButton, setShowSaveButton] = useState(false);
-
-    const toggleDiv = () => {
-        setShowDiv(!showDiv);
-        setShowSaveButton(true);
+    return {
+      ...state,
+      [event.name]: event.value
     };
+  };
+  // code for form
+  const [formData, setFormData] = useReducer(formReducer(), initialState);
+  const [submitting, setSubmitting] = useState(false);
 
-    const handleSaveClick = () => {
-        setShowDiv(false);
-        setShowSaveButton(false);
-        axios.patch('http://localhost:4000/users/' + props.userId, formData, {
-            headers: {
-                'authorization': `Bearer ${cookies.get('accessToken')}`
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
-    };
+  useEffect(() => {
+    setFormData({
+      reset: true
+    });
+  }, [user]);
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+    setSubmitting(true);
+
+    const result = await fn.updateUserProfile(userId, formData);
+
+    if (result) {
+      fn.fancyPopup('Profile updated');
+    }
+
+    setSubmitting(false);
+    setFormData({
+      reset: true
+    });
+  };
+
+  const handleChange = event => {
+    setFormData({
+      name: event.target.name,
+      value: event.target.value
+    });
+  };
+
+  const [showDiv, setShowDiv] = useState(false);
+  const [showSaveButton, setShowSaveButton] = useState(false);
+
+  const toggleDiv = () => {
+    setShowDiv(!showDiv);
+    setShowSaveButton(true);
+  };
+
+  const handleSaveClick = () => {
+    setShowDiv(false);
+    setShowSaveButton(false);
+  };
 
     return (
         <div className='container'>
@@ -109,7 +110,6 @@ function StudProfile(props) {
                             className='btn'>Save</button>
                     ) : (
                         <div>
-                            <img className='studImgEdit' src={pic} alt='profile pic' />
                             <h3>{formData.firstName} {formData.lastName}</h3>
                             <p>{formData.age} years old<br />
                                 <Popup
@@ -117,9 +117,9 @@ function StudProfile(props) {
                                     position='right center'>
                                     <div>{formData.email}</div>
                                 </Popup></p>
-                            <div>{formData.biography}</div>
+                            <div>{formData.biography}</div> <br />
                             <button onClick={toggleDiv} className='btn'>Edit</button>
-                            <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br /> <br />
+                            <br /> <br /> <br /> <br /> <br />
                         </div>
                     )}
                     {showDiv && <div className='wrapper'>
@@ -152,6 +152,10 @@ function StudProfile(props) {
                                         </tr>
                                         <br />
                                     </table>
+                                    <p className='stud-form-edit-p-tag'>Age &nbsp;</p>
+                                    <input className='input-edit-stud-profile' name='age' onChange={handleChange}
+                                        value={formData.age || ''} />
+                                    <br />
                                     <p className='stud-form-edit-p-tag'>Email Address &nbsp;</p>
                                     <input className='input-edit-stud-profile' name='email' onChange={handleChange}
                                         value={formData.email || ''} />
@@ -165,12 +169,6 @@ function StudProfile(props) {
                         </form>
                     </div>}
                 </div>
-
-                <Routes>
-                    <Route path='/experience' element={<WorkExp />} />
-                    <Route path='/education' element={<Education />} />
-                    <Route path='/skills' element={<Skills />} />
-                </Routes>
             </div>
         </div>
     );
