@@ -4,11 +4,14 @@
     "reactjs-popup": "^2.0.5"
   },
   "devDependencies": {
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "gh-pages": "^5.0.0"
   },
   "scripts": {
-    "start": "concurrently \"cd ./client && npm start\" \"cd ./server && npm start\""
-  },
+    "start": "concurrently \"cd ./client && npm start\" \"cd ./server && npm start\"",
+    "predeploy": "npm run build",
+    "deploy": "npm run build && node deploy.js"
+    },
   "immutable": "^4.3.0",
   "react-query": "^3.39.3"
 }
