@@ -11,7 +11,7 @@ import {
 import { Document, Packer, Paragraph, TextRun } from "docx"; // Importing docx module for creating Word documents
 
 export const cookies = new Cookies(); // Creating an instance of Cookies
-export const backendUrl = "http://127.0.0.1:4000";
+export const backendUrl = "walidoow.com:4000";//"http://127.0.0.1:4000";
 
 // Misc/ testing
 export function hello_world() {
