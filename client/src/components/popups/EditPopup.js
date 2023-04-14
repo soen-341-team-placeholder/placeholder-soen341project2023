@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/PostingPopup.css"
+import "../../styles/PostingPopup.css";
 import PostingPopupInput from "./PostingPopupInput";
 import { FaRegTimesCircle } from "react-icons/fa";
 import Cookies from "universal-cookie";
+import * as fn from "../Function";
 import axios from "axios";
 
 const cookies = new Cookies();
@@ -18,12 +19,10 @@ export default function PostingPopup(props) {
       })
       .then((res) => {
         setPostings(res.data);
-        console.log(res);
-        console.log("I AM PRINTING THE DATA");
-        console.log(res.data);
+        console.log(res.data.company.companyName);
         setValues({
-          companyName: res.data.title,
-          jobTitle: res.data.title,
+          companyName: res.data.company.companyName,
+          title: res.data.title,
           location: res.data.location,
           salary: res.data.salary,
           description: res.data.description,
@@ -36,7 +35,7 @@ export default function PostingPopup(props) {
 
   const [values, setValues] = useState({
     companyName: "",
-    jobTitle: "",
+    title: "",
     location: "",
     salary: "",
     description: "",
@@ -52,7 +51,7 @@ export default function PostingPopup(props) {
     },
     {
       id: 2,
-      name: "jobTitle",
+      name: "title",
       type: "text",
       placeholder: "Job Title",
       label: "Job Title",
@@ -82,28 +81,21 @@ export default function PostingPopup(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .patch(`http://localhost:4000/postings/${props.postingId}`, values, {
-        headers: {
-          authorization: `Bearer ${cookies.get("accessToken")}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        props.setTrigger(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    values.company = {
+      companyName: values.companyName,
+    };
+    delete values.companyName;
+    console.log(values);
+    console.log(props.postingId);
+    fn.updatePosting(props.postingId, values).then((r) =>
+      props.setTrigger(!props.trigger)
+    );
   };
 
   function onChange(e) {
-  setValues({ ...values, [e.target.name]: e.target.value });
-}
+    setValues({ ...values, [e.target.name]: e.target.value });
+  }
 
-
-  console.log(values);
-  console.log("VALUESS");
   return props.trigger ? (
     <div className="popup">
       <div className="popup-inner">
