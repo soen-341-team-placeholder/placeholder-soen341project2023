@@ -41,49 +41,21 @@ export default function ViewPostings(props) {
             Authorization: `Bearer ${cookies.get("accessToken")}`,
           },
         });
-        const postings = response.data;
-
-        const userId = cookies.get("userId");
-        const updatedApplicationStatuses = [];
-  
-        postings.forEach((posting) => {
-          const {
-            pendingApplicantsIds,
-            interviewApplicantIds,
-            acceptedApplicantIds,
-            rejectedApplicantIds,
-          } = posting;
-  
-          let status = "Apply?";
-
-          if (pendingApplicantsIds.includes(userId)) {
-            status = "Application Pending";
-          } else if (interviewApplicantIds.includes(userId)) {
-            status = "Selected for Interview";
-          } else if (acceptedApplicantIds.includes(userId)) {
-            status = "Accepted";
-          } else if (rejectedApplicantIds.includes(userId)) {
-            status = "Rejected";
-          }
-          
-          updatedApplicationStatuses.push({ postingId: posting._id, status });
-        });
-  
-        setApplicationStatuses(updatedApplicationStatuses);
-        console.log(userId);
-        console.log(updatedApplicationStatuses);
-      }catch (err) {
+        setApplicationStatuses(response.data);
+      } catch (err) {
         console.log(err);
       }
     }
+
     getStudentApplicationStatus();
-  }, []); 
+  }, []);
 
   function getUserStatus(postingId) {
-    const statusObj = applicationStatuses.find(status => status.postingId === postingId);
-    return statusObj?.status || "Apply?";
+    const status = applicationStatuses.find(
+      (status) => status.postingId === postingId
+    );
+    return status ? status.status : "Want to Apply?";
   }
-  
 
   return (
     <>
