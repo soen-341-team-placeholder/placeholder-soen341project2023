@@ -26,7 +26,6 @@ app.use((req, res, next) => {
   const backendUrl = `${req.protocol}://${req.get("host")}:${process.env.PORT}`;
   app.locals.backendUrl = backendUrl;
   console.log(`Backend URL: ${backendUrl}`); // log the backend URL to the console
-  next();
 });
 
 // Define endpoint to return backend URL
