@@ -161,7 +161,7 @@ export function downloadCV(user) {
 export function loginRedirector() {
   console.log("login redirected!");
   fancyPopup("Please log in first");
-  return <Navigate to="./login" />;
+  return <Navigate to="../login" />;
 }
 
 // API Request
@@ -421,3 +421,4 @@ export async function deletePosting(postingId) {
     return false;
   }
 }
+

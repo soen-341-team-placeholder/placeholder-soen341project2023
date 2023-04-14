@@ -47,7 +47,6 @@ export default function LoginPage(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     fn.loginUser(values, cookies);
-
   };
 
   function onChange(e) {
