@@ -1,41 +1,7 @@
-# Career Service Application
+# Continuous Integration and Deployment for Team Project 341
 
-### Description
-This is a repository created to organize and keep track of our SOEN 341 Project. The Goal is to create a career site resembling Indeed. At the end of the development cycle, there will be complete UX for job seekers, employers and site admins.
+This project is an implementation of the same code as the team project for course 341. The next step is to implement Continuous Integration and Continuous Deployment (CI/CD). We initially attempted to host our own pipelines but encountered problems. Therefore, we decided to explore cloud-based pipelines which use third-party servers. Unfortunately, using these servers comes at a cost, which we found to be too high for our project budget.
 
-This is a website shared by employers and students. It allows employers to advertise their job vacancies to job seekers. As for students, it serves as an online marketplace where they can apply for jobs online based on their skill, experience and location.
+To overcome this issue, I decided to fork the original repository. This was done to take advantage of the free CI/CD services provided for public repositories. It's unfortunate that we are not able to use these services for our private repository due to the lack of a school agreement with these companies. I'm deleting this the second it's graded, no worries.
 
-#### Objectives
-The objectives of this website will differ for different users. It will allow employers to post and manage their job postings and review application from candidates. As for students, it will allow them to post and update their portfolio, shorlist their potential jobs.
-
-#### Core Features
-- Sign up/Log in
-- Post/Apply for jobs
-- Update portfolio
-- Job board page
-- Send/Receive notifications
-
-### Project Approach and Tech Stack
-
-The Project will be be built using the MERN stack (MongoDB, Express, ReactJS, NodeJS) because of the following reasons:
-1. Full-stack JavaScript: All components of the MERN stack use JavaScript, allowing for a seamless development experience.
-
-2. Popularity: MERN is a widely used and well-supported stack, with a large community of developers, making it easy to find resources and support.
-
-3. Scalability: The MERN stack has proven to be scalable, making it a good choice for developing a career site with potential for growth.
-
-4. Speed: React, one of the components of the MERN stack, is known for its fast performance, which is important for a site with a large volume of job postings and candidate profiles.
-
-5. User experience: React and Node.js allow for fast and responsive user interactions, making the site more user-friendly and easy to navigate.
-
-### Team Members
-
-
-| Name                   | Student ID | GitHub Username | Role/Strength   |
-| ------------------------ | ------------ | ----------------- | ----------------- |
-| Minh Huynh             | 40210039   | vibqetowi       | Frontend/react  |
-| Bryan Andrianantenaina | 40210254   | utoktoomuch     | Frontend/react  |
-| Youssef Alsheghri      | 40108014   | yousfino        | Frontend/react  |
-| Walid Achlaf           | 40210355   | walidoow        | Backend/Express |
-| Khalil Garaali         | 40226310   | KhalilGarali    | Frontend/react  |
-| Wadeh Hamati           | 40216893   | wade3hamati     | Backend/Express |
+In this repository, you will find the necessary files and configurations to run our CI/CD pipeline using a free cloud-based service. The pipeline is triggered whenever a pull request is made to the master branch of the original repository. It automatically runs our tests, linters, and code quality checks. If everything passes, the pipeline deploys the code to our production environment.
