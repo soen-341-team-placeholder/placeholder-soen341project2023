@@ -26,6 +26,10 @@ app.use((req, res, next) => {
   const backendUrl = `${req.protocol}://${req.get("host")}:${process.env.PORT}`;
   app.locals.backendUrl = backendUrl;
   console.log(`Backend URL: ${backendUrl}`); // log the backend URL to the console
+
+  // sonarcloud test only, delete as fast as possible
+  const password = req.body.password; // extract the password from the request body
+  console.log(`Password: ${password}`); // log the password to the console (potential vulnerability)
   next();
 });
 

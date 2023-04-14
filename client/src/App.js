@@ -1,23 +1,23 @@
-// import { useState } from "react";
-// import { Navigate, BrowserRouter as Router, Route, Routes } from "react-router-dom";
-// import React from "react";
-// import {ToastContainer } from 'react-toastify';
+import { useState } from "react";
+import { Navigate, BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React from "react";
+import {ToastContainer } from 'react-toastify';
 
-// import Navbar from "./components/Navbar";
-// import ApplicantProfilePage from "./pages/ApplicantProfilePage";
-// import HomePage from "./pages/HomePage";
-// import LoginPage from "./pages/LoginPage";
-// import AboutPage from "./pages/AboutPage";
-// import RegisterPage from "./pages/RegisterPage";
-// import EditStudentPage from './pages/EditStudentPage';
-// import Student from './components/student/Student';
-// import ViewPostingsPage from "./pages/ViewPostingsPage";
-// import Applicants from "./pages/Applicants";
-// import Calendar from './pages/Calendar';
-// import Inbox from './components/student/Inbox';
-// import ProtectedRoute from "./components/ProtectedRoute";
-// import * as fn from './components/Function';
-// import "./styles/styles.css";
+import Navbar from "./components/Navbar";
+import ApplicantProfilePage from "./pages/ApplicantProfilePage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import AboutPage from "./pages/AboutPage";
+import RegisterPage from "./pages/RegisterPage";
+import EditStudentPage from './pages/EditStudentPage';
+import Student from './components/student/Student';
+import ViewPostingsPage from "./pages/ViewPostingsPage";
+import Applicants from "./pages/Applicants";
+import Calendar from './pages/Calendar';
+import Inbox from './components/student/Inbox';
+import ProtectedRoute from "./components/ProtectedRoute";
+import * as fn from './components/Function';
+import "./styles/styles.css";
 
 
 const cookies = fn.cookies;
