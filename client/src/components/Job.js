@@ -73,7 +73,7 @@ export default function Job({
           </>
         ) : (
           <>
-            <p>{status}</p>
+            <p>Status: {status}</p>
           </>
         )}
       </div>
