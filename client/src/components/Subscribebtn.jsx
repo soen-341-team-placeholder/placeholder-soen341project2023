@@ -4,11 +4,6 @@ import "..styles/Subscribe.css";
 function SubscriptionButton() {
   const [subscribed, setSubscribed] = useState(false);
 
-  function handleClick() {
-    setSubscribed(!subscribed);
-    // Subscription function
-  }
-
   return (
     <div className="Subscribe">
         <button
