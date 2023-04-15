@@ -56,7 +56,7 @@ export default function App() {
                                 path="/student/edit/:userId"
                                 element={
                                     <ProtectedRoute>
-                                        <StudentProfile {...universalProps} />
+                                        <StudentProfile/>
                                     </ProtectedRoute>
                                 }
                             />
