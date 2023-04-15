@@ -9,12 +9,16 @@ export default function ProfilePage() {
     const [user, setUser] = useState(null);
     const [isEditable, setEditable] = useState(false)
     const [showModal, setShowModal] = useState(false)
+    const [subscribed, setSubscribed] = useState(false)
 
     const cookies = new Cookies()
 
     useEffect(() => {
         async function fetchData() {
             const user = await fn.fetchUserProfile(userId);
+            const subscribers = user.subscribers
+
+            setSubscribed(subscribers.includes(cookies.get('userId')))
             setUser(user);
         }
 
@@ -24,7 +28,9 @@ export default function ProfilePage() {
     }, [userId]);
 
     const subscribeToEmployer = async () => {
-        await fn.subscribeTo(cookies.get('userId'), userId) // First id is student's id and second is the employer's one
+        const res = await fn.subscribeTo(userId) // Employer's id
+        if (res)
+            setSubscribed(true)
     }
 
     if (!user) {
@@ -113,11 +119,17 @@ export default function ProfilePage() {
                                 Edit Profile
                             </button>)
                         }
-                        {(isAnEmployer() && !isProfileOwner()) &&
+                        {(isAnEmployer() && !isProfileOwner() && !subscribed) &&
                             (<button
                                 className="mt-4 ml-4 bg-green-500 text-white px-6 py-2 rounded-md"
                                 onClick={() => subscribeToEmployer()}>
                                 Subscribe
+                            </button>)
+                        }
+                        {(isAnEmployer() && !isProfileOwner() && subscribed) &&
+                            (<button
+                                className="mt-4 ml-4 bg-green-500 text-white px-6 py-2 rounded-md">
+                                Subscribed!
                             </button>)
                         }
                     </div>
