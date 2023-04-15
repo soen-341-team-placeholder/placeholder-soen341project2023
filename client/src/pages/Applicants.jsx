@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
 import Cookies from "universal-cookie";
 import PostingTab from "../components/applicants/PostingTab";
+import * as fn from '../components/Function'
 
 export default function Applicants() {
 
@@ -9,87 +9,93 @@ export default function Applicants() {
     const [interviewApplicationsList, setInterviewApplicationsList] = useState([]);
     const [acceptedApplicationsList, setAcceptedApplicationsList] = useState([]);
 
-    useEffect(() => {
-        const cookies = new Cookies();
+    const cookies = new Cookies();
 
-        const fetchData = async () => {
-            try {
-                const res = await axios.get('http://localhost:4000/postings?employerId=' + cookies.get('userId'), {
-                    headers: {authorization: `Bearer ${cookies.get('accessToken')}`},
-                });
+    const fetchApplications = async () => {
+        setPendingApplicationsList([])
+        setInterviewApplicationsList([])
+        setAcceptedApplicationsList([])
 
-                let pendingApplications = [];
-                let interviewApplications = [];
-                let acceptedApplications = [];
+        const response = await fn.getPostingsByEmployerId(cookies.get('userId'))
 
-                for (const posting of res.data) {
-                    const processStudent = async (studentId, applicationType) => {
-                        try {
-                            const student = await axios.get('http://localhost:4000/users/' + studentId, {
-                                headers: {authorization: `Bearer ${cookies.get('accessToken')}`},
-                            });
+        for (const posting of response) {
+            const processStudent = async (studentId, applicationType) => {
+                const student = await fn.fetchUserProfile(studentId)
 
-                            const applicationData = {
-                                firstName: student.data.firstName,
-                                lastName: student.data.lastName,
-                                studentId: studentId,
-                                biography: student.data.biography,
-                                postingTitle: posting.title,
-                                postingId: posting._id
-                            };
+                const applicationData = {
+                    firstName: student.firstName,
+                    lastName: student.lastName,
+                    studentId: studentId,
+                    biography: student.biography,
+                    postingTitle: posting.title,
+                    postingId: posting._id
+                };
 
-                            if (applicationType === 'pending') {
-                                pendingApplications.push(applicationData);
-                            } else if (applicationType === 'interview') {
-                                interviewApplications.push(applicationData);
-                            } else if (applicationType === 'accepted') {
-                                acceptedApplications.push(applicationData);
-                            }
-                        } catch (err) {
-                            console.log(err);
-                        }
-                    };
-
-                    if (posting.pendingApplicantsIds) {
-                        for (const studentId of posting.pendingApplicantsIds) {
-                            await processStudent(studentId, 'pending');
-                        }
-                    }
-
-                    if (posting.interviewApplicantIds) {
-                        for (const studentId of posting.interviewApplicantIds) {
-                            await processStudent(studentId, 'interview');
-                        }
-                    }
-
-                    if (posting.acceptedApplicantIds) {
-                        for (const studentId of posting.acceptedApplicantIds) {
-                            await processStudent(studentId, 'accepted');
-                        }
-                    }
+                if (applicationType === 'pending') {
+                    setPendingApplicationsList(oldArray => [...oldArray, applicationData])
+                } else if (applicationType === 'interview') {
+                    setInterviewApplicationsList(oldArray => [...oldArray, applicationData])
+                } else if (applicationType === 'accepted') {
+                    setAcceptedApplicationsList(oldArray => [...oldArray, applicationData])
                 }
-
-                setPendingApplicationsList(pendingApplications);
-                setInterviewApplicationsList(interviewApplications);
-                setAcceptedApplicationsList(acceptedApplications);
-            } catch (err) {
-                console.log(err);
             }
-        };
 
-        fetchData();
+            if (posting.pendingApplicantsIds) {
+                posting.pendingApplicantsIds.forEach(
+                    studentId => processStudent(studentId, 'pending'))
+            }
+
+            if (posting.interviewApplicantIds) {
+                posting.interviewApplicantIds.forEach(
+                    studentId => processStudent(studentId, 'interview'))
+            }
+
+            if (posting.acceptedApplicantIds) {
+                posting.acceptedApplicantIds.forEach(
+                    studentId => processStudent(studentId, 'accepted'))
+            }
+        }
+    }
+
+    const updateApplicationStatus = (studentId, oldStatus, newStatus) => {
+        if (oldStatus === newStatus) return
+        console.log('updateApplicationStatus')
+        let applicationData;
+
+        // Remove student from the old status list
+        if (oldStatus === 'pending') {
+            applicationData = pendingApplicationsList.find(application => application.studentId === studentId)
+            setPendingApplicationsList(pendingApplicationsList.filter(application => application.studentId !== studentId));
+        } else if (oldStatus === 'interview') {
+            applicationData = interviewApplicationsList.find(application => application.studentId === studentId)
+            setInterviewApplicationsList(interviewApplicationsList.filter(application => application.studentId !== studentId));
+        } else if (oldStatus === 'accepted') {
+            applicationData = acceptedApplicationsList.find(application => application.studentId === studentId)
+            setAcceptedApplicationsList(acceptedApplicationsList.filter(application => application.studentId !== studentId));
+        }
+
+        if (newStatus === 'pending') {
+            setPendingApplicationsList([...pendingApplicationsList, applicationData]);
+        } else if (newStatus === 'interview') {
+            setInterviewApplicationsList([...interviewApplicationsList, applicationData]);
+        } else if (newStatus === 'accepted') {
+            setAcceptedApplicationsList([...acceptedApplicationsList, applicationData]);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchApplications()
     }, []);
 
-    return (
-        <div style={{
-            display: 'flex', flexDirection: 'row', justifyContent: 'center',
-            paddingTop: '5%'
-        }}>
-            <PostingTab
-                pendingApplicationsList={pendingApplicationsList}
-                interviewApplicationsList={interviewApplicationsList}
-                acceptedApplicationsList={acceptedApplicationsList}
-            />
-        </div>
-    );
+    return (<div style={{
+        display: 'flex', flexDirection: 'row', justifyContent: 'center', paddingTop: '5%'
+    }}>
+        <PostingTab
+            pendingApplicationsList={pendingApplicationsList}
+            interviewApplicationsList={interviewApplicationsList}
+            acceptedApplicationsList={acceptedApplicationsList}
+            updateApplicationStatus={updateApplicationStatus}
+        />
+    </div>);
 }
