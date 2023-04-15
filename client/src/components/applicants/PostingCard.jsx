@@ -14,13 +14,18 @@ export default function PostingCard({
                                         studentId,
                                         canInterview,
                                         canAccept,
-                                        canRescind
+                                        canRescind,
+                                        refreshData
                                     }) {
 
     const [isVisible, setIsVisible] = useState(true);
 
     const hidePostingCard = () => {
         setIsVisible(false);
+    };
+
+    const handleRefresh = async (studentId, oldStatus, newStatus) => {
+        await refreshData(studentId, oldStatus, newStatus);
     };
 
     return (
@@ -33,6 +38,7 @@ export default function PostingCard({
                                 canAccept={canAccept}
                                 canRescind={canRescind}
                                 onHidePostingCard={hidePostingCard}
+                                refreshData={handleRefresh}
                 />
             </Accordion.Item>
         </Accordion.Root>)

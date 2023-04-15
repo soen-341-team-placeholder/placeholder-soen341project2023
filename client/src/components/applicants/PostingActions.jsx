@@ -22,51 +22,87 @@ async function patchPosting(postingId, posting) {
     })
 }
 
-export default function PostingActions({studentId, postingId, canInterview, canAccept, canRescind, onHidePostingCard}) {
+export default function PostingActions({
+                                           studentId,
+                                           postingId,
+                                           canInterview,
+                                           canAccept,
+                                           canRescind,
+                                           onHidePostingCard,
+                                           refreshData
+                                       }) {
+
+    const handleRefresh = async (studentId, oldStatus, newStatus) => {
+        await refreshData(studentId, oldStatus, newStatus);
+    };
 
     const sendToInterview = async (studentId, postingId) => {
         const posting = await getPosting(postingId)
-        if (posting.pendingApplicantsIds.includes(studentId))
+        let newStatus = 'interview'
+        let oldStatus
+
+        if (posting.pendingApplicantsIds.includes(studentId)) {
             posting.pendingApplicantsIds = posting.pendingApplicantsIds.filter(e => e !== studentId);
-        else if (posting.acceptedApplicantIds.includes(studentId))
+            oldStatus = 'pending'
+        } else if (posting.acceptedApplicantIds.includes(studentId)) {
             posting.acceptedApplicantIds = posting.acceptedApplicantIds.filter(e => e !== studentId);
-        else if (posting.rejectedApplicantIds.includes(studentId))
+            oldStatus = 'accepted'
+        } else if (posting.rejectedApplicantIds.includes(studentId)) {
             posting.rejectedApplicantIds = posting.rejectedApplicantIds.filter(e => e !== studentId);
+            oldStatus = 'rejected'
+        }
 
         posting.interviewApplicantIds.push(studentId)
 
         await patchPosting(postingId, posting)
         onHidePostingCard();
+        await handleRefresh(studentId, oldStatus, newStatus)
     }
 
     const sendToAccepted = async (studentId, postingId) => {
         const posting = await getPosting(postingId)
-        if (posting.pendingApplicantsIds.includes(studentId))
+        let newStatus = 'accepted'
+        let oldStatus
+
+        if (posting.pendingApplicantsIds.includes(studentId)) {
             posting.pendingApplicantsIds = posting.pendingApplicantsIds.filter(e => e !== studentId);
-        else if (posting.interviewApplicantIds.includes(studentId))
+            oldStatus = 'pending'
+        } else if (posting.interviewApplicantIds.includes(studentId)) {
             posting.interviewApplicantIds = posting.interviewApplicantIds.filter(e => e !== studentId);
-        else if (posting.rejectedApplicantIds.includes(studentId))
+            oldStatus = 'interview'
+        } else if (posting.rejectedApplicantIds.includes(studentId)) {
             posting.rejectedApplicantIds = posting.rejectedApplicantIds.filter(e => e !== studentId);
+            oldStatus = 'rejected'
+        }
 
         posting.acceptedApplicantIds.push(studentId)
 
         await patchPosting(postingId, posting)
         onHidePostingCard();
+        await handleRefresh(studentId, oldStatus, newStatus)
     }
 
     const sendToRescinded = async (studentId, postingId) => {
         const posting = await getPosting(postingId)
-        if (posting.pendingApplicantsIds.includes(studentId))
+        let newStatus = 'rejected'
+        let oldStatus
+
+        if (posting.pendingApplicantsIds.includes(studentId)) {
             posting.pendingApplicantsIds = posting.pendingApplicantsIds.filter(e => e !== studentId);
-        else if (posting.interviewApplicantIds.includes(studentId))
+            oldStatus = 'pending'
+        } else if (posting.interviewApplicantIds.includes(studentId)) {
             posting.interviewApplicantIds = posting.interviewApplicantIds.filter(e => e !== studentId);
-        else if (posting.acceptedApplicantIds.includes(studentId))
+            oldStatus = 'interview'
+        } else if (posting.acceptedApplicantIds.includes(studentId)) {
             posting.acceptedApplicantIds = posting.acceptedApplicantIds.filter(e => e !== studentId);
+            oldStatus = 'accepted'
+        }
 
         posting.rejectedApplicantIds.push(studentId)
 
         await patchPosting(postingId, posting)
         onHidePostingCard();
+        await handleRefresh(studentId, oldStatus, newStatus)
     }
 
     return (

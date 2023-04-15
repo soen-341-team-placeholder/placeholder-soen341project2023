@@ -354,6 +354,23 @@ export async function getPosting(postingId) {
   }
 }
 
+export async function getPostingsByEmployerId(employerId) {
+  try {
+    if (!isLoggedIn()) {
+      fancyPopup("Please log in first.");
+      return;
+    }
+    const response = await axios.get(`${backendUrl}/postings?employerId=${employerId}`, {
+      headers: {
+        authorization: `Bearer ${cookies.get("accessToken")}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    fancyPopup(error);
+  }
+}
+
 export async function updatePosting(postingId, data) {
   try {
     if (!isLoggedIn()) {
