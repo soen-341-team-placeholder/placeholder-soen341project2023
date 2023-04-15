@@ -38,7 +38,8 @@ const ProfileModal = ({user, onClose, onSave, isAnEmployer}) => {
     });
 
     const {fields: workExperienceFields, append: appendWorkExperience, remove: removeWorkExperience} = useFieldArray({
-        control, name: "workExperience",
+        control,
+        name: "workExperience",
     });
 
     const onSubmit = (formValues) => {
@@ -63,7 +64,7 @@ const ProfileModal = ({user, onClose, onSave, isAnEmployer}) => {
                                 Name</label>
                             <input
                                 {...register("firstName")}
-                                className="shadow appearance-none border                 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 type="text"
                                 id="firstName"
                             />

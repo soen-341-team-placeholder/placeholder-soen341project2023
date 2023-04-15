@@ -42,7 +42,7 @@ router.patch('/:id', authenticateToken, async (req, res) => {
 
     await user.save();
 
-    res.status(200).send('Emplyer Name(s) added successfully');
+    res.status(200).send('Employer Name(s) added successfully');
   } catch (error) {
     console.error(error);
     res.status(500).send('Error adding name(s)');

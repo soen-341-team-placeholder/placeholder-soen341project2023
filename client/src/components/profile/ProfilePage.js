@@ -10,9 +10,9 @@ export default function ProfilePage() {
     const [isEditable, setEditable] = useState(false)
     const [showModal, setShowModal] = useState(false)
 
-    useEffect(() => {
-        const cookies = new Cookies()
+    const cookies = new Cookies()
 
+    useEffect(() => {
         async function fetchData() {
             const user = await fn.fetchUserProfile(userId);
             setUser(user);
@@ -23,6 +23,10 @@ export default function ProfilePage() {
         setEditable(cookies.get('userId') === userId || cookies.get('userType') === 'admin')
     }, [userId]);
 
+    const subscribeToEmployer = async () => {
+        await fn.subscribeTo(cookies.get('userId'), userId) // First id is student's id and second is the employer's one
+    }
+
     if (!user) {
         return <div>Loading...</div>;
     }
@@ -31,12 +35,16 @@ export default function ProfilePage() {
         return user.userType === 'employer'
     }
 
+    const isProfileOwner = () => {
+        return user.userId === cookies.get('userId')
+    }
+
     const hasWorkExperience = () => {
-        return user.workExperience.length !== 0
+        return (user.workExperience && user.workExperience.length !== 0)
     };
 
     const hasEducation = () => {
-        return user.education.length !== 0
+        return (user.education && user.education.length !== 0)
     };
 
     const ProfileCard = () => {
@@ -56,21 +64,11 @@ export default function ProfilePage() {
                             {isAnEmployer() && <p className="text-gray-500">Company: {user.companyName}</p>}
                         </div>
                     </div>
+
                     <div className="mt-5">
                         <p className="text-gray-500">{user.biography}</p>
-                        <button
-                            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md"
-                            onClick={() => fn.downloadCV(user)}>
-                            Download CV
-                        </button>
-                        {isEditable &&
-                            (<button
-                                className="mt-4 ml-4 bg-green-500 text-white px-6 py-2 rounded-md"
-                                onClick={() => setShowModal(true)}>
-                                Edit Profile
-                            </button>)
-                        }
                     </div>
+
                     {hasWorkExperience() && (
                         <div className="mt-10">
                             <h2 className="text-xl font-semibold">Work Experience</h2>
@@ -102,6 +100,27 @@ export default function ProfilePage() {
                             </div>
                         </div>
                     )}
+                    <div className="mt-5">
+                        <button
+                            className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-md"
+                            onClick={() => fn.downloadCV(user)}>
+                            Download CV
+                        </button>
+                        {isEditable &&
+                            (<button
+                                className="mt-4 ml-4 bg-green-500 text-white px-6 py-2 rounded-md"
+                                onClick={() => setShowModal(true)}>
+                                Edit Profile
+                            </button>)
+                        }
+                        {(isAnEmployer() && !isProfileOwner()) &&
+                            (<button
+                                className="mt-4 ml-4 bg-green-500 text-white px-6 py-2 rounded-md"
+                                onClick={() => subscribeToEmployer()}>
+                                Subscribe
+                            </button>)
+                        }
+                    </div>
                 </div>
             </div>
         )
