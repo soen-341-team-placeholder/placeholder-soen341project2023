@@ -46,7 +46,10 @@ export default function LoginPage(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fn.loginUser(values, cookies);
+    fn.loginUser(values, cookies).then(() => {
+        if (cookies.get('userId'))
+            navigate("/", {replace: true});
+    });
 
   };
 
