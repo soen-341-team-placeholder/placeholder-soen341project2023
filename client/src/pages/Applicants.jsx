@@ -12,7 +12,6 @@ export default function Applicants() {
     const cookies = new Cookies();
 
     const fetchApplications = async () => {
-        console.log('fetchApplications')
         setPendingApplicationsList([])
         setInterviewApplicationsList([])
         setAcceptedApplicationsList([])
@@ -86,7 +85,6 @@ export default function Applicants() {
 
 
     useEffect(() => {
-        console.log('reload')
         fetchApplications()
     }, []);
 

@@ -22,7 +22,8 @@ const PostingTab = ({
             </Tabs.List>
             <Tabs.Content className="TabsContent" value="tab1">
                 {pendingApplicationsList.map((applicant) => (
-                    <PostingCard firstName={applicant.firstName}
+                    <PostingCard key={applicant.studentId}
+                                 firstName={applicant.firstName}
                                  lastName={applicant.lastName}
                                  postingTitle={applicant.postingTitle}
                                  postingId={applicant.postingId}
@@ -37,7 +38,8 @@ const PostingTab = ({
             </Tabs.Content>
             <Tabs.Content className="TabsContent" value="tab2">
                 {interviewApplicationsList.map((applicant) => (
-                    <PostingCard firstName={applicant.firstName}
+                    <PostingCard key={applicant.studentId}
+                                 firstName={applicant.firstName}
                                  lastName={applicant.lastName}
                                  postingTitle={applicant.postingTitle}
                                  postingId={applicant.postingId}
@@ -52,7 +54,8 @@ const PostingTab = ({
             </Tabs.Content>
             <Tabs.Content className="TabsContent" value="tab3">
                 {acceptedApplicationsList.map((applicant) => (
-                    <PostingCard firstName={applicant.firstName}
+                    <PostingCard key={applicant.studentId}
+                                 firstName={applicant.firstName}
                                  lastName={applicant.lastName}
                                  postingTitle={applicant.postingTitle}
                                  postingId={applicant.postingId}
