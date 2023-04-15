@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
-import { FaBars, FaMoon, FaSun, FaTimes } from "react-icons/fa"; // import font awesome icons
+import {useRef} from "react";
+import {Link, useLocation} from "react-router-dom";
+import Cookies from "universal-cookie";
+import {FaBars} from "react-icons/fa"; // import font awesome icons
 import "../styles/styles.css";
 
 import SearchBar from "./SearchBar";
@@ -9,60 +10,45 @@ import * as fn from './Function';
 import "../styles/styles.css";
 import "../styles/Navbar.css";
 
-export default function Navbar(props) {
-  // Destructure props to get required variables
-  const { isLoggedIn, cookies, darkMode } = props;
+export default function Navbar() {
+    const universal_cookies = new Cookies()
 
-  // Create a ref to access the nav element
-  const navRef = useRef();
+    // Create a ref to access the nav element
+    const navRef = useRef();
 
-  // Function to toggle the navbar menu
-  const showNavbar = () => {
-    navRef.current.classList.toggle("responsive_nav");
-  };
+    // Function to toggle the navbar menu
+    const showNavbar = () => {
+        navRef.current.classList.toggle("responsive_nav");
+    };
+    
+    return (
+        <div className="nav-container">
+            {/* Placeholder logo */}
+            <h3>PlaceHolder</h3>
 
-  // Function to handle dark mode toggle
-  const handleDarkModeToggle = () => {
-    fn.toggleDarkMode();
-    console.log(`darkMode = ${cookies.get("darkMode")}`);
-  };
+            {/* Search bar component */}
+            <SearchBar/>
 
-  return (
-    <div className="nav-container">
-      {/* Placeholder logo */}
-      <h3>PlaceHolder</h3>
+            {/* Navigation menu */}
+            <nav ref={navRef}>
+                <Link to="/" onClick={showNavbar}>
+                    Hub
+                </Link>
+                <Link to="/postings" onClick={showNavbar}>
+                    View Postings
+                </Link>
+                <Link to={"/profile/" + universal_cookies.get('userId')} onClick={showNavbar}>
+                    Profile
+                </Link>
+                <Link to="/about" onClick={showNavbar}>
+                    Dev
+                </Link>
+            </nav>
 
-      {/* Search bar component */}
-      <SearchBar />
-
-      {/* Navigation menu */}
-      <nav ref={navRef}>
-        <Link to="/" onClick={showNavbar}>
-          Hub
-        </Link>
-        <Link to="/postings" onClick={showNavbar}>
-          View Postings
-        </Link>
-        <Link to="/inbox">
-          Inbox
-        </Link>
-        <Link to="/profile/:userId" onClick={showNavbar}>
-          Profile
-        </Link>
-        <Link to="/about" onClick={showNavbar}>
-          Dev
-        </Link>
-
-        {/* Dark mode toggle button */}
-        <button className="darkmode-toggle-btn" onClick={handleDarkModeToggle}>
-          {darkMode ? <FaMoon /> : <FaSun />}
-        </button>
-      </nav>
-
-      {/* Hamburger menu button */}
-      <button className="hamburger-menu" onClick={showNavbar}>
-        <FaBars />
-      </button>
-    </div>
-  );
+            {/* Hamburger menu button */}
+            <button className="hamburger-menu" onClick={showNavbar}>
+                <FaBars/>
+            </button>
+        </div>
+    );
 }

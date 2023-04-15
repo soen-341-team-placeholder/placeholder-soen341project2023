@@ -5,7 +5,6 @@ import { FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import * as fn from "../components/Function";
-import { stringify } from "querystring";
 import { FaPlay } from "react-icons/fa";
 
 const cookies = new Cookies();
