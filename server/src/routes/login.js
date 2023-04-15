@@ -1,35 +1,45 @@
-const express = require('express');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const User = require('../models/User');
-const router = express.Router();
+const { MongoClient } = require("mongodb");
+const router = require("express").Router();
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
-router.post('/', async (req, res) => {
-
+router.post("/", async (req, res) => {
+  try {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({ email: req.body.email }, async (err, user) => {
-        if (err) {
-            res.status(400).send('message:' + err);
-            console.log(err);
-        } else if (user) {
-            try {
-                if (await bcrypt.compare(password, user.password)) {
-                    const accessToken = jwt.sign({ email }, process.env.JWT_ACCESS_TOKEN_SECRET, { expiresIn: '30m' });
-                    const refreshToken = jwt.sign({ email }, process.env.JWT_REFRESH_TOKEN_SECRET);
-                    res.status(201).json({ accessToken: accessToken, refreshToken: refreshToken });
-                } else {
-                    res.status(400).send('message: Password is incorrect');
-                }
-            }
-            catch {
-                res.status(500).send('message: Server error');
-            }
-        } else {
-            res.status(404).send('message: User not found');
-        }
-    });
+    const query = { email };
+    const client = await MongoClient.connect(process.env.MONGODB_URI);
+    const db = client.db();
+
+    const users = await db.collection("users").find(query).toArray();
+    const user = users[0];
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Password is incorrect" });
+    }
+
+    const accessToken = jwt.sign(
+      { email },
+      process.env.JWT_ACCESS_TOKEN_SECRET,
+      { expiresIn: "30m" }
+    );
+    const refreshToken = jwt.sign(
+      { email },
+      process.env.JWT_REFRESH_TOKEN_SECRET
+    );
+
+    res.status(200).json({ accessToken, refreshToken });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 module.exports = router;
