@@ -186,7 +186,7 @@ export async function loginUser(values) {
     });
     cookies.set("accessToken", response.data.accessToken, { path: "/" });
     cookies.set("refreshToken", response.data.refreshToken, { path: "/" });
-    await sendToProfile(values);
+    await sendToHomePage(values);
   } catch (error) {
     console.log(error);
   }
@@ -216,7 +216,7 @@ export async function refreshToken() {
  * Function to send user to their profile page after logging in
  * @param {object} values - An object containing email and password values
  */
-export async function sendToProfile(values) {
+export async function sendToHomePage(values) {
   if (!isLoggedIn()) {
     fancyPopup("Please log in first.");
     return;
