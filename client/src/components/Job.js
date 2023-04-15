@@ -57,7 +57,7 @@ export default function Job({
         fn.fancyConfirmationPopup("Applied successfully!");
         fn.updatePosting(postingId, posting);
       } else {
-        fn.fancyPopup("You have already applied to this posting!");
+        fn.fancyErrorPopup("You have already applied to this posting!");
       }
       setButtonMenu(!buttonMenu);
     });
