@@ -88,7 +88,7 @@ const userSchema = new mongoose.Schema({
         default: Date.now(),
         immutable: true
     },
-    subscribedTo: [
+    subscribers: [
         {
             type: String,
             required: true
@@ -101,7 +101,7 @@ const userSchema = new mongoose.Schema({
             required: true
         }
     ]
-    
+
 });
 
 module.exports = mongoose.model('User', userSchema);

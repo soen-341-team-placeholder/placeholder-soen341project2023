@@ -407,7 +407,6 @@ export async function addNewPosting(data) {
             error.response?.data?.message ||
             "An error occurred while creating the the posting"
         fancyErrorPopup(errorMessage);
-        return false;
     }
 }
 
@@ -433,6 +432,47 @@ export async function deletePosting(postingId) {
     }
 }
 
-export async function subscribeTo(userId, employerId) {
-    console.log('subscribe')
+
+export async function getSubscribers(employerId) {
+    try {
+        if (!isLoggedIn()) {
+            fancyErrorPopup("Please log in first.");
+            return;
+        }
+        const res = await axios.get(`${backendUrl}/subscribe/${employerId}`, {
+            headers: {
+                authorization: `Bearer ${cookies.get("accessToken")}`,
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        const errorMessage =
+            error.response?.data?.message ||
+            "An error occurred while getting subscribers fom the employer"
+        fancyErrorPopup(errorMessage);
+        return false;
+    }
+}
+
+export async function subscribeTo(employerId) {
+    try {
+        if (!isLoggedIn()) {
+            fancyErrorPopup("Please log in first.");
+            return;
+        }
+        await axios.patch(`${backendUrl}/subscribe/${employerId}`, {}, {
+            headers: {
+                authorization: `Bearer ${cookies.get("accessToken")}`,
+            },
+        });
+        fancyConfirmationPopup("Subscribed successfully")
+        return true;
+    } catch (error) {
+        const errorMessage =
+            error.response?.data?.message ||
+            "An error occurred while subscribing the the employer"
+        fancyErrorPopup(errorMessage);
+        return false;
+    }
 }
