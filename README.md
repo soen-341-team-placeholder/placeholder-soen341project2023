@@ -1,4 +1,4 @@
-# Career Service Application
+# Career Service Application 
 
 ### Description
 This is a repository created to organize and keep track of our SOEN 341 Project. The Goal is to create a career site resembling Indeed. At the end of the development cycle, there will be complete UX for job seekers, employers and site admins.
