@@ -103,6 +103,7 @@ export default function ViewPostings(props) {
             location={posting.location}
             salary={posting.salary}
             postingId={posting._id}
+            employerId={posting.employerId}
             status={getUserStatus(posting._id)}
           />
         ))}

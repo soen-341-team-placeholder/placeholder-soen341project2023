@@ -432,3 +432,7 @@ export async function deletePosting(postingId) {
         return false;
     }
 }
+
+export async function subscribeTo(userId, employerId) {
+    console.log('subscribe')
+}
