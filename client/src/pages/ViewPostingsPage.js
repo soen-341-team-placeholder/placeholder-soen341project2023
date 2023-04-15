@@ -35,26 +35,48 @@ export default function ViewPostings(props) {
 
   useEffect(() => {
     async function getStudentApplicationStatus() {
-      try {
-        const response = await axios.get("http://localhost:4000/postings", {
-          headers: {
-            Authorization: `Bearer ${cookies.get("accessToken")}`,
-          },
-        });
-        setApplicationStatuses(response.data);
-      } catch (err) {
-        console.log(err);
-      }
+      const response = await axios.get("http://localhost:4000/postings", {
+        headers: {
+          Authorization: `Bearer ${cookies.get("accessToken")}`,
+        },
+      });
+  
+      const postings = response.data;
+  
+      const userId = cookies.get("userId");
+      const updatedApplicationStatuses = [];
+  
+      postings.forEach((posting) => {
+        const {
+          pendingApplicantsIds,
+          interviewApplicantIds,
+          acceptedApplicantIds,
+          rejectedApplicantIds,
+        } = posting;
+  
+        let status = "Apply?";
+  
+        if (pendingApplicantsIds.includes(userId)) {
+          status = "Application Pending";
+        } else if (interviewApplicantIds.includes(userId)) {
+          status = "Selected for Interview";
+        } else if (acceptedApplicantIds.includes(userId)) {
+          status = "Accepted";
+        } else if (rejectedApplicantIds.includes(userId)) {
+          status = "Rejected";
+        }
+        
+        updatedApplicationStatuses.push({ postingId: posting._id, status });
+      });
+  
+      setApplicationStatuses(updatedApplicationStatuses);
     }
-
     getStudentApplicationStatus();
-  }, []);
-
+  }, []); 
+  
   function getUserStatus(postingId) {
-    const status = applicationStatuses.find(
-      (status) => status.postingId === postingId
-    );
-    return status ? status.status : "Want to Apply?";
+    const statusObj = applicationStatuses.find(status => status.postingId === postingId);
+    return statusObj?.status || "Apply?";
   }
 
   return (
