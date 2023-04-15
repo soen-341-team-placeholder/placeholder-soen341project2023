@@ -2,8 +2,7 @@ import React from 'react';
 import Student from '../components/student/Student';
 import { useParams } from 'react-router-dom';
 
-function EditStudentPage(props) {
-      const { isLoggedIn, cookies, darkMode} = props;
+function StudentProfile() {
 
     const userId = useParams().userId;
 
@@ -14,4 +13,4 @@ function EditStudentPage(props) {
     </div>);
 }
 
-export default EditStudentPage;
+export default StudentProfile;
