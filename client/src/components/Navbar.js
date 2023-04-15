@@ -1,11 +1,10 @@
 import {useRef} from "react";
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 import Cookies from "universal-cookie";
 import {FaBars} from "react-icons/fa"; // import font awesome icons
 import "../styles/styles.css";
 
 import SearchBar from "./SearchBar";
-import * as fn from './Function';
 
 import "../styles/styles.css";
 import "../styles/Navbar.css";
