@@ -6,7 +6,7 @@ import {Navigate} from "react-router-dom"; // Importing react-router-dom module 
 import {Document, Packer, Paragraph, TextRun} from "docx"; // Importing docx module for creating Word documents
 
 export const cookies = new Cookies(); // Creating an instance of Cookies
-export const backendUrl = "http://localhost:4000/";    //process.env.BACKEND_URL ||
+export const backendUrl = "http://localhost/";    //process.env.BACKEND_URL ||
 
 // Misc/ testing
 export function hello_world() {
