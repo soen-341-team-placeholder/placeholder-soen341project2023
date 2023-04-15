@@ -1,8 +1,7 @@
-import {useRef} from "react";
-import {Link} from "react-router-dom";
+import { useRef } from "react";
+import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
-import {FaBars} from "react-icons/fa"; // import font awesome icons
-import "../styles/styles.css";
+import { FaBars } from "react-icons/fa";
 
 import SearchBar from "./SearchBar";
 
@@ -10,7 +9,7 @@ import "../styles/styles.css";
 import "../styles/Navbar.css";
 
 export default function Navbar() {
-    const universal_cookies = new Cookies()
+    const universal_cookies = new Cookies();
 
     // Create a ref to access the nav element
     const navRef = useRef();
@@ -19,14 +18,19 @@ export default function Navbar() {
     const showNavbar = () => {
         navRef.current.classList.toggle("responsive_nav");
     };
-    
+
     return (
         <div className="nav-container">
             {/* Placeholder logo */}
             <h3>PlaceHolder</h3>
 
             {/* Search bar component */}
-            <SearchBar/>
+            <SearchBar />
+
+            {/* Hamburger menu button */}
+            <button className="hamburger-menu" onClick={showNavbar}>
+                <FaBars />
+            </button>
 
             {/* Navigation menu */}
             <nav ref={navRef}>
@@ -36,18 +40,16 @@ export default function Navbar() {
                 <Link to="/postings" onClick={showNavbar}>
                     View Postings
                 </Link>
-                <Link to={"/profile/" + universal_cookies.get('userId')} onClick={showNavbar}>
+                <Link
+                    to={"/profile/" + universal_cookies.get("userId")}
+                    onClick={showNavbar}
+                >
                     Profile
                 </Link>
                 <Link to="/about" onClick={showNavbar}>
                     Dev
                 </Link>
             </nav>
-
-            {/* Hamburger menu button */}
-            <button className="hamburger-menu" onClick={showNavbar}>
-                <FaBars/>
-            </button>
         </div>
     );
 }
