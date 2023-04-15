@@ -8,7 +8,7 @@ import '../styles/FormInput.css';
 import * as fn from "../components/Function";
 
 function RegisterPage(props) {
-    const { isLoggedIn, cookies, darkMode} = props;
+    const { isLoggedIn} = props;
   const navigate = useNavigate();
     const [values, setValues] = useState({
     firstName: "",
@@ -23,7 +23,7 @@ function RegisterPage(props) {
   
   if (isLoggedIn) {
     navigate('/');
-    fn.fancyPopup('Already logged in!');
+    fn.fancyErrorPopup('Already logged in!');
     return null;
   } else
 {

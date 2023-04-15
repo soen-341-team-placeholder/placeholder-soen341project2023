@@ -5,18 +5,13 @@ import '../styles/styles.css';
 import * as fn from "../components/Function";
 
 export default function AboutPage(props) {
-  const { cookies,isLoggedIn, darkMode } = props;
+  const { cookies,isLoggedIn} = props;
   const [cookieState, setCookieState] = useState({});
 
   useEffect(() => {
     setCookieState(cookies.getAll());
   }, [cookies]);
-
-  const handleClick = () => {
-    fn.fancyPopup('Button clicked!');
-  };
-
-  return (
+    return (
     <div>
       <h1>welcome to the about page</h1>
       {fn.hello_world()}

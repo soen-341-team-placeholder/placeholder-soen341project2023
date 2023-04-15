@@ -7,7 +7,7 @@ import '../styles/Register.css';
 
 
 export default function LoginPage(props) {
-    const { isLoggedIn, cookies, darkMode} = props;
+    const { isLoggedIn, cookies} = props;
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
@@ -17,7 +17,7 @@ export default function LoginPage(props) {
 
    if (isLoggedIn) {
     navigate('/');
-    fn.fancyPopup('Already logged in!');
+    fn.fancyErrorPopup('Already logged in!');
     return null;
   } else{
 

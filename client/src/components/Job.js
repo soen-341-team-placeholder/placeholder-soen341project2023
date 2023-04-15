@@ -5,7 +5,6 @@ import { FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import * as fn from "../components/Function";
-import { stringify } from "querystring";
 import { FaPlay } from "react-icons/fa";
 
 const cookies = new Cookies();
@@ -58,7 +57,7 @@ export default function Job({
         fn.fancyConfirmationPopup("Applied successfully!");
         fn.updatePosting(postingId, posting);
       } else {
-        fn.fancyPopup("You have already applied to this posting!");
+        fn.fancyErrorPopup("You have already applied to this posting!");
       }
       setButtonMenu(!buttonMenu);
     });
