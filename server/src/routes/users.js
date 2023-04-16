@@ -9,7 +9,7 @@ router.get('/', authenticateToken, async (req, res) => {
 
     // User has provided an email, thus search for a specific user with that email
     if (email != null) {
-        User.findOne({ email: email }, (err, user) => {
+        User.findOne({email: email}, (err, user) => {
             if (err) {
                 res.status(400).send('message:' + err)
                 console.log(err)
@@ -26,7 +26,7 @@ router.get('/', authenticateToken, async (req, res) => {
     // User has not provided an email, thus return all users
 
     // Get requester user type
-    const userType = (await User.findOne({ email: req.email })).userType
+    const userType = (await User.findOne({email: req.email})).userType
     if (userType != 'admin') {
         res.status(403).send('message: Forbidden')
         return
@@ -85,64 +85,38 @@ router.patch('/', async (req, res) => {
 
 //update user by id
 router.patch('/:id', authenticateToken, async (req, res) => {
-    const newEmployer = req.body.subscribedTo;
-    const newSavedPosting = req.body.savedPostings;
     const userId = req.params.id;
-    try{
-        const user = await User.findById(userId);
-        const { firstName, lastName, age, userType } = req.body;
-        const updatedUser = await User.findOneAndUpdate(
-            { _id: userId },
-            { firstName, lastName,age, userType },
-            { new: true } // return the updated document
-        )
-        if (!updatedUser) {
-            return res.status(404).send(`User with ID ${userId} not found`);
-        }
 
-        const existingEmployers = user.subscribedTo;
-        const uniqueEmployers = [];
-        const existingSavedPostings = user.savedPostings;
-        const uniqueSavedPostings = [];
+    let user = await User.findById(req.params.id).catch((err) => {
+        res.status(400).send('message:' + err);
+        console.log(err);
+    });
 
-        newEmployer.forEach(name => {
-            if (!existingEmployers.includes(name)) {
-                uniqueEmployers.push(name);
-            }
-          });
-
-        if (uniqueEmployers.length === 0) {
-            res.status(400).send('All names already exist');
-            return;
-        }
-
-        newEmployer.forEach(name => {
-            if (!existingSavedPostings.includes(name)) {
-                uniqueSavedPostings.push(name);
-            }
-          });
-
-        if (uniqueSavedPostings.length === 0) {
-            res.status(400).send('All names already exist');
-            return;
-        }
-        
-        user.subscribedTo = [...existingEmployers, ...uniqueEmployers];
-        user.savedPostings = [...user.existingSavedPostings, ...uniqueSavedPostings];
-        await user.save();
-        res.send(`User with ID ${userId} has been updated`);
-
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error')
+    if (!user) {
+        res.status(404).send('message: User not found');
+        return;
     }
+
+    Object.keys(req.body).forEach((key) => {
+        user[key] = req.body[key];
+    });
+
+    user.save((err, user) => {
+        if (err) {
+            res.status(400).send('message:' + err);
+            console.log(err);
+        } else {
+            res.status(200).json(user);
+        }
+    });
+
 })
 
 router.delete('/:id', authenticateToken, async (req, res) => {
     const userId = req.params.id;
     try {
         // Find and delete the user with the specified ID from the database
-        const deletedUser = await User.findOneAndDelete({ _id: userId });
+        const deletedUser = await User.findOneAndDelete({_id: userId});
 
         if (!deletedUser) {
             return res.status(404).send(`User with ID ${userId} not found`);
@@ -162,10 +136,10 @@ async function getUser(req, res, next) {
     try {
         user = await User.findById(req.params.id)
         if (user == null) {
-            return res.status(404).json({ message: 'cannot find user' })
+            return res.status(404).json({message: 'cannot find user'})
         }
     } catch (error) {
-        return res.status(500).json({ message: error.message })
+        return res.status(500).json({message: error.message})
     }
     res.user = user
     next()
