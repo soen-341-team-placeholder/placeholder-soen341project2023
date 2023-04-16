@@ -1,6 +1,7 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
+const Posting = require('../models/Posting')
 const authenticateToken = require('../auth/token_validator')
 const router = express.Router()
 
@@ -128,6 +129,32 @@ router.delete('/:id', authenticateToken, async (req, res) => {
         res.status(500).send('Server error');
     }
 
+})
+
+router.get('/:id/rating', getUser, authenticateToken, async (req, res) => {
+    try {
+        const userId = req.params.id;
+
+        const appliedPostingsCount = await Posting.countDocuments({
+            $or: [
+                {pendingApplicantsIds: userId},
+                {interviewApplicantIds: userId},
+                {acceptedApplicantIds: userId},
+                {rejectedApplicantIds: userId}
+            ]
+        });
+
+        // Calculate the rating based on the appliedPostingsCount
+        const rating = appliedPostingsCount;
+
+        res.json({rating: rating});
+    } catch (error) {
+        res.status(400).send("message" + error.message)
+    }
+})
+
+router.patch('/', async (req, res) => {
+    res.sendStatus(200)
 })
 
 //find user by id
