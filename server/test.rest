@@ -1,0 +1,25 @@
+###
+
+POST http://localhost:4000/subscribe/sendEmail
+Authorization: Bearer token
+Content-Type: application/json
+{
+    "email" : "wade3_hamati@outlook.com"
+}
+
+###
+
+POST http://localhost:4000/subscribe/
+Authorization: Bearer token
+Content-Type: application/json
+{
+    "student" : "student's id",
+    "employer" : "employer's id"
+}
+
+POST http://localhost:4000/users/localhost:4000/users/savePosting/642461c3f45b952f3b4e915f
+Authorization: Bearer token
+Content-Type: application/json
+{
+    "savedPostings" : ["Post 1"]
+}
