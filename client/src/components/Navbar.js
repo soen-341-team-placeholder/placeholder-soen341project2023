@@ -1,78 +1,81 @@
 import {useEffect, useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
+import Cookies from "universal-cookie";
 import {FaBars} from "react-icons/fa";
+
 import SearchBar from "./SearchBar";
 
-import * as fn from "./Function";
 import "../styles/styles.css";
 import "../styles/Navbar.css";
+import {cookies} from "./Function";
 
-export default function Navbar(props) {
-  const { isLoggedIn } = props;
-  const cookies = fn.cookies();
-  const [isEmployer, setEmployer] = useState(false);
+export default function Navbar() {
 
-  const navigate = useNavigate();
+    const [isEmployer, setEmployer] = useState(false)
 
-  // Create a ref to access the nav element
-  const navRef = useRef();
+    const universal_cookies = new Cookies();
+    const navigate = useNavigate();
 
-  // Function to toggle the navbar menu
-  const showNavbar = () => {
-    navRef.current.classList.toggle("responsive_nav");
-  };
+    // Create a ref to access the nav element
+    const navRef = useRef();
 
-  const logout = () => {
-    navRef.current.classList.toggle("responsive_nav");
-    cookies.remove("accessToken");
-    cookies.remove("refreshToken");
-    cookies.remove("userId");
-    cookies.remove("userType");
-  };
+    // Function to toggle the navbar menu
+    const showNavbar = () => {
+        navRef.current.classList.toggle("responsive_nav");
+    };
 
-  useEffect(() => {
-    setEmployer(cookies.get("userType") === "employer");
-  });
+    const logout = () => {
+        navRef.current.classList.toggle("responsive_nav");
+        cookies.remove('accessToken')
+        cookies.remove('refreshToken')
+        cookies.remove('userId')
+        cookies.remove('userType')
+    };
 
-  return (
-    <div className="nav-container">
-      {/* Placeholder logo */}
-      <h3>PlaceHolder</h3>
+    useEffect(() => {
+        setEmployer(cookies.get('userType') === 'employer')
+    })
 
-      {/* Search bar component */}
-      <SearchBar />
+    return (
+        <div className="nav-container">
+            {/* Placeholder logo */}
+            <h3>PlaceHolder</h3>
 
-      {/* Hamburger menu button */}
-      <button className="hamburger-menu" onClick={showNavbar}>
-        <FaBars />
-      </button>
+            {/* Search bar component */}
+            <SearchBar/>
 
-      {/* Navigation menu */}
-      <nav ref={navRef}>
-        <Link to="/" onClick={showNavbar}>
-          Hub
-        </Link>
-        <Link to="/postings" onClick={showNavbar}>
-          View Postings
-        </Link>
-        <Link
-          to={"/profile/" + cookies.get("userId")}
-          onClick={showNavbar}
-        >
-          Profile
-        </Link>
-        <Link to="/about" onClick={showNavbar}>
-          Dev
-        </Link>
-        {isEmployer && (
-          <Link to="/applicants" onClick={showNavbar}>
-            Applicants
-          </Link>
-        )}
-        <Link to="/login" onClick={logout}>
-          Logout
-        </Link>
-      </nav>
-    </div>
-  );
+            {/* Hamburger menu button */}
+            <button className="hamburger-menu" onClick={showNavbar}>
+                <FaBars/>
+            </button>
+
+            {/* Navigation menu */}
+            <nav ref={navRef}>
+                <Link to="/" onClick={showNavbar}>
+                    Hub
+                </Link>
+                <Link to="/postings" onClick={showNavbar}>
+                    View Postings
+                </Link>
+                <Link
+                    to={"/profile/" + universal_cookies.get("userId")}
+                    onClick={showNavbar}
+                >
+                    Profile
+                </Link>
+                <Link to="/about" onClick={showNavbar}>
+                    Dev
+                </Link>
+                {
+                    isEmployer &&
+                    <Link to="/applicants" onClick={showNavbar}>
+                        Applicants
+                    </Link>
+                }
+                <Link to="/login" onClick={logout}>
+                    Logout
+                </Link>
+            </nav>
+        </div>
+    );
 }

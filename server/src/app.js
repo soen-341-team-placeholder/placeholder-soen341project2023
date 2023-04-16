@@ -1,9 +1,7 @@
 require('dotenv').config();
 
 const express = require('express');
-let app = express(); 
-app.disable("x-powered-by");
-
+const app = express();
 const cors = require("cors");
 
 // Routers
