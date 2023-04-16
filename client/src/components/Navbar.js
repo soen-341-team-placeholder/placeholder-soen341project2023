@@ -1,15 +1,20 @@
-import { useRef } from "react";
-import { Link } from "react-router-dom";
+import {useEffect, useRef, useState} from "react";
+import {Link, useNavigate} from "react-router-dom";
 import Cookies from "universal-cookie";
-import { FaBars } from "react-icons/fa";
+import {FaBars} from "react-icons/fa";
 
 import SearchBar from "./SearchBar";
 
 import "../styles/styles.css";
 import "../styles/Navbar.css";
+import {cookies} from "./Function";
 
 export default function Navbar() {
+
+    const [isEmployer, setEmployer] = useState(false)
+
     const universal_cookies = new Cookies();
+    const navigate = useNavigate();
 
     // Create a ref to access the nav element
     const navRef = useRef();
@@ -19,17 +24,29 @@ export default function Navbar() {
         navRef.current.classList.toggle("responsive_nav");
     };
 
+    const logout = () => {
+        navRef.current.classList.toggle("responsive_nav");
+        cookies.remove('accessToken')
+        cookies.remove('refreshToken')
+        cookies.remove('userId')
+        cookies.remove('userType')
+    };
+
+    useEffect(() => {
+        setEmployer(cookies.get('userType') === 'employer')
+    })
+
     return (
         <div className="nav-container">
             {/* Placeholder logo */}
             <h3>PlaceHolder</h3>
 
             {/* Search bar component */}
-            <SearchBar />
+            <SearchBar/>
 
             {/* Hamburger menu button */}
             <button className="hamburger-menu" onClick={showNavbar}>
-                <FaBars />
+                <FaBars/>
             </button>
 
             {/* Navigation menu */}
@@ -48,6 +65,15 @@ export default function Navbar() {
                 </Link>
                 <Link to="/about" onClick={showNavbar}>
                     Dev
+                </Link>
+                {
+                    isEmployer &&
+                    <Link to="/applicants" onClick={showNavbar}>
+                        Applicants
+                    </Link>
+                }
+                <Link to="/login" onClick={logout}>
+                    Logout
                 </Link>
             </nav>
         </div>
