@@ -1,8 +1,17 @@
 const request = require('supertest');
-const app = require('../app'); // assuming your Express app is exported from a file called app.js
+const app = require('../app');
+const User = require('../models/User');
+
+jest.mock('../models/User');
 
 describe('POST /login', () => {
+  beforeEach(() => {
+    User.mockClear();
+  });
+
   it('should return 404 if user is not found', async () => {
+    User.findOne.mockResolvedValueOnce(null);
+
     const response = await request(app)
       .post('/login')
       .send({ email: 'nonexistentuser@example.com', password: 'password' });
@@ -12,6 +21,11 @@ describe('POST /login', () => {
   });
 
   it('should return 400 if password is incorrect', async () => {
+    User.findOne.mockResolvedValueOnce({
+      email: 'existinguser@example.com',
+      password: 'password',
+    });
+
     const response = await request(app)
       .post('/login')
       .send({ email: 'existinguser@example.com', password: 'wrongpassword' });
@@ -21,6 +35,11 @@ describe('POST /login', () => {
   });
 
   it('should return 200 with access and refresh tokens if user is found and password is correct', async () => {
+    User.findOne.mockResolvedValueOnce({
+      email: 'existinguser@example.com',
+      password: 'correctpassword',
+    });
+
     const response = await request(app)
       .post('/login')
       .send({ email: 'existinguser@example.com', password: 'correctpassword' });
@@ -31,8 +50,8 @@ describe('POST /login', () => {
   });
 
   it('should return 500 if server error occurs', async () => {
-    jest.spyOn(console, 'error').mockImplementation(() => {}); // mock console.error to prevent output during test
-    jest.spyOn(MongoClient, 'connect').mockRejectedValueOnce(new Error('connection error')); // mock MongoClient.connect to simulate a connection error
+    jest.spyOn(console, 'error').mockImplementation(() => {});
+    User.findOne.mockRejectedValueOnce(new Error('connection error'));
 
     const response = await request(app)
       .post('/login')
@@ -41,6 +60,6 @@ describe('POST /login', () => {
     expect(response.statusCode).toBe(500);
     expect(response.body.message).toBe('Server error');
 
-    jest.restoreAllMocks(); // restore the mocked functions to their original implementations
+    jest.restoreAllMocks();
   });
 });

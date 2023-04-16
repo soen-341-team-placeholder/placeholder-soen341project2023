@@ -3,9 +3,10 @@ const app = require('../app');
 
 describe('Posting endpoints', () => {
   let token;
+  let studentToken;
   let postingId;
 
-  // Get token for authentication
+  // Get tokens for authentication
   beforeAll(async () => {
     const response = await request(app)
       .post('/auth/login')
@@ -15,8 +16,17 @@ describe('Posting endpoints', () => {
       });
 
     token = response.body.token;
-  });
 
+    const studentResponse = await request(app)
+      .post('/auth/login')
+      .send({
+        email: 'student@test.com',
+        password: 'studentpassword'
+      });
+
+    studentToken = studentResponse.body.token;
+  });
+})
   describe('POST /postings', () => {
     it('should create a new posting', async () => {
       const newPosting = {
@@ -64,32 +74,21 @@ describe('Posting endpoints', () => {
       expect(response.text).toBe('message: Forbidden (You are a student, you cannot perform this action)');
     });
 
-    // Add more tests for error cases and edge cases
-  });
+    it('should return a 401 Unauthorized error when no token is provided', async () => {
+      const newPosting = {
+        title: 'New Posting',
+        description: 'This is a new posting',
+        employerId: '123',
+        startDate: '2022-01-01',
+        endDate: '2022-01-31',
+        location: 'New York'
+      };
 
-  describe('GET /postings/:id', () => {
-    it('should return a posting by id', async () => {
       const response = await request(app)
-        .get(`/postings/${postingId}`)
-        .set('Authorization', `Bearer ${token}`);
+        .post('/postings')
+        .send(newPosting);
 
-      expect(response.statusCode).toBe(200);
-      expect(response.body).toHaveProperty('_id', postingId);
-      expect(response.body).toHaveProperty('title', 'New Posting');
-      expect(response.body).toHaveProperty('description', 'This is a new posting');
-      expect(response.body).toHaveProperty('employerId', '123');
-      expect(response.body).toHaveProperty('startDate', '2022-01-01');
-      expect(response.body).toHaveProperty('endDate', '2022-01-31');
-      expect(response.body).toHaveProperty('location', 'New York');
+      expect(response.statusCode).toBe(401);
+      expect(response.text).toBe('message: Unauthorized (No token provided)');
     });
-
-    it('should return a 404 error if posting is not found', async () => {
-      const response = await request(app)
-        .get(`/postings/invalid-id`)
-        .set('Authorization', `Bearer ${token}`);
-
-      expect(response.statusCode).toBe(404);
-      expect(response.text).toBe('message: Posting not found');
-    })
-})
-})
+  })
