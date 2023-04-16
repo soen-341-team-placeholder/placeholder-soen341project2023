@@ -1,6 +1,6 @@
 import { useState } from "react";
-import '../styles/FormInput.css';
-import '../styles/Register.css';
+import "../styles/FormInput.css";
+import "../styles/Register.css";
 
 const FormInput = (props) => {
   const [focused, setFocused] = useState(false);
@@ -28,12 +28,19 @@ const FormInput = (props) => {
   return (
     <div className="formInput">
       <label>{label}</label>
-               <input className="input-register" {...inputProps}
-                onChange={onChange}
-                onBlur={handleFocus}
-                onFocus={() => inputProps.name === "confirmPassword" && setFocused(true)} focused={focused.toString()}
+      <input
+        className="input-register"
+        {...inputProps}
+        onChange={onChange}
+        onBlur={handleFocus}
+        onFocus={() =>
+          inputProps.name === "confirmPassword" && setFocused(true)
+        }
+        focused={focused.toString()}
       />
-      {!isValid() && focused && <span style={{color:'red',display:'block'}}>{errorMessage}</span>}
+      {!isValid() && focused && (
+        <span style={{ color: "red", display: "block" }}>{errorMessage}</span>
+      )}
     </div>
   );
 };

@@ -31,73 +31,82 @@ export default function App() {
 
 
     return (
-        <div className={'h-screen'}>
-            <Router>
-                <React.Fragment>
-                    <main className={'flex flex-col h-full'}>
-                        <HeaderWrapper/>
-                        <div className={'flex-grow'}>
-                            <ToastContainer/>
-                            <Routes>
-                                <Route path="/" element={<HomePage/>}/>
-                                <Route path="/about" element={<AboutPage {...universalProps} />}/>
-                                <Route path="/login" element={<LoginPage {...universalProps} />}/>
-                                <Route path="/register" element={<RegisterPage {...universalProps} />}/>
-                                <Route
-                                    path="/profile/:userId"
-                                    element={
-                                        <ProtectedRoute>
-                                            <ProfilePage/>
-                                        </ProtectedRoute>
-                                    }
-                                />
-                                <Route
-                                    path="/profiles/:userId"
-                                    element={
-                                        <ProtectedRoute>
-                                            <ProfileModal/>
-                                        </ProtectedRoute>
-                                    }
-                                />
-                                <Route
-                                    path="/postings"
-                                    element={
-                                        <ProtectedRoute>
-                                            <ViewPostingsPage {...universalProps} />
-                                        </ProtectedRoute>
-                                    }
-                                />
-                                <Route
-                                    path="/applicants"
-                                    element={
-                                        <ProtectedRoute>
-                                            <Applicants {...universalProps} />
-                                        </ProtectedRoute>
-                                    }
-                                />
-                                <Route
-                                    path="/calendar"
-                                    element={
-                                        <ProtectedRoute>
-                                            <Calendar {...universalProps} />
-                                        </ProtectedRoute>
-                                    }
-                                />
-                                <Route
-                                    path="/inbox"
-                                    element={
-                                        <ProtectedRoute>
-                                            <Inbox {...universalProps} />
-                                        </ProtectedRoute>
-                                    }
-                                />
-                            </Routes>
-                        </div>
-                        <FooterWrapper/>
-                    </main>
-                </React.Fragment>
-            </Router>
-        </div>
+      <div className={"h-screen"}>
+        <Router>
+          <React.Fragment>
+            <main className={"flex flex-col h-full"}>
+              <HeaderWrapper />
+              <div className={"flex-grow"}>
+                <ToastContainer />
+                <Routes>
+                  <Route path="/" element={<HomePage {...universalProps} />} />
+                  <Route
+                    path="/about"
+                    element={<AboutPage {...universalProps} />}
+                  />
+                  <Route
+                    path="/login"
+                    element={<LoginPage {...universalProps} />}
+                  />
+                  <Route
+                    path="/register"
+                    element={<RegisterPage {...universalProps} />}
+                  />
+                  <Route
+                    path="/profile/:userId"
+                    element={
+                      <ProtectedRoute>
+                        <ProfilePage {...universalProps} />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/profiles/:userId"
+                    element={
+                      <ProtectedRoute>
+                        <ProfileModal {...universalProps} />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/postings"
+                    element={
+                      <ProtectedRoute>
+                        <ViewPostingsPage {...universalProps} />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/applicants"
+                    element={
+                      <ProtectedRoute>
+                        <Applicants {...universalProps} />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/calendar"
+                    element={
+                      <ProtectedRoute>
+                        <Calendar {...universalProps} />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/inbox"
+                    element={
+                      <ProtectedRoute>
+                        <Inbox {...universalProps} />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </div>
+              <FooterWrapper />
+            </main>
+          </React.Fragment>
+        </Router>
+      </div>
     );
 }
 

@@ -13,26 +13,33 @@ export default function ViewPostings(props) {
   const [applicationStatuses, setApplicationStatuses] = useState([]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await fn.getPostings();
-      setPostings(data);
-      console.log(data);
+    const fetchData = () => {
+      fn.getPostings()
+        .then((data) => {
+          setPostings(data);
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     fetchData();
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fn.fetchUserProfile(cookies.get("userId"));
-        setUserType(res.userType);
-      } catch (err) {
-        console.log(err);
-      }
+    const fetchData = () => {
+      fn.fetchUserProfile(cookies.get("userId"))
+        .then((res) => {
+          setUserType(res.userType);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
     fetchData();
   }, []);
-
+  
+// @TODO export this to function.js
   useEffect(() => {
     async function getStudentApplicationStatus() {
       const response = await axios.get("http://localhost:4000/postings", {
@@ -40,12 +47,12 @@ export default function ViewPostings(props) {
           Authorization: `Bearer ${cookies.get("accessToken")}`,
         },
       });
-  
+
       const postings = response.data;
-  
+
       const userId = cookies.get("userId");
       const updatedApplicationStatuses = [];
-  
+
       postings.forEach((posting) => {
         const {
           pendingApplicantsIds,
@@ -53,9 +60,9 @@ export default function ViewPostings(props) {
           acceptedApplicantIds,
           rejectedApplicantIds,
         } = posting;
-  
+
         let status = "Apply?";
-  
+
         if (pendingApplicantsIds.includes(userId)) {
           status = "Application Pending";
         } else if (interviewApplicantIds.includes(userId)) {
@@ -65,17 +72,19 @@ export default function ViewPostings(props) {
         } else if (rejectedApplicantIds.includes(userId)) {
           status = "Rejected";
         }
-        
+
         updatedApplicationStatuses.push({ postingId: posting._id, status });
       });
-  
+
       setApplicationStatuses(updatedApplicationStatuses);
     }
     getStudentApplicationStatus();
-  }, []); 
-  
+  }, []);
+
   function getUserStatus(postingId) {
-    const statusObj = applicationStatuses.find(status => status.postingId === postingId);
+    const statusObj = applicationStatuses.find(
+      (status) => status.postingId === postingId
+    );
     return statusObj?.status || "Apply?";
   }
 
