@@ -496,4 +496,3 @@ export async function subscribeTo(employerId) {
         return false;
     }
 }
-

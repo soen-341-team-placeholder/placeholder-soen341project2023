@@ -61,7 +61,7 @@ router.patch('/:id', authenticateToken, async (req, res) => {
 function sendNewPostingEmail(email) {
     // User has provided an email, thus search for a specific user with that email
     return new Promise((resolve, reject) => {
-        const transporter = nodemailer.createTransport({
+        var transporter = nodemailer.createTransport({
             host: 'smtp.gmail.com',
             port: 465,
             secure: true, // use SSL
