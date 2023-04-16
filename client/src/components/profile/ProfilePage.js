@@ -22,7 +22,7 @@ export default function ProfilePage() {
             if (user.subscribers)
                 setSubscribed(user.subscribers.includes(cookies.get('userId')))
 
-            if (rating.rating)
+            if (rating && rating.rating)
                 setRating(rating.rating)
             setUser(user);
         }
