@@ -35,55 +35,49 @@ export default function ViewPostings(props) {
 
   useEffect(() => {
     async function getStudentApplicationStatus() {
-      try {
-        const response = await axios.get("http://localhost:4000/postings", {
-          headers: {
-            Authorization: `Bearer ${cookies.get("accessToken")}`,
-          },
-        });
-        const postings = response.data;
-
-        const userId = cookies.get("userId");
-        const updatedApplicationStatuses = [];
+      const response = await axios.get("http://localhost:4000/postings", {
+        headers: {
+          Authorization: `Bearer ${cookies.get("accessToken")}`,
+        },
+      });
   
-        postings.forEach((posting) => {
-          const {
-            pendingApplicantsIds,
-            interviewApplicantIds,
-            acceptedApplicantIds,
-            rejectedApplicantIds,
-          } = posting;
+      const postings = response.data;
   
-          let status = "Apply?";
-
-          if (pendingApplicantsIds.includes(userId)) {
-            status = "Application Pending";
-          } else if (interviewApplicantIds.includes(userId)) {
-            status = "Selected for Interview";
-          } else if (acceptedApplicantIds.includes(userId)) {
-            status = "Accepted";
-          } else if (rejectedApplicantIds.includes(userId)) {
-            status = "Rejected";
-          }
-          
-          updatedApplicationStatuses.push({ postingId: posting._id, status });
-        });
+      const userId = cookies.get("userId");
+      const updatedApplicationStatuses = [];
   
-        setApplicationStatuses(updatedApplicationStatuses);
-        console.log(userId);
-        console.log(updatedApplicationStatuses);
-      }catch (err) {
-        console.log(err);
-      }
+      postings.forEach((posting) => {
+        const {
+          pendingApplicantsIds,
+          interviewApplicantIds,
+          acceptedApplicantIds,
+          rejectedApplicantIds,
+        } = posting;
+  
+        let status = "Apply?";
+  
+        if (pendingApplicantsIds.includes(userId)) {
+          status = "Application Pending";
+        } else if (interviewApplicantIds.includes(userId)) {
+          status = "Selected for Interview";
+        } else if (acceptedApplicantIds.includes(userId)) {
+          status = "Accepted";
+        } else if (rejectedApplicantIds.includes(userId)) {
+          status = "Rejected";
+        }
+        
+        updatedApplicationStatuses.push({ postingId: posting._id, status });
+      });
+  
+      setApplicationStatuses(updatedApplicationStatuses);
     }
     getStudentApplicationStatus();
   }, []); 
-
+  
   function getUserStatus(postingId) {
     const statusObj = applicationStatuses.find(status => status.postingId === postingId);
     return statusObj?.status || "Apply?";
   }
-  
 
   return (
     <>
@@ -109,6 +103,7 @@ export default function ViewPostings(props) {
             location={posting.location}
             salary={posting.salary}
             postingId={posting._id}
+            employerId={posting.employerId}
             status={getUserStatus(posting._id)}
           />
         ))}

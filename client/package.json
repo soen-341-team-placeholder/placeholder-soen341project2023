@@ -40,7 +40,7 @@
     "zod": "^3.21.4"
   },
   "scripts": {
-    "start": "  BACKEND_URL=${{ secrets.BACKEND_URL }} react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --verbose --watchAll=false",
     "eject": "react-scripts eject"

@@ -5,9 +5,8 @@ import React from "react"; // Importing react module and useState hook
 import {Navigate} from "react-router-dom"; // Importing react-router-dom module for routing
 import {Document, Packer, Paragraph, TextRun} from "docx"; // Importing docx module for creating Word documents
 
-export const cookies = new Cookies(); // Creating an instance of Cookie
-export const backendUrl = "http://localhost:4000/";    //process.env.BACKEND_URL || 
-
+export const cookies = new Cookies(); // Creating an instance of Cookies
+export const backendUrl = "http://127.0.0.1:4000";
 
 // Misc/ testing
 export function hello_world() {
@@ -408,7 +407,6 @@ export async function addNewPosting(data) {
             error.response?.data?.message ||
             "An error occurred while creating the the posting"
         fancyErrorPopup(errorMessage);
-        return false;
     }
 }
 
@@ -434,3 +432,47 @@ export async function deletePosting(postingId) {
     }
 }
 
+
+export async function getSubscribers(employerId) {
+    try {
+        if (!isLoggedIn()) {
+            fancyErrorPopup("Please log in first.");
+            return;
+        }
+        const res = await axios.get(`${backendUrl}/subscribe/${employerId}`, {
+            headers: {
+                authorization: `Bearer ${cookies.get("accessToken")}`,
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        const errorMessage =
+            error.response?.data?.message ||
+            "An error occurred while getting subscribers fom the employer"
+        fancyErrorPopup(errorMessage);
+        return false;
+    }
+}
+
+export async function subscribeTo(employerId) {
+    try {
+        if (!isLoggedIn()) {
+            fancyErrorPopup("Please log in first.");
+            return;
+        }
+        await axios.patch(`${backendUrl}/subscribe/${employerId}`, {}, {
+            headers: {
+                authorization: `Bearer ${cookies.get("accessToken")}`,
+            },
+        });
+        fancyConfirmationPopup("Subscribed successfully")
+        return true;
+    } catch (error) {
+        const errorMessage =
+            error.response?.data?.message ||
+            "An error occurred while subscribing the the employer"
+        fancyErrorPopup(errorMessage);
+        return false;
+    }
+}
