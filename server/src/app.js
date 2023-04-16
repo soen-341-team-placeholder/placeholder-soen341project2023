@@ -9,7 +9,7 @@ const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const tokenRouter = require('./routes/token');
 const postingsRouter = require('./routes/postings');
-const subscribeRouter = require('./routes/subscribe');
+const subscribeRouter = require('./routes/subscribe').router;
 
 app.options("*", cors());
 app.use(cors());
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 
 // Define endpoint to return backend URL
 app.get('/backend-url', (req, res) => {
-    res.json({ backendUrl: app.locals.backendUrl });
+    res.json({backendUrl: app.locals.backendUrl});
 });
 
 module.exports = app

@@ -1,7 +1,9 @@
 const express = require('express');
 const authenticateToken = require('../auth/token_validator');
+const subscribe = require('../routes/subscribe')
 const router = express.Router();
 const Posting = require('../models/Posting');
+const User = require('../models/User');
 
 router.get('/', authenticateToken, async (req, res) => {
     const employerId = req.query.employerId;
@@ -56,12 +58,21 @@ router.post('/', authenticateToken, async (req, res) => {
         return;
     }
 
-    new Posting(req.body).save((err, posting) => {
+    new Posting(req.body).save(async (err, posting) => {
         if (err) {
             res.status(400).send('message:' + err);
             console.log(err);
         } else {
             res.status(200).json(posting);
+
+            //Notify subscribers
+            if (req.requester.subscribers) {
+                req.requester.subscribers.forEach((studentId) => {
+                    User.findById(studentId).then((student) => {
+                        subscribe.sendNewPostingEmail(student.email)
+                    })
+                })
+            }
         }
     });
 });

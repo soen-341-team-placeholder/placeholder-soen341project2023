@@ -86,11 +86,11 @@ function sendNewPostingEmail(email) {
         transporter.sendMail(mail_configs, function (error, info) {
             if (error) {
                 console.log(error)
-                return reject({message: `An error has occured`})
+                return reject({message: `An error has occurred`})
             }
-            return resolve({message: `Email sent succesfuly`})
+            return resolve({message: `Email sent successfully`})
         })
     })
 }
 
-module.exports = router;
+module.exports = {router, sendNewPostingEmail};
