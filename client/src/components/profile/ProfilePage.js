@@ -7,6 +7,7 @@ import Cookies from "universal-cookie";
 export default function ProfilePage() {
     const {userId} = useParams();
     const [user, setUser] = useState(null);
+    const [rating, setRating] = useState(0)
     const [isEditable, setEditable] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [subscribed, setSubscribed] = useState(false)
@@ -16,9 +17,13 @@ export default function ProfilePage() {
     useEffect(() => {
         async function fetchData() {
             const user = await fn.fetchUserProfile(userId);
+            const rating = await fn.getRating(userId)
 
             if (user.subscribers)
                 setSubscribed(user.subscribers.includes(cookies.get('userId')))
+
+            if (rating.rating)
+                setRating(rating.rating)
             setUser(user);
         }
 
@@ -65,6 +70,7 @@ export default function ProfilePage() {
                         />
                         <div>
                             <h1 className="text-2xl font-semibold">{`${user.firstName} ${user.lastName}`}</h1>
+                            <h1 className="text-xl font-semibold">{`Rating: ${rating} ⭐`}</h1>
                             <p className="text-gray-500">{user.email}</p>
                             <p className="text-gray-500">Age: {user.age}</p>
                             {isAnEmployer() && <p className="text-gray-500">Company: {user.companyName}</p>}

@@ -455,6 +455,26 @@ export async function getSubscribers(employerId) {
     }
 }
 
+export async function getRating(userId) {
+    try {
+        if (!isLoggedIn()) {
+            fancyErrorPopup("Please log in first.");
+            return;
+        }
+        const res = await axios.get(`${backendUrl}/users/${userId}/rating`, {
+            headers: {
+                authorization: `Bearer ${cookies.get("accessToken")}`,
+            },
+        });
+
+        return res.data;
+    } catch (error) {
+        const errorMessage = error.response?.data?.message || "No rating returned"
+        fancyErrorPopup(errorMessage);
+        return false;
+    }
+}
+
 export async function subscribeTo(employerId) {
     try {
         if (!isLoggedIn()) {
