@@ -2,17 +2,16 @@ import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import * as fn from "../Function";
 import ProfileModal from "./ProfileModal";
-import Cookies from "universal-cookie";
 
 export default function ProfilePage(props) {
-  const { isLoggedIn, cookies } = props;
+  const { isLoggedIn } = props;
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [rating, setRating] = useState(0);
   const [isEditable, setEditable] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
-
+const cookies = fn.cookies;
 
   useEffect(() => {
     const fetchData = async () => {
