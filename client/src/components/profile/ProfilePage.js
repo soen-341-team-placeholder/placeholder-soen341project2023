@@ -16,9 +16,9 @@ export default function ProfilePage() {
     useEffect(() => {
         async function fetchData() {
             const user = await fn.fetchUserProfile(userId);
-            const subscribers = user.subscribers
 
-            setSubscribed(subscribers.includes(cookies.get('userId')))
+            if (user.subscribers)
+                setSubscribed(user.subscribers.includes(cookies.get('userId')))
             setUser(user);
         }
 
