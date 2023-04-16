@@ -115,6 +115,7 @@ router.patch('/:id', authenticateToken, async (req, res) => {
 
 router.delete('/:id', authenticateToken, async (req, res) => {
     const userId = req.params.id;
+    res.set("Content-Type", "text/plain");
     try {
         // Find and delete the user with the specified ID from the database
         const deletedUser = await User.findOneAndDelete({_id: userId});
