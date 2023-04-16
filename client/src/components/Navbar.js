@@ -1,17 +1,15 @@
 import {useEffect, useRef, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
-import Cookies from "universal-cookie";
 import {FaBars} from "react-icons/fa";
-
 import SearchBar from "./SearchBar";
 
+import * as fn from "./Function";
 import "../styles/styles.css";
 import "../styles/Navbar.css";
-import {cookies} from "./Function";
 
 export default function Navbar(props) {
-  const { isLoggedIn, cookies } = props;
-
+  const { isLoggedIn } = props;
+  const cookies = fn.cookies();
   const [isEmployer, setEmployer] = useState(false);
 
   const navigate = useNavigate();
