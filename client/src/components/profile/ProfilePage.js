@@ -42,7 +42,7 @@ export default function ProfilePage() {
     }
 
     const isProfileOwner = () => {
-        return user.userId === cookies.get('userId')
+        return user._id.toString() === cookies.get('userId')
     }
 
     const hasWorkExperience = () => {
