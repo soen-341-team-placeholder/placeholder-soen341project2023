@@ -4,7 +4,8 @@ import PostingTab from "../components/applicants/PostingTab";
 import * as fn from "../components/Function";
 
 export default function Applicants(props) {
-  const { isLoggedIn, cookies } = props;
+  const { isLoggedIn } = props;
+  const cookies = fn.cookies;
   const [pendingApplicationsList, setPendingApplicationsList] = useState([]);
   const [interviewApplicationsList, setInterviewApplicationsList] = useState(
     []
