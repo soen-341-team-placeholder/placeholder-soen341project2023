@@ -161,7 +161,7 @@ const ProfileModal = ({user, onClose, onSave, isAnEmployer}) => {
                                         <input
                                             {...register(`education.${index}.startDate`)}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            type="text"
+                                            type="date"
                                             id={`education.${index}.startDate`}
                                             defaultValue={item.startDate}
                                         />
@@ -174,7 +174,7 @@ const ProfileModal = ({user, onClose, onSave, isAnEmployer}) => {
                                         <input
                                             {...register(`education.${index}.endDate`)}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            type="text"
+                                            type="date"
                                             id={`education.${index}.endDate`}
                                             defaultValue={item.endDate}
                                         />
@@ -223,7 +223,7 @@ const ProfileModal = ({user, onClose, onSave, isAnEmployer}) => {
                                         <input
                                             {...register(`workExperience.${index}.startDate`)}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            type="text"
+                                            type="date"
                                             id={`workExperience.${index}.startDate`}
                                             defaultValue={item.startDate}
                                         />
@@ -236,7 +236,7 @@ const ProfileModal = ({user, onClose, onSave, isAnEmployer}) => {
                                         <input
                                             {...register(`workExperience.${index}.endDate`)}
                                             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            type="text"
+                                            type="date"
                                             id={`workExperience.${index}.endDate`}
                                             defaultValue={item.endDate}
                                         />
