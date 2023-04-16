@@ -4,6 +4,7 @@ import {render, screen, waitFor} from "@testing-library/react";
 import ProfilePage from "../../components/profile/ProfilePage";
 import {MemoryRouter, Route, Routes} from "react-router-dom";
 import * as fn from "../../components/Function";
+import {cookies} from "../../components/Function";
 
 // Mock Function.fetchUserProfile and Cookies
 jest.mock("../../components/Function");
@@ -41,6 +42,7 @@ describe("ProfilePage", () => {
     beforeEach(() => {
         fn.fetchUserProfile.mockImplementation(() => Promise.resolve(mockUser));
         fn.isLoggedIn.mockImplementation(true)
+        cookies.get.mockImplementation('aaaa')
     });
 
     afterEach(() => {
