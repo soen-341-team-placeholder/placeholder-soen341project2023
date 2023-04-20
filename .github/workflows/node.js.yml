@@ -3,10 +3,10 @@ name: Node.js CI with SonarCloud
 on:
   push:
     branches:
-      - '*'
+      - "*"
   pull_request:
-    branches: 
-      - 'main'
+    branches:
+      - "main"
 
 jobs:
   build-frontend:
@@ -24,13 +24,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install and test frontend
         working-directory: ./client
         env:
           CI: ""
           BACKEND_URL: ${{ secrets.BACKEND_URL }}
+          INVALID_EMAIL: ${{ secrets.INVALID_EMAIL }}
+          VALID_EMAIL: ${{ secrets.VALID_EMAIL }}
+          INVALID_PASSWORD: ${{ secrets.INVALID_PASSWORD }}
+          VALID_PASSWORD: ${{ secrets.VALID_PASSWORD }}
+          VALID_TOKEN: ${{ secrets.VALID_TOKEN }}
+          INVALID_TOKEN: ${{ secrets.INVALID_TOKEN }}
         run: |
           npm ci
           npm run build --if-present
@@ -50,23 +56,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         working-directory: ./server
         run: npm ci
-# @TODO fix tests and uncomment the code
-      # - name: Test
-      #   working-directory: ./server
-      #   env:
-      #     MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
-      #     MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-      #     MONGO_HOST: ${{ secrets.MONGO_HOST }}
-      #     MONGO_DB: ${{ secrets.MONGO_DB }}
-      #     PORT: ${{ secrets.PORT }}
-      #     JWT_ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN_SECRET }}
-      #     JWT_REFRESH_TOKEN_SECRET: ${{ secrets.JWT_REFRESH_TOKEN_SECRET }}
-      #   run: npm test
+  # @TODO fix tests and uncomment the code
+  # - name: Test
+  #   working-directory: ./server
+  #   env:
+  #     MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+  #     MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+  #     MONGO_HOST: ${{ secrets.MONGO_HOST }}
+  #     MONGO_DB: ${{ secrets.MONGO_DB }}
+  #     PORT: ${{ secrets.PORT }}
+  #     JWT_ACCESS_TOKEN_SECRET: ${{ secrets.JWT_ACCESS_TOKEN_SECRET }}
+  #     JWT_REFRESH_TOKEN_SECRET: ${{ secrets.JWT_REFRESH_TOKEN_SECRET }}
+  #   run: npm test
 
   sonarcloud:
     name: SonarCloud
