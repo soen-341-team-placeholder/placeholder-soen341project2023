@@ -2,6 +2,8 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+// disable fingerprint exposure
+app.disable("x-powered-by");
 const cors = require("cors");
 
 // Routers
