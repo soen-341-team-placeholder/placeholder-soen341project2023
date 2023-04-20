@@ -9,15 +9,15 @@ describe("Posting endpoints", () => {
   // Get tokens for authentication
   beforeAll(async () => {
     const response = await request(app).post("/auth/login").send({
-      email: "admin@test.com",
-      password: "adminpassword",
+      email: process.env.ADMIN_EMAIL,
+      password: process.env.ADMIN_PASSWORD,
     });
 
     token = response.body.token;
 
     const studentResponse = await request(app).post("/auth/login").send({
-      email: "student@test.com",
-      password: "studentpassword",
+      email: process.env.STUDENT_EMAIL,
+      password: process.env.STUDENT_PASSWORD,
     });
 
     studentToken = studentResponse.body.token;
