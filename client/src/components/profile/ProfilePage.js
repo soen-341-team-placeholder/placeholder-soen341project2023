@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import * as fn from "../Function";
 import ProfileModal from "./ProfileModal";
+import ProfileCard from "./ProfileCard";
 import Cookies from "universal-cookie";
 
 export default function ProfilePage() {
@@ -62,6 +63,7 @@ export default function ProfilePage() {
     };
 
 
+
     return (
         <div className="h-full bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
             {(showModal && isEditable) && ( // Conditionally render the modal
@@ -78,6 +80,7 @@ export default function ProfilePage() {
             <div className="relative py-3 sm:max-w-xl sm:mx-auto">
                 <div
                     className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-light-blue-500 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+                <ProfileCard user = {user}/>
             </div>
         </div>
     );
