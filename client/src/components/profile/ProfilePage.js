@@ -61,6 +61,7 @@ export default function ProfilePage() {
   };
 
   const cardProps = {
+    user,
     rating,
     isAnEmployer,
     hasWorkExperience,
