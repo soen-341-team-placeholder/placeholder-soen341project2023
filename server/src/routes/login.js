@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({ email: req.body.email }, async (err, user) => {
+    User.findOne({ email: req.body.email.toString() }, async (err, user) => {
         if (err) {
             res.status(400).send('message:' + err);
             console.log(err);
