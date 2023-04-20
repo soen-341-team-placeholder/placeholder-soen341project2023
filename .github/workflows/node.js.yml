@@ -77,7 +77,7 @@ jobs:
           STUDENT_EMAIL: ${{ secrets.STUDENT_EMAIL }}
           STUDENT_PASSWORD: ${{ secrets.STUDENT_PASSWORD }}
 
-        run: 
+        run: |
           npm run build --if-present
           npm test
 
